@@ -6,6 +6,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
 import HelpIcon from '@material-ui/icons/Help';
+import TableHeadCellLabel from './TableHeadCellLabel.js';
 
 const defaultHeadCellStyles = theme => ({
   root: {},
@@ -135,7 +136,7 @@ class TableHeadCell extends React.Component {
                   [classes.data]: true,
                   [classes.sortActive]: sortActive,
                 })}>
-                {children}
+                <TableHeadCellLabel>{children}</TableHeadCellLabel>
               </div>
               <div className={classes.sortAction}>
                 <TableSortLabel {...sortLabelProps} />

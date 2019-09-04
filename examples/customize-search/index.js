@@ -80,7 +80,7 @@ class Example extends React.Component {
     const options = {
       filter: true,
       filterType: 'dropdown',
-      responsive: 'stacked',
+      responsive: 'scrollMaxHeight',
       page: 1,
       searchText: this.state.searchText,
       searchPlaceholder: 'Your Custom Search Placeholder',
