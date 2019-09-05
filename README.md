@@ -124,10 +124,10 @@ The component accepts the following props:
 
 |Name|Type|Description
 |:--:|:-----|:-----|
-|**`title`**|array|Title used to caption table
 |**`columns`**|array|Columns used to describe table. Must be either an array of simple strings or objects describing a column
 |**`data`**|array|Data used to describe table. Must be an array containing objects. (Arrays containing just strings or numbers also supported)
 |**`options`**|object|Options used to describe table
+|**`title`**|array|Title used to caption table
 
 #### Options:
 |Name|Type|Default|Description
