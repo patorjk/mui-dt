@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import TableRow from '@material-ui/core/TableRow';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(
-  theme => ({
+  (theme) => ({
     root: {},
     hover: {},
     hoverCursor: { cursor: 'pointer' },
@@ -18,9 +18,9 @@ const useStyles = makeStyles(
   { name: 'MUIDataTableBodyRow' },
 );
 
-function TableBodyRow() {
+function TableBodyRow(props) {
   const classes = useStyles();
-  const { options, rowSelected, onClick, className, ...rest } = this.props;
+  const { options, rowSelected, onClick, className, ...rest } = props;
 
   return (
     <TableRow
@@ -37,7 +37,7 @@ function TableBodyRow() {
       )}
       selected={rowSelected}
       {...rest}>
-      {this.props.children}
+      {props.children}
     </TableRow>
   );
 }

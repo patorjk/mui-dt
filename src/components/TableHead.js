@@ -61,7 +61,7 @@ class TableHead extends React.Component {
                   key={index}
                   index={index}
                   type={'cell'}
-                  ref={el => setCellRef(index + 1, findDOMNode(el))}
+                  cellRef={el => setCellRef(index + 1, findDOMNode(el))}
                   sort={column.sort}
                   sortDirection={column.sortDirection}
                   toggleSort={this.handleToggleColumn}
