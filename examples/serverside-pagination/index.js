@@ -92,7 +92,7 @@ class Example extends React.Component {
     };
     return (
       <div>
-        <MUIDataTable title={<Typography variant="title">
+        <MUIDataTable title={<Typography variant="h6">
           ACME Employee list
           {isLoading && <CircularProgress size={24} style={{marginLeft: 15, position: 'relative', top: 4}} />}
           </Typography>
@@ -103,4 +103,4 @@ class Example extends React.Component {
   }
 }
 
-ReactDOM.render(<Example />, document.getElementById("app-root"));
+export default Example;

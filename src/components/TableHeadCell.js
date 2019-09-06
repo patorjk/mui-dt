@@ -112,9 +112,6 @@ class TableHeadCell extends React.Component {
           <Tooltip
             title={options.textLabels.body.toolTip}
             placement={'bottom-start'}
-            classes={{
-              tooltip: classes.tooltip,
-            }}
             enterDelay={300}
             classes={{ popper: classes.mypopper }}
             open={isSortTooltipOpen}

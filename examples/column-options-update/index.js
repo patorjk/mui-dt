@@ -127,7 +127,6 @@ class Example extends React.Component {
       filterType: 'dropdown',
       responsive: 'stacked',
       rowsPerPage: 10,
-      page: 1,
     };
 
     return (
@@ -154,4 +153,4 @@ class Example extends React.Component {
   }
 }
 
-ReactDOM.render(<Example />, document.getElementById("app-root"));
+export default Example;

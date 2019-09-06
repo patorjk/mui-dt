@@ -65,7 +65,7 @@ class Example extends React.Component {
 
   options = {
     filter: true,
-    selectableRows: true,
+    selectableRows: 'multiple',
     filterType: 'dropdown',
     responsive: 'scrollMaxHeight',
     rowsPerPage: 10,
@@ -79,4 +79,4 @@ class Example extends React.Component {
   }
 }
 
-ReactDOM.render(<Example />, document.getElementById('app-root'));
+export default Example;

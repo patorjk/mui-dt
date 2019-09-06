@@ -113,6 +113,7 @@ class Example extends React.Component {
       filter: true,
       filterType: 'dropdown',
       responsive: 'stacked',
+      rowHover: false,
       setRowProps: (row) => {
         return {
           className: classnames(
@@ -136,4 +137,4 @@ class Example extends React.Component {
 
 const ExampleWithStyles = withStyles(customStyles, {name: "Example"})(Example);
 
-ReactDOM.render(<ExampleWithStyles/>, document.getElementById("app-root"));
+export default ExampleWithStyles;
