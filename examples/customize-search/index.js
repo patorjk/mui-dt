@@ -81,7 +81,6 @@ class Example extends React.Component {
       filter: true,
       filterType: 'dropdown',
       responsive: 'stacked',
-      page: 1,
       searchText: this.state.searchText,
       searchPlaceholder: 'Your Custom Search Placeholder',
       customSearch: (searchQuery, currentRow, columns) => {
