@@ -2,6 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import MUIDataTable from "../../src/";
 
+/*
+  TODO: This example looks like it's useless...
+*/
+
 class Example extends React.Component {
 
   render() {
@@ -43,19 +47,12 @@ class Example extends React.Component {
 
     const options = {
       filter: true,
-      selectableRows: true,
+      selectableRows: 'multiple',
       filterType: 'dropdown',
       responsive: 'stacked',
       rowsPerPage: 10,
       page: 1,
       rowsSelected: [2, 5],
-      filterList: [
-        ["Aaren Rose"],
-        [],
-        [],
-        [],
-        []
-      ]
     };
 
     return (
@@ -65,4 +62,4 @@ class Example extends React.Component {
   }
 }
 
-ReactDOM.render(<Example />, document.getElementById("app-root"));
+export default Example;

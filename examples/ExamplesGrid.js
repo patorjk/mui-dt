@@ -1,0 +1,67 @@
+import {Link} from "react-router-dom";
+import {Card, CardContent, Grid, Typography} from "@material-ui/core";
+import React from "react";
+import examples from "./examples";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  card: {
+    '&:hover': {
+      background: theme.palette.primary.main,
+      color: 'white',
+      fontWeight: 500,
+    },
+    backgroundColor: 'lightgrey',
+  },
+  cardContent: {
+    '&:last-child': {
+      padding: 8,
+    }
+  },
+  link: {
+    textDecoration: 'none',
+  },
+  label: {
+    fontWeight: 'inherit'
+  }
+}));
+
+function ExamplesGrid(props) {
+  const classes = useStyles();
+
+  // Sort Examples alphabetically
+  const examplesSorted = {};
+  Object.keys(examples).sort().forEach(function (key) {
+      examplesSorted[key] = examples[key];
+  });
+
+  const examplesSortedKeys = Object.keys(examplesSorted);
+
+  return (
+      <React.Fragment>
+        <Typography variant="h5" align="center">Choose an Example</Typography>
+        <Typography variant="subtitle2" align="center">({examplesSortedKeys.length}) Examples</Typography>
+        <Grid container className={classes.container} spacing={2}>
+          {examplesSortedKeys.map((label, index) => (
+            <Grid key={index} item md={2}>
+              <Link className={classes.link} to={`/${label.replace(/\s+/g, '-').toLowerCase()}`}>
+                <Card className={classes.card}>
+                  <CardContent className={classes.cardContent}>
+                    <Typography variant="subtitle1" className={classes.label} align="center">{label}</Typography>
+                  </CardContent>
+                </Card>
+              </Link>
+            </Grid>
+          ))}
+        </Grid>
+      </React.Fragment>
+    );
+}
+
+export default ExamplesGrid;

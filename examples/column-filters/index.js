@@ -87,11 +87,10 @@ class Example extends React.Component {
       onFilterChange: (changedColumn, filterList) => {
         console.log(changedColumn, filterList);
       },
-      selectableRows: true,
+      selectableRows: 'multiple',
       filterType: 'dropdown',
       responsive: 'stacked',
       rowsPerPage: 10,
-      page: 1,
     };
 
     return (
@@ -101,4 +100,4 @@ class Example extends React.Component {
   }
 }
 
-ReactDOM.render(<Example />, document.getElementById("app-root"));
+export default Example;

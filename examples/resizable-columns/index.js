@@ -57,7 +57,8 @@ class Example extends React.Component {
     const options = {
       filter: true,
       filterType: 'dropdown',
-      resizableColumns: true
+      resizableColumns: true,
+      responsive: 'scrollMaxHeight',
     };
 
     return (
@@ -67,4 +68,4 @@ class Example extends React.Component {
   }
 }
 
-ReactDOM.render(<Example />, document.getElementById("app-root"));
+export default Example;
