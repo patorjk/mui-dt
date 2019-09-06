@@ -496,6 +496,16 @@ describe('<MUIDataTable />', function() {
     assert.deepEqual(state.rowsPerPageOptions, [5, 10, 15]);
   });
 
+  it('should allow empty array rowsPerPageOptions when provided in options', () => {
+    const options = {
+      rowsPerPageOptions: [],
+    };
+
+     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} options={options} />);
+    const state = shallowWrapper.dive().state();
+    assert.deepEqual(state.rowsPerPageOptions, []);
+  });
+
   it('should render pagination when enabled in options', () => {
     const options = {
       pagination: true,
@@ -729,7 +739,7 @@ describe('<MUIDataTable />', function() {
     assert.deepEqual(JSON.stringify(state.displayData), expectedResult);
   });
 
-  it('should sort provided column in descending order when calling toggleSortColum method for the first time', () => {
+  it('should sort provided column with defined data, in descending order when calling toggleSortColum method for the first time', () => {
     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />).dive();
     const instance = shallowWrapper.instance();
 
@@ -745,6 +755,24 @@ describe('<MUIDataTable />', function() {
     ]);
 
     assert.deepEqual(JSON.stringify(state.displayData), expectedResult);
+  });
+
+  it('should sort provided column with undefined data as though it were an empty string, in descending order when calling toggleSortColum method for the first time', () => {
+    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />).dive();
+    const instance = shallowWrapper.instance();
+
+     instance.toggleSortColumn(4);
+    shallowWrapper.update();
+    const state = shallowWrapper.state();
+
+     const expectedResult = JSON.stringify([
+      { data: ['James, Joe', 'Test Corp', renderCities('Yonkers', { rowIndex: 0 }), 'NY', undefined], dataIndex: 0 },
+      { data: ['Walsh, John', 'Test Corp', renderCities('Hartford', { rowIndex: 1 }), null, undefined], dataIndex: 1 },
+      { data: ['Herm, Bob', 'Test Corp', renderCities('Tampa', { rowIndex: 2 }), 'FL', undefined], dataIndex: 2 },
+      { data: ['Houston, James', 'Test Corp', renderCities('Dallas', { rowIndex: 3 }), 'TX', undefined], dataIndex: 3 },
+    ]);
+
+     assert.deepEqual(JSON.stringify(state.displayData), expectedResult);
   });
 
   it('should sort provided column in ascending order when calling toggleSortColum method twice', () => {
@@ -1012,6 +1040,32 @@ describe('<MUIDataTable />', function() {
     const expectedResult = [{ index: 0, dataIndex: 0 }];
 
     assert.deepEqual(state.selectedRows.data, expectedResult);
+  });
+
+  it('should call onRowsExpand when row is expanded or collapsed', () => {
+    const options = {
+      expandableRows: true,
+      renderExpandableRow: () => <tr><td>foo</td></tr>,
+      expandableRowsOnClick: true,
+      onRowsExpand: spy()
+    };
+    const mountWrapper = mount(<MUIDataTable columns={columns} data={data} options={options} />);
+
+     mountWrapper
+      .find('#MUIDataTableBodyRow-2')
+      .first()
+      .simulate('click');
+
+     assert.strictEqual(options.onRowsExpand.callCount, 1);
+    assert(options.onRowsExpand.calledWith([{ index: 2, dataIndex: 2 }], [{ index: 2, dataIndex: 2 }]));
+
+     mountWrapper
+      .find('#MUIDataTableBodyRow-2')
+      .first()
+      .simulate('click');
+
+     assert.strictEqual(options.onRowsExpand.callCount, 2);
+     assert(options.onRowsExpand.calledWith([{ index: 2, dataIndex: 2 }], []));
   });
 
   it('should update selectedRows when using rowsSelected option with type=multiple', () => {

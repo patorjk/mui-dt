@@ -12,7 +12,7 @@ class TableFooter extends React.Component {
 
   render() {
     const { options, rowCount, page, rowsPerPage, changeRowsPerPage, changePage } = this.props;
-
+console.log('page='+page);
     return (
       <MuiTable>
         {options.customFooter

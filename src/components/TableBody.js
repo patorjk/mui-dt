@@ -17,30 +17,32 @@ const defaultBodyStyles = {
 
 class TableBody extends React.Component {
   static propTypes = {
-    /** Data used to describe table */
-    data: PropTypes.array.isRequired,
-    /** Total number of data rows */
-    count: PropTypes.number.isRequired,
+    /** Extend the style applied to components */
+    classes: PropTypes.object,
     /** Columns used to describe table */
     columns: PropTypes.array.isRequired,
-    /** Options used to describe table */
-    options: PropTypes.object.isRequired,
+    /** Total number of data rows */
+    count: PropTypes.number.isRequired,
+    /** Data used to describe table */
+    data: PropTypes.array.isRequired,
+    /** Table rows expanded */
+    expandedRows: PropTypes.object,
     /** Data used to filter table against */
     filterList: PropTypes.array,
     /** Callback to execute when row is clicked */
     onRowClick: PropTypes.func,
-    /** Table rows selected */
-    selectedRows: PropTypes.object,
-    /** Callback to trigger table row select */
-    selectRowUpdate: PropTypes.func,
+    /** Options used to describe table */
+    options: PropTypes.object.isRequired,
     /** The most recent row to have been selected/unselected */
     previousSelectedRow: PropTypes.object,
     /** Data used to search table against */
     searchText: PropTypes.string,
+    /** Table rows selected */
+    selectedRows: PropTypes.object,
+    /** Callback to trigger table row select */
+    selectRowUpdate: PropTypes.func,
     /** Toggle row expandable */
     toggleExpandRow: PropTypes.func,
-    /** Extend the style applied to components */
-    classes: PropTypes.object,
   };
 
   static defaultProps = {
@@ -95,6 +97,15 @@ class TableBody extends React.Component {
 
     if (options.isRowSelectable) {
       return options.isRowSelectable(dataIndex, selectedRows);
+    } else {
+      return true;
+    }
+  }
+
+  isRowExpandable(dataIndex) {
+    const { options, expandedRows } = this.props;
+    if (options.isRowExpandable) {
+      return options.isRowExpandable(dataIndex, expandedRows);
     } else {
       return true;
     }
@@ -177,7 +188,11 @@ class TableBody extends React.Component {
       this.handleRowSelect(selectRow, event);
     }
     // Check if we should trigger row expand when row is clicked anywhere
-    if (this.props.options.expandableRowsOnClick && this.props.options.expandableRows) {
+    if (
+      this.props.options.expandableRowsOnClick &&
+      this.props.options.expandableRows &&
+      this.isRowExpandable(data.dataIndex, this.props.expandedRows)
+    ) {
       const expandRow = { index: data.rowIndex, dataIndex: data.dataIndex };
       this.props.toggleExpandRow(expandRow);
     }
