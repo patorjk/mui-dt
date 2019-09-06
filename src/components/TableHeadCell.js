@@ -89,7 +89,8 @@ class TableHeadCell extends React.Component {
 
   render() {
     const { isSortTooltipOpen, isHintTooltipOpen } = this.state;
-    const { children, classes, options, sortDirection, sort, hint, print } = this.props;
+    const { children, classes, options, sortDirection, sort, hint, print, label, cellHeaderProps } = this.props;
+    const { className, ...otherProps } = cellHeaderProps;
     const sortActive = sortDirection !== 'none' && sortDirection !== undefined ? true : false;
     const ariaSortDirection = sortDirection === 'none' ? false : sortDirection;
 
@@ -104,13 +105,13 @@ class TableHeadCell extends React.Component {
       [classes.root]: true,
       [classes.fixedHeader]: options.fixedHeader,
       'datatables-noprint': !print,
-    });
+    }, className);
 
     return (
-      <TableCell className={cellClass} scope={'col'} sortDirection={ariaSortDirection}>
+      <TableCell className={cellClass} scope={'col'} sortDirection={ariaSortDirection} {...otherProps}>
         {options.sort && sort ? (
           <Tooltip
-            title={options.textLabels.body.toolTip}
+            title={options.textLabels.body.columnHeaderTooltip ? options.textLabels.body.columnHeaderTooltip(label) : "Sort"}
             placement={'bottom-start'}
             enterDelay={300}
             classes={{ popper: classes.mypopper }}

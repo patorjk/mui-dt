@@ -82,7 +82,15 @@ class Example extends React.Component {
       filterType: 'dropdown',
       responsive: 'stacked',
       searchText: this.state.searchText,
-      searchPlaceholder: 'Your Custom Search Placeholder',
+      searchProps: {
+        placeholder: 'Custom Search Placeholder!',
+        onBlur: (e) => {
+          console.log('onBlur!');
+        },
+        onKeyUp:(e) => {
+          console.log('onKeyUp!');
+        }
+      },
       customSearch: (searchQuery, currentRow, columns) => {
         let isFound = false;
         currentRow.forEach(col => {

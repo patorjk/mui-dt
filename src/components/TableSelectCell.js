@@ -37,17 +37,18 @@ class TableSelectCell extends React.Component {
   static propTypes = {
     /** Select cell checked on/off */
     checked: PropTypes.bool.isRequired,
-    /** Select cell part of fixed header */
-    fixedHeader: PropTypes.bool.isRequired,
-    /** Callback to trigger cell update */
-    onChange: PropTypes.func,
     /** Extend the style applied to components */
     classes: PropTypes.object,
     /** Is expandable option enabled */
     expandableOn: PropTypes.bool,
+    /** Select cell part of fixed header */
+    fixedHeader: PropTypes.bool.isRequired,
+    /** Callback to trigger cell update */
+    onChange: PropTypes.func,
     /** Is selectable option enabled */
     selectableOn: PropTypes.string,
-    /** Select cell disabled on/off */
+    /** If there should be a select-all checkbox */
+    selectableRowsHeader: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -67,6 +68,7 @@ class TableSelectCell extends React.Component {
       isRowExpanded,
       onExpand,
       isRowSelectable,
+      selectableRowsHeader,
       ...otherProps
     } = this.props;
 
@@ -85,7 +87,7 @@ class TableSelectCell extends React.Component {
     });
 
     const renderCheckBox = () => {
-      if (isHeaderCell && selectableOn !== 'multiple') {
+      if (isHeaderCell && (selectableOn !== 'multiple' || !selectableRowsHeader)) {
         // only display the header checkbox for multiple selection.
         return null;
       }

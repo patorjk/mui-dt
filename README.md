@@ -133,6 +133,7 @@ The component accepts the following props:
 |**`customToolbar`**|function||Render a custom toolbar
 |**`customToolbarSelect`**|function||Render a custom selected rows toolbar. `function(selectedRows, displayData, setSelectedRows) => void`
 |**`count`**|number||User provided override for total number of rows
+|**`disableToolbarSelect`**|boolean|false|Enable/disable the Select Toolbar that appears when a row is selected.
 |**`download`**|boolean|true|Show/hide download icon from toolbar
 |**`downloadOptions`**|object|`{filename: 'tableDownload.csv', separator: ','}`|Options to change the output of the CSV file: `filename`: string, `separator`: string, `filterOptions`: object(`useDisplayedColumnsOnly`: boolean, `useDisplayedRowsOnly`: boolean)
 |**`elevation`**|number|4|Shadow depth applied to Paper component
@@ -141,6 +142,7 @@ The component accepts the following props:
 |**`filter`**|boolean|true|Show/hide filter icon from toolbar
 |**`filterType `**|string||Choice of filtering view. `enum('checkbox', 'dropdown', 'multiselect', 'textField')`
 |**`fixedHeader`**|boolean|true|Enable/disable fixed header columns
+|**`isRowExpandable`**|function||Enable/disable expansion or collapse on certain expandable rows with custom function. Will be considered true if not provided. `function(dataIndex: number, expandedRows: object(lookup: {dataIndex: number}, data: arrayOfObjects: {index: number, dataIndex: number})) => bool`.
 |**`isRowSelectable`**|function||Enable/disable selection on certain rows with custom function. Returns true if not provided. `function(dataIndex: number, selectedRows: object(lookup: {[dataIndex]: boolean}, data: arrayOfObjects: {index: number, dataIndex: number})) => boolean`.
 |**`onCellClick`**|function||Callback function that triggers when a cell is clicked. `function(colData: any, cellMeta: { colIndex: number, rowIndex: number, dataIndex: number }) => void`
 |**`onChangePage`**|function||Callback function that triggers when a page has changed. `function(currentPage: number) => void`
@@ -151,8 +153,10 @@ The component accepts the following props:
 |**`onFilterChange`**|function||Callback function that triggers when filters have changed. `function(changedColumn: string, filterList: array) => void`
 |**`onRowClick`**|function||Callback function that triggers when a row is clicked. `function(rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => void`
 |**`onRowsDelete`**|function||Callback function that triggers when row(s) are deleted. `function(rowsDeleted: object(lookup: {[dataIndex]: boolean}, data: arrayOfObjects: {index: number, dataIndex: number})) => void OR false` (Returning `false` prevents row deletion.)
+|**`onRowsExpand`**|function||Callback function that triggers when a row is expanded or collapsed. `function(affectedRows: array, allRowsExpanded: array) => void`
 |**`onRowsSelect`**|function||Callback function that triggers when row(s) are selected. `function(currentRowsSelected: array, allRowsSelected: array) => void`
 |**`onSearchChange`**|function||Callback function that triggers when the search text value has changed. `function(searchText: string) => void`
+|**`onSearchClose`**|function||Callback function that triggers when the searchbox closes. `function() => void`
 |**`onSearchOpen`**|function||Callback function that triggers when the searchbox opens. `function() => void`
 |**`onTableChange`**|function||Callback function that triggers when table state has changed. `function(action: string, tableState: object) => void`
 |**`onTableInit`**|function||Callback function that triggers when table state has been initialized. `function(action: string, tableState: object) => void`
@@ -168,14 +172,16 @@ The component accepts the following props:
 |**`rowsPerPageOptions`**|array|[10,15,100]|Options to provide in pagination for number of rows a user can select
 |**`rowsSelected`**|array||User provided selected rows
 |**`selectableRows`**|string|'multiple'|Numbers of rows that can be selected. Options are "multiple", "single", "none".
+|**`selectableRowsHeader`**|boolean|true|Show/hide the select all/deselect all checkbox header for selectable rows.
 |**`selectableRowsOnClick`**|boolean|false|Enable/disable select toggle when row is clicked. When False, only checkbox will trigger this action.
 |**`search`**|boolean|true|Show/hide search icon from toolbar
 |**`searchText`**|string||Initial search text
-|**`searchPlaceholder`**|string||Search text placeholder. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-search/index.js)
-|**`setRowProps`**|function||Is called for each row and allows to return custom props for this row based on its data. `function(row: array, dataIndex: number) => object`
-|**`serverSide`**|boolean|false|Enable remote data source
+|**`searchProps`**|object|{}|Props applied to the search text box. You can set the placeholder text this way as well as add method callbacks like onBlur, onKeyUp, etc. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-search/index.js)
+|**`setRowProps`**|function||Is called for each row and allows you to return custom props for this row based on its data. `function(row: array, dataIndex: number) => object` [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-styling/index.js)
+|**`serverSide`**|boolean|false|Enable remote data source. When setting this option to true, the developer is responsible for the filtering, sorting, etc, of the data and for updating the options and columns inputs to the table (ex: sortDirection on a sorted column would need to be updated). [Example](https://github.com/patorjk/mui-dt/blob/master/examples/serverside-pagination/index.js)
 |**`sort`**|boolean|true|Enable/disable sort on all columns
 |**`sortFilterList`**|boolean|true|Enable/disable alphanumeric sorting of filter lists
+|**`tableProps`**|object|{}|Props applied to the table. You can set the table up to be a "dense" table this way. [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-styling/index.js)
 |**`textLabels `**|object||User provided labels to localize text
 |**`viewColumns`**|boolean|true|Show/hide viewColumns icon from toolbar
 
@@ -220,7 +226,8 @@ const columns = [
 |**`hint`**|string||Display hint icon with string as tooltip on hover.
 |**`print`**|boolean|true|Display column when printing
 |**`searchable`**|boolean|true|Exclude/include column from search results
-|**`setCellProps`**|function||Is called for each cell and allows to return custom props for this cell based on its data. `function(cellValue: string, rowIndex: number, columnIndex: number) => object`
+|**`setCellProps`**|function||Is called for each cell and allows to you return custom props for this cell based on its data. `function(cellValue: string, rowIndex: number, columnIndex: number) => object` [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-styling/index.js)
+|**`setCellHeaderProps`**|function||Is called for each header cell and allows you to return custom props for the header cell based on its data. `function(columnMeta: object) => object` [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-styling/index.js)
 |**`sort`**|boolean|true|Enable/disable sorting on column
 |**`sortDirection`**|string||Set default sort order `enum('asc', 'desc', 'none')`
 |**`viewColumns`**|boolean|true|Allow user to toggle column visibility through 'View Column' list

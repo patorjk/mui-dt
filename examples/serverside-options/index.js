@@ -56,7 +56,12 @@ class Example extends React.Component {
     };
 
     return (
-      <MUIDataTable title={"ACME Employee list"} data={data} columns={columns} options={options} />
+      <>
+        <div>
+          Note: This example was imported from mui-datatables. It was never finished. See the other serverSide example. I will try and finish this later.
+        </div>
+        <MUIDataTable title={"ACME Employee list"} data={data} columns={columns} options={options} />
+      </>
     );
 
   }
