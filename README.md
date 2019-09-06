@@ -2,15 +2,11 @@
   <img src="https://user-images.githubusercontent.com/19170080/34070522-e15d32e2-e235-11e7-8af5-fa704cdcad56.png" />
 </div>
 
-# MUI-Datatables - Datatables for Material-UI
+# MUI-DT - Datatables for Material-UI
 
-[![Build Status](https://travis-ci.org/gregnb/mui-datatables.svg?branch=master)](https://travis-ci.org/gregnb/mui-datatables)
-[![NPM Downloads](https://img.shields.io/npm/dt/mui-datatables.svg?style=flat)](https://npmcharts.com/compare/mui-datatables?minimal=true)
-[![Coverage Status](https://coveralls.io/repos/github/gregnb/mui-datatables/badge.svg?branch=master)](https://coveralls.io/github/gregnb/mui-datatables?branch=master)
-[![dependencies Status](https://david-dm.org/gregnb/mui-datatables/status.svg)](https://david-dm.org/gregnb/mui-datatables)
-[![npm version](https://badge.fury.io/js/mui-datatables.svg)](https://badge.fury.io/js/mui-datatables)
+MUI-DT is a data tables component built on [Material-UI](https://www.material-ui.com).  It comes with features like filtering, resizable + view/hide columns, search, export to CSV download, printing, selectable rows, expandable rows, pagination, and sorting. On top of the ability to customize styling on most views, there are three responsive modes "stacked", "scrollMaxHeight", and "scrollFullHeight" for mobile/tablet devices.
 
-MUI-Datatables is a data tables component built on [Material-UI](https://www.material-ui.com).  It comes with features like filtering, resizable + view/hide columns, search, export to CSV download, printing, selectable rows, expandable rows, pagination, and sorting. On top of the ability to customize styling on most views, there are three responsive modes "stacked", "scrollMaxHeight", and "scrollFullHeight" for mobile/tablet devices.
+This library is currently a work in progress and acts as a drop-in replacement for mui-datatables (it's being developed for my own needs but others are welcome to use it). I will keep this readme current as I add features and progress towards version 1.
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/19170080/38026128-eac9d506-3258-11e8-92a7-b0d06e5faa82.gif" />
@@ -18,11 +14,7 @@ MUI-Datatables is a data tables component built on [Material-UI](https://www.mat
 
 ## Install
 
-`npm install mui-datatables --save`
-
-## Demo
-
-[![Edit react-to-print](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/wy2rl1nyzl)
+`npm install mui-dt --save`
 
 ## Usage
 
@@ -30,7 +22,7 @@ For a simple table:
 
 ```js
 
-import MUIDataTable from "mui-datatables";
+import MUIDataTable from "mui-dt";
 
 const columns = ["Name", "Company", "City", "State"];
 
@@ -58,7 +50,7 @@ Or customize columns:
 
 ```js
 
-import MUIDataTable from "mui-datatables";
+import MUIDataTable from "mui-dt";
 
 const columns = [
  {
@@ -133,7 +125,7 @@ The component accepts the following props:
 |Name|Type|Default|Description
 |:--:|:-----|:--|:-----|
 |**`caseSensitive `**|boolean|false|Enable/disable case sensitivity for search
-|**`customFooter`**|function||Render a custom table footer. `function(count, page, rowsPerPage, changeRowsPerPage, changePage, `[`textLabels: object`](https://github.com/gregnb/mui-datatables/blob/master/src/textLabels.js)`) => string`&#124;` React Component` [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-footer/index.js)
+|**`customFooter`**|function||Render a custom table footer. `function(count, page, rowsPerPage, changeRowsPerPage, changePage, `[`textLabels: object`](https://github.com/patorjk/mui-dt/blob/master/src/textLabels.js)`) => string`&#124;` React Component` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-footer/index.js)
 |**`customRowRender `**|function||Override default row rendering with custom function. `customRowRender(data, dataIndex, rowIndex) => React Component`
 |**`customSearch `**|function||Override default search with custom function. `customSearch(searchQuery: string, currentRow: array, columns: array) => boolean`
 |**`customSearchRender `**|function||Render a custom table search. `customSearchRender(searchText: string, handleSearch, hideSearch, options) => React Component`
@@ -179,7 +171,7 @@ The component accepts the following props:
 |**`selectableRowsOnClick`**|boolean|false|Enable/disable select toggle when row is clicked. When False, only checkbox will trigger this action.
 |**`search`**|boolean|true|Show/hide search icon from toolbar
 |**`searchText`**|string||Initial search text
-|**`searchPlaceholder`**|string||Search text placeholder. [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-search/index.js)
+|**`searchPlaceholder`**|string||Search text placeholder. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-search/index.js)
 |**`setRowProps`**|function||Is called for each row and allows to return custom props for this row based on its data. `function(row: array, dataIndex: number) => object`
 |**`serverSide`**|boolean|false|Enable remote data source
 |**`sort`**|boolean|true|Enable/disable sort on all columns
@@ -215,15 +207,15 @@ const columns = [
 #### Column Options:
 |Name|Type|Default|Description
 |:--:|:-----|:--|:-----|
-|**`customBodyRender`**|function||Function that returns a string or React component. Used as display data within all table cells of a given column. `function(value, tableMeta, updateValue) => string`&#124;` React Component` [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/component/index.js)
+|**`customBodyRender`**|function||Function that returns a string or React component. Used as display data within all table cells of a given column. `function(value, tableMeta, updateValue) => string`&#124;` React Component` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/component/index.js)
 |**`customHeadRender`**|function||Function that returns a string or React component. Used as display for column header. `function(columnMeta, handleToggleColumn) => string`&#124;` React Component`
 |**`display`**|string|'true'|Display column in table. `enum('true', 'false', 'excluded')`
 |**`download`**|boolean|true|Display column in CSV download file
 |**`empty`**|boolean|false|This denotes whether the column has data or not (for use with intentionally empty columns)
 |**`filter`**|boolean|true|Display column in filter list
-|**`filterList`**|array||Filter value list [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/column-filters/index.js)
-|**`filterOptions`**|{names, logic, display}||With filter options, it's possible to use custom names for the filter fields [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/column-filters/index.js), custom filter logic [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-filter/index.js), and custom rendering [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-filter/index.js)
-|**`customFilterListRender`**|function||Function that returns a string used as the chip label. `function(value) => string` [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/column-filters/index.js)
+|**`filterList`**|array||Filter value list [Example](https://github.com/patorjk/mui-dt/blob/master/examples/column-filters/index.js)
+|**`filterOptions`**|{names, logic, display}||With filter options, it's possible to use custom names for the filter fields [Example](https://github.com/patorjk/mui-dt/blob/master/examples/column-filters/index.js), custom filter logic [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-filter/index.js), and custom rendering [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-filter/index.js)
+|**`customFilterListRender`**|function||Function that returns a string used as the chip label. `function(value) => string` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/column-filters/index.js)
 |**`filterType `**|string|'dropdown'|Choice of filtering view. Takes priority over global filterType option.`enum('checkbox', 'dropdown', 'multiselect', 'textField', 'custom')` Use 'custom' if you are supplying your own rendering via `filterOptions`.
 |**`hint`**|string||Display hint icon with string as tooltip on hover.
 |**`print`**|boolean|true|Display column when printing
@@ -284,7 +276,7 @@ Using Material-UI theme overrides will allow you to customize styling to your li
 
 ```js
 import React from "react";
-import MUIDataTable from "mui-datatables";
+import MUIDataTable from "mui-dt";
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 class BodyCellExample extends React.Component {
@@ -327,7 +319,7 @@ const options = {
 };
 ```
 
-To see an example **[Click Here](https://github.com/gregnb/mui-datatables/blob/master/examples/serverside-pagination/index.js)**
+To see an example **[Click Here](https://github.com/patorjk/mui-dt/blob/master/examples/serverside-pagination/index.js)**
 
 ## Localization
 
