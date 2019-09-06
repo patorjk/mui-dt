@@ -341,7 +341,7 @@ class MUIDataTable extends React.Component {
     }
     if (this.props.options.filterList) {
       console.error(
-        'Deprecated: filterList must now be provided under each column option. see https://github.com/gregnb/mui-datatables/tree/master/examples/column-filters example',
+        'Deprecated: filterList must now be provided under each column option. see https://github.com/patorjk/mui-dt/tree/master/examples/column-filters example',
       );
     }
   }
@@ -505,7 +505,7 @@ class MUIDataTable extends React.Component {
         if (Array.isArray(column.filterOptions)) {
           filterData[colIndex] = cloneDeep(column.filterOptions);
           console.error(
-            'Deprecated: filterOptions must now be an object. see https://github.com/gregnb/mui-datatables/tree/master/examples/customize-filter example',
+            'Deprecated: filterOptions must now be an object. see https://github.com/patorjk/mui-dt/tree/master/examples/customize-filter example',
           );
         } else if (Array.isArray(column.filterOptions.names)) {
           filterData[colIndex] = cloneDeep(column.filterOptions.names);

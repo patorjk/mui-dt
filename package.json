@@ -23,19 +23,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gregnb/mui-datatables.git"
+    "url": "git+https://github.com/patorjk/mui-dt.git"
   },
   "keywords": [
     "material-ui",
     "datatables",
     "react"
   ],
-  "author": "gregnb <gregnb@gmail.com>",
+  "author": "patorjk <patorjk@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gregnb/mui-datatables/issues"
+    "url": "https://github.com/patorjk/mui-dt/issues"
   },
-  "homepage": "https://github.com/gregnb/mui-datatables#readme",
+  "homepage": "https://github.com/patorjk/mui-dt#readme",
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
