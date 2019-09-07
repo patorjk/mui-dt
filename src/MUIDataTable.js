@@ -133,6 +133,7 @@ class MUIDataTable extends React.Component {
     /** Options used to describe table */
     options: PropTypes.shape({
       caseSensitive: PropTypes.bool,
+      checkboxColor: PropTypes.string,
       count: PropTypes.number,
       customFooter: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
       customSearchRender: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
@@ -290,6 +291,7 @@ class MUIDataTable extends React.Component {
 
   getDefaultOptions = () => ({
     caseSensitive: false,
+    checkboxColor: 'primary',
     disableToolbarSelect: false,
     download: true,
     downloadOptions: {

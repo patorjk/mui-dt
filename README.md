@@ -124,7 +124,8 @@ The component accepts the following props:
 #### Options:
 |Name|Type|Default|Description
 |:--:|:-----|:--|:-----|
-|**`caseSensitive `**|boolean|false|Enable/disable case sensitivity for search
+|**`caseSensitive `**|boolean|false|Enable/disable case sensitivity for search.
+|**`checkboxColor `**|string|'primary'|Color of the checkbox. Options are: 'primary', 'secondary', 'default'.
 |**`customFooter`**|function||Render a custom table footer. `function(count, page, rowsPerPage, changeRowsPerPage, changePage, `[`textLabels: object`](https://github.com/patorjk/mui-dt/blob/master/src/textLabels.js)`) => string`&#124;` React Component` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-footer/index.js)
 |**`customRowRender `**|function||Override default row rendering with custom function. `customRowRender(data, dataIndex, rowIndex) => React Component`
 |**`customSearch `**|function||Override default search with custom function. `customSearch(searchQuery: string, currentRow: array, columns: array) => boolean`
@@ -171,7 +172,7 @@ The component accepts the following props:
 |**`rowsPerPage`**|number|10|Number of rows allowed per page
 |**`rowsPerPageOptions`**|array|[10,15,100]|Options to provide in pagination for number of rows a user can select
 |**`rowsSelected`**|array||User provided selected rows
-|**`selectableRows`**|string|'multiple'|Numbers of rows that can be selected. Options are "multiple", "single", "none".
+|**`selectableRows`**|string|'multiple'|Numbers of rows that can be selected. Options are 'multiple', 'single', 'none'.
 |**`selectableRowsHeader`**|boolean|true|Show/hide the select all/deselect all checkbox header for selectable rows.
 |**`selectableRowsOnClick`**|boolean|false|Enable/disable select toggle when row is clicked. When False, only checkbox will trigger this action.
 |**`search`**|boolean|true|Show/hide search icon from toolbar

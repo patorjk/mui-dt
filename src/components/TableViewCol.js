@@ -28,12 +28,6 @@ export const defaultViewColStyles = theme => ({
     width: '32px',
     height: '32px',
   },
-  checkboxRoot: {
-    '&$checked': {
-      color: theme.palette.primary.main,
-    },
-  },
-  checked: {},
   label: {
     fontSize: '15px',
     marginLeft: '8px',
@@ -80,10 +74,7 @@ class TableViewCol extends React.Component {
                   control={
                     <Checkbox
                       className={classes.checkbox}
-                      classes={{
-                        root: classes.checkboxRoot,
-                        checked: classes.checked,
-                      }}
+                      color={options.checkboxColor}
                       onChange={this.handleColChange.bind(null, index)}
                       checked={column.display === 'true'}
                       value={column.name}

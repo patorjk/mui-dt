@@ -76,7 +76,7 @@ class TableSelectCell extends React.Component {
 
     const cellClass = classNames({
       [classes.root]: true,
-      [classes.fixedHeader]: fixedHeader,
+      [classes.fixedHeader]: fixedHeader && isHeaderCell,
       [classes.headerCell]: isHeaderCell,
     });
 
@@ -98,7 +98,7 @@ class TableSelectCell extends React.Component {
             checked: classes.checked,
             disabled: classes.disabled,
           }}
-          color="primary"
+          color={this.props.checkboxColor}
           disabled={!isRowSelectable}
           {...otherProps}
         />

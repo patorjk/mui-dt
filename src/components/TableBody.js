@@ -237,6 +237,7 @@ class TableBody extends React.Component {
                       dataIndex: dataIndex,
                     })}
                     fixedHeader={options.fixedHeader}
+                    checkboxColor={options.checkboxColor}
                     checked={this.isRowSelected(dataIndex)}
                     expandableOn={options.expandableRows}
                     selectableOn={options.selectableRows}

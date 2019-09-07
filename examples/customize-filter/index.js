@@ -140,6 +140,7 @@ class Example extends React.Component {
     ];
 
     const options = {
+      checkboxColor: 'secondary',
       filter: true,
       filterType: 'dropdown',
       responsive: 'scrollMaxHeight',

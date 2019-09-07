@@ -638,7 +638,7 @@ describe('<MUIDataTable />', function() {
     assert.strictEqual(actualResult.prop('label'), 'Name: Joe James');
   });
 
-  it('should remove entry from filterList when calling filterUpdate method with type=dropdown and same arguments a second time', () => {
+  it('should remove entry from filterList when calling filterUpdate method with type=dropdown and an empty array', () => {
     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();

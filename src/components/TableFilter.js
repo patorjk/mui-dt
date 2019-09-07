@@ -74,12 +74,6 @@ export const defaultFilterStyles = theme => ({
     width: '32px',
     height: '32px',
   },
-  checkbox: {
-    '&$checked': {
-      color: theme.palette.primary.main,
-    },
-  },
-  checked: {},
   gridListTile: {
     marginTop: '16px',
   },
@@ -124,7 +118,7 @@ class TableFilter extends React.Component {
   };
 
   renderCheckbox(column, index) {
-    const { classes, filterData, filterList } = this.props;
+    const { classes, filterData, filterList, options } = this.props;
 
     return (
       <GridListTile key={index} cols={2}>
@@ -148,10 +142,7 @@ class TableFilter extends React.Component {
                       className={classes.checkboxIcon}
                       onChange={this.handleCheckboxChange.bind(null, index, filterValue, column.name)}
                       checked={filterList[index].indexOf(filterValue) >= 0 ? true : false}
-                      classes={{
-                        root: classes.checkbox,
-                        checked: classes.checked,
-                      }}
+                      color={options.checkboxColor}
                       value={filterValue != null ? filterValue.toString() : ''}
                     />
                   }
@@ -211,7 +202,7 @@ class TableFilter extends React.Component {
   }
 
   renderMultiselect(column, index) {
-    const { classes, filterData, filterList } = this.props;
+    const { classes, filterData, filterList, options } = this.props;
 
     return (
       <GridListTile key={index} cols={1} classes={{ tile: classes.gridListTile }}>
@@ -231,10 +222,7 @@ class TableFilter extends React.Component {
                   checked={filterList[index].indexOf(filterValue) >= 0 ? true : false}
                   value={filterValue != null ? filterValue.toString() : ''}
                   className={classes.checkboxIcon}
-                  classes={{
-                    root: classes.checkbox,
-                    checked: classes.checked,
-                  }}
+                  color={options.checkboxColor}
                 />
                 <ListItemText primary={filterValue} />
               </MenuItem>
