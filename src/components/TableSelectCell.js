@@ -87,7 +87,7 @@ class TableSelectCell extends React.Component {
     });
 
     const renderCheckBox = () => {
-      if (isHeaderCell && (selectableOn !== 'multiple' || !selectableRowsHeader)) {
+      if (isHeaderCell && (selectableOn !== 'multiple' || selectableRowsHeader === false)) {
         // only display the header checkbox for multiple selection.
         return null;
       }

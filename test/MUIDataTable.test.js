@@ -501,7 +501,7 @@ describe('<MUIDataTable />', function() {
       rowsPerPageOptions: [],
     };
 
-     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} options={options} />);
+    const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} options={options} />);
     const state = shallowWrapper.dive().state();
     assert.deepEqual(state.rowsPerPageOptions, []);
   });
@@ -571,7 +571,7 @@ describe('<MUIDataTable />', function() {
     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
-    instance.filterUpdate(0, 'Joe James', 'Name', 'dropdown');
+    instance.filterUpdate(0, ['Joe James'], 'Name', 'dropdown');
     table.update();
 
     const state = table.state();
@@ -642,13 +642,13 @@ describe('<MUIDataTable />', function() {
     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
-    instance.filterUpdate(0, 'Joe James', 'Name', 'dropdown');
+    instance.filterUpdate(0, ['Joe James'], 'Name', 'dropdown');
     table.update();
 
     let state = table.state();
     assert.deepEqual(state.filterList, [['Joe James'], [], [], [], []]);
 
-    instance.filterUpdate(0, 'Joe James', 'Name', 'dropdown');
+    instance.filterUpdate(0, [], 'Name', 'dropdown');
     table.update();
 
     state = table.state();
@@ -689,7 +689,7 @@ describe('<MUIDataTable />', function() {
     assert.strictEqual(changedColumn, 'Name');
 
     // test dropdown filter
-    instance.filterUpdate(0, 'Test Corp', 'Company', 'dropdown');
+    instance.filterUpdate(0, ['Test Corp'], 'Company', 'dropdown');
     table.update();
     assert.strictEqual(changedColumn, 'Company');
 
@@ -699,7 +699,7 @@ describe('<MUIDataTable />', function() {
     assert.strictEqual(changedColumn, 'Name');
 
     // test multiselect filter
-    instance.filterUpdate(0, 'Test Corp', 'Company', 'multiselect');
+    instance.filterUpdate(0, ['Test Corp'], 'Company', 'multiselect');
     table.update();
     assert.strictEqual(changedColumn, 'Company');
 
@@ -761,18 +761,18 @@ describe('<MUIDataTable />', function() {
     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />).dive();
     const instance = shallowWrapper.instance();
 
-     instance.toggleSortColumn(4);
+    instance.toggleSortColumn(4);
     shallowWrapper.update();
     const state = shallowWrapper.state();
 
-     const expectedResult = JSON.stringify([
+    const expectedResult = JSON.stringify([
       { data: ['James, Joe', 'Test Corp', renderCities('Yonkers', { rowIndex: 0 }), 'NY', undefined], dataIndex: 0 },
       { data: ['Walsh, John', 'Test Corp', renderCities('Hartford', { rowIndex: 1 }), null, undefined], dataIndex: 1 },
       { data: ['Herm, Bob', 'Test Corp', renderCities('Tampa', { rowIndex: 2 }), 'FL', undefined], dataIndex: 2 },
       { data: ['Houston, James', 'Test Corp', renderCities('Dallas', { rowIndex: 3 }), 'TX', undefined], dataIndex: 3 },
     ]);
 
-     assert.deepEqual(JSON.stringify(state.displayData), expectedResult);
+    assert.deepEqual(JSON.stringify(state.displayData), expectedResult);
   });
 
   it('should sort provided column in ascending order when calling toggleSortColum method twice', () => {
@@ -1045,27 +1045,31 @@ describe('<MUIDataTable />', function() {
   it('should call onRowsExpand when row is expanded or collapsed', () => {
     const options = {
       expandableRows: true,
-      renderExpandableRow: () => <tr><td>foo</td></tr>,
+      renderExpandableRow: () => (
+        <tr>
+          <td>foo</td>
+        </tr>
+      ),
       expandableRowsOnClick: true,
-      onRowsExpand: spy()
+      onRowsExpand: spy(),
     };
     const mountWrapper = mount(<MUIDataTable columns={columns} data={data} options={options} />);
 
-     mountWrapper
+    mountWrapper
       .find('#MUIDataTableBodyRow-2')
       .first()
       .simulate('click');
 
-     assert.strictEqual(options.onRowsExpand.callCount, 1);
+    assert.strictEqual(options.onRowsExpand.callCount, 1);
     assert(options.onRowsExpand.calledWith([{ index: 2, dataIndex: 2 }], [{ index: 2, dataIndex: 2 }]));
 
-     mountWrapper
+    mountWrapper
       .find('#MUIDataTableBodyRow-2')
       .first()
       .simulate('click');
 
-     assert.strictEqual(options.onRowsExpand.callCount, 2);
-     assert(options.onRowsExpand.calledWith([{ index: 2, dataIndex: 2 }], []));
+    assert.strictEqual(options.onRowsExpand.callCount, 2);
+    assert(options.onRowsExpand.calledWith([{ index: 2, dataIndex: 2 }], []));
   });
 
   it('should update selectedRows when using rowsSelected option with type=multiple', () => {
@@ -1269,7 +1273,7 @@ describe('<MUIDataTable />', function() {
     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} options={options} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
-    instance.filterUpdate(0, 'Joe James', 'Name', 'dropdown');
+    instance.filterUpdate(0, ['Joe James'], 'Name', 'dropdown');
     table.update();
     const state = table.state();
 
@@ -1391,7 +1395,7 @@ describe('<MUIDataTable />', function() {
       const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} options={options} />);
       const table = shallowWrapper.dive();
       const instance = table.instance();
-      instance.filterUpdate(1, 'b', 'Name', 'dropdown');
+      instance.filterUpdate(1, ['b'], 'Name', 'dropdown');
       table.update();
       const { displayData } = table.state();
 
@@ -1439,7 +1443,7 @@ describe('<MUIDataTable />', function() {
       const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} options={options} />);
       const table = shallowWrapper.dive();
       const instance = table.instance();
-      instance.filterUpdate(1, 'b', 'Name', 'dropdown');
+      instance.filterUpdate(1, ['b'], 'Name', 'dropdown');
       table.update();
       const { displayData } = table.state();
 

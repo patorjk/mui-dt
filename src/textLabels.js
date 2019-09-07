@@ -4,9 +4,9 @@
 const textLabels = {
   body: {
     noMatch: 'Sorry, no matching records found',
-    columnHeaderTooltip: (label) => {
+    columnHeaderTooltip: label => {
       return 'Sort by ' + label;
-    }
+    },
   },
   pagination: {
     next: 'Next Page',

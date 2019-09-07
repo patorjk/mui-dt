@@ -6,7 +6,7 @@
 
 MUI-DT is a data tables component built on [Material-UI](https://www.material-ui.com).  It comes with features like filtering, resizable + view/hide columns, search, export to CSV download, printing, selectable rows, expandable rows, pagination, and sorting. On top of the ability to customize styling on most views, there are three responsive modes "stacked", "scrollMaxHeight", and "scrollFullHeight" for mobile/tablet devices.
 
-This library is currently a work in progress and acts as a drop-in replacement for mui-datatables (it's being developed for my own needs but others are welcome to use it). I will keep this readme current as I add features and progress towards version 1.
+This library is a drop-in replacement for mui-datatables with additional features (it's being developed for my own needs but others are welcome to use it). I will keep this readme current as I add features and progress towards version 1.
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/19170080/38026128-eac9d506-3258-11e8-92a7-b0d06e5faa82.gif" />

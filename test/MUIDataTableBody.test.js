@@ -275,13 +275,17 @@ describe('<TableBody />', function() {
     let expandedRowData;
     const options = {
       expandableRows: true,
-      renderExpandableRow: () => <tr><td>foo</td></tr>,
+      renderExpandableRow: () => (
+        <tr>
+          <td>foo</td>
+        </tr>
+      ),
       expandableRowsOnClick: true,
-      isRowExpandable: dataIndex => dataIndex === 2 ? false : true,
+      isRowExpandable: dataIndex => (dataIndex === 2 ? false : true),
     };
-    const toggleExpandRow = spy((_, data) => expandedRowData = data);
+    const toggleExpandRow = spy((_, data) => (expandedRowData = data));
 
-     const mountWrapper = mount(
+    const mountWrapper = mount(
       <TableBody
         data={displayData}
         count={displayData.length}
@@ -297,12 +301,12 @@ describe('<TableBody />', function() {
       />,
     );
 
-     mountWrapper
+    mountWrapper
       .find('#MUIDataTableBodyRow-2')
       .first()
       .simulate('click');
 
-     assert.isUndefined(expandedRowData);
+    assert.isUndefined(expandedRowData);
     assert.strictEqual(toggleExpandRow.callCount, 0);
   });
 
@@ -386,13 +390,17 @@ describe('<TableBody />', function() {
     let expandedRowData;
     const options = {
       expandableRows: true,
-      renderExpandableRow: () => <tr><td>foo</td></tr>,
+      renderExpandableRow: () => (
+        <tr>
+          <td>foo</td>
+        </tr>
+      ),
       expandableRowsOnClick: true,
-      isRowExpandable: dataIndex => dataIndex === 2 ? true : false,
+      isRowExpandable: dataIndex => (dataIndex === 2 ? true : false),
     };
-    const toggleExpandRow = spy(data => expandedRowData = data);
+    const toggleExpandRow = spy(data => (expandedRowData = data));
 
-     const mountWrapper = mount(
+    const mountWrapper = mount(
       <TableBody
         data={displayData}
         count={displayData.length}
@@ -408,12 +416,12 @@ describe('<TableBody />', function() {
       />,
     );
 
-     mountWrapper
+    mountWrapper
       .find('#MUIDataTableBodyRow-2')
       .first()
       .simulate('click');
 
-     assert.isDefined(expandedRowData);
+    assert.isDefined(expandedRowData);
     assert.strictEqual(toggleExpandRow.callCount, 1);
   });
 

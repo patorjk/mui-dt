@@ -24,7 +24,7 @@ class Example extends React.Component {
         name: 'Location',
         options: {
           print: false,
-          filter: false,
+          filter: true,
         },
       },
       {
@@ -107,6 +107,7 @@ class Example extends React.Component {
 
     const data = [
       ['Gabby George', 'Business Analyst', 'Minneapolis', 30, '$100,000'],
+      ['Nowhere Man', 'Business Analyst', '', 30, '$100,000'],
       ['Aiden Lloyd', 'Business Consultant', 'Dallas', 55, '$200,000'],
       ['Jaden Collins', 'Attorney', 'Santa Ana', 27, '$500,000'],
       ['Franky Rees', 'Business Analyst', 'St. Petersburg', 22, '$50,000'],

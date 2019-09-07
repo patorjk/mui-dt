@@ -251,12 +251,12 @@ class MUIDataTable extends React.Component {
         this.setTableAction('propsUpdate');
       });
     }
-    
+
     if (this.props.options.searchText !== prevProps.options.searchText && !this.props.options.serverSide) {
       // When we have a search, we must reset page to view it unless on serverSide since paging is handled by the user.
       this.setState({ page: 0 });
-    } 
-    
+    }
+
     // TODO: page is described as the "starting" page. Should this prop be
     // rename? It's confusing. The below code would make it so options.page
     // controls the current page
@@ -311,7 +311,7 @@ class MUIDataTable extends React.Component {
     searchProps: {},
     selectableRows: 'multiple',
     selectableRowsHeader: true,
-    selectableRowsOnClick: false,    
+    selectableRowsOnClick: false,
     serverSide: false,
     sort: true,
     sortFilterList: true,
@@ -329,7 +329,9 @@ class MUIDataTable extends React.Component {
       this.options.selectableRows = props.options.selectableRows ? 'multiple' : 'none';
     }
     if (typeof props.options.searchPlaceholder === 'string' && props.options.searchPlaceholder) {
-      console.warn('options.searchPlaceholder is superfluous. Please use options.searchProps.placeholder to set the placeholder text.');
+      console.warn(
+        'options.searchPlaceholder is superfluous. Please use options.searchProps.placeholder to set the placeholder text.',
+      );
     }
     if (['scrollMaxHeight', 'scrollFullHeight', 'stacked'].indexOf(props.options.responsive) === -1) {
       console.error(
@@ -478,7 +480,7 @@ class MUIDataTable extends React.Component {
         })
       : data.map(row => {
           let ret = columns.map(col => leaf(row, col.name));
-          ret.originalObjectData = row;
+          //ret.originalObjectData = row;
           return ret;
         });
   };
@@ -988,6 +990,9 @@ class MUIDataTable extends React.Component {
           case 'multiselect':
           case 'dropdown':
           case 'custom':
+            if (!Array.isArray(value)) {
+              console.warn('filterUpdate: Invalid value for filter.');
+            }
             filterList[index] = value;
             break;
           default:
@@ -1062,7 +1067,7 @@ class MUIDataTable extends React.Component {
       }
     }
     let curExpandedRows = removedRow ? removedRow : [row];
-    
+
     this.setState(
       {
         expandedRows: {
@@ -1073,7 +1078,6 @@ class MUIDataTable extends React.Component {
       () => {
         this.setTableAction('expandRow');
         if (this.options.onRowsExpand) {
-          console.log(curExpandedRows, this.state.expandedRows.data);
           this.options.onRowsExpand(curExpandedRows, this.state.expandedRows.data);
         }
       },
@@ -1108,15 +1112,15 @@ class MUIDataTable extends React.Component {
           // if the select toolbar is disabled, the rules are a little different
           if (this.options.disableToolbarSelect === true) {
             if (selectedRowsLen > displayData.length) {
-               isDeselect = true;
-             } else {
+              isDeselect = true;
+            } else {
               for (let ii = 0; ii < displayData.length; ii++) {
                 if (!selectedMap[displayData[ii].dataIndex]) {
-                   isDeselect = true;
-                 }
-               }
-             }
-           }
+                  isDeselect = true;
+                }
+              }
+            }
+          }
 
           if (isDeselect) {
             newRows = prevState.selectedRows.data.filter(({ dataIndex }) => !selectedMap[dataIndex]);
@@ -1300,7 +1304,7 @@ class MUIDataTable extends React.Component {
         elevation={this.options.elevation}
         ref={this.tableContent}
         className={classnames(classes.paper, className)}>
-        {(selectedRows.data.length && this.options.disableToolbarSelect !== true) ? (
+        {selectedRows.data.length && this.options.disableToolbarSelect !== true ? (
           <TableToolbarSelect
             options={this.options}
             selectedRows={selectedRows}
@@ -1345,12 +1349,12 @@ class MUIDataTable extends React.Component {
               setResizeable={fn => (this.setHeadResizeable = fn)}
             />
           )}
-          <MuiTable 
-          ref={el => (this.tableRef = el)} 
-          tabIndex={'0'} 
-          role={'grid'} 
-          className={tableClassNames}
-          {...tableProps}>
+          <MuiTable
+            ref={el => (this.tableRef = el)}
+            tabIndex={'0'}
+            role={'grid'}
+            className={tableClassNames}
+            {...tableProps}>
             <caption className={classes.caption}>{title}</caption>
             <TableHead
               columns={columns}
