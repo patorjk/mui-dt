@@ -8,9 +8,11 @@
 [![Coverage Status](https://coveralls.io/repos/github/patorjk/mui-dt/badge.svg?branch=master)](https://coveralls.io/github/patorjk/mui-dt?branch=master)
 [![npm version](https://badge.fury.io/js/mui-dt.svg)](https://badge.fury.io/js/mui-dt)
 
-MUI-DT is a data tables component built on [Material-UI](https://www.material-ui.com).  It comes with features like filtering, resizable + view/hide columns, search, export to CSV download, printing, selectable rows, expandable rows, pagination, and sorting. On top of the ability to customize styling on most views, there are three responsive modes "stacked", "scrollMaxHeight", and "scrollFullHeight" for mobile/tablet devices.
+MUI-DT is a data tables component built on [Material-UI](https://www.material-ui.com).  It comes with features like responsive design, filtering, resizable + view/hide columns, search, export to CSV download, printing, selectable rows, expandable rows, pagination, and sorting. On top of the ability to customize styling on most views, there are three responsive modes "stacked", "scrollMaxHeight", and "scrollFullHeight" for mobile/tablet devices.
 
-This library is a drop-in replacement for mui-datatables with additional features (it's being developed for my own needs but others are welcome to use it). I will keep this readme current as I add features and progress towards version 1.
+You can try the table out live in a CodeSandbox here: https://codesandbox.io/s/github/patorjk/mui-dt
+
+This library was created as a drop-in replacement for mui-datatables with additional features (it's being developed for my own needs but others are welcome to use it). 
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/19170080/38026128-eac9d506-3258-11e8-92a7-b0d06e5faa82.gif" />
