@@ -4,7 +4,7 @@
 
 # MUI-DT - Datatables for Material-UI
 
-[![Build Status](https://travis-ci.org/gregnb/mui-datatables.svg?branch=master)](https://travis-ci.org/patorjk/mui-dt)
+[![Build Status](https://travis-ci.org/patorjk/mui-dt.svg?branch=master)](https://travis-ci.org/patorjk/mui-dt)
 [![Coverage Status](https://coveralls.io/repos/github/patorjk/mui-dt/badge.svg?branch=master)](https://coveralls.io/github/patorjk/mui-dt?branch=master)
 [![npm version](https://badge.fury.io/js/mui-dt.svg)](https://badge.fury.io/js/mui-dt)
 
@@ -184,12 +184,12 @@ The component accepts the following props:
 |**`search`**|boolean|true|Show/hide search icon from toolbar.
 |**`searchText`**|string||Initial search text.
 |**`searchProps`**|object|{}|Props applied to the search text box. You can set the placeholder text this way as well as add method callbacks like onBlur, onKeyUp, etc. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-search/index.js)
-|**`setRowProps`**|function||Is called for each row and allows you to return custom props for this row based on its data. `function(row: array, dataIndex: number) => object` [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-styling/index.js)
+|**`setRowProps`**|function||Is called for each row and allows you to return custom props for this row based on its data. `function(row: array, dataIndex: number) => object` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-styling/index.js)
 |**`serverSide`**|boolean|false|Enable remote data source. When setting this option to true, the developer is responsible for the filtering, sorting, etc, of the data and for updating the options and columns inputs to the table (ex: sortDirection on a sorted column would need to be updated). [Example](https://github.com/patorjk/mui-dt/blob/master/examples/serverside-pagination/index.js)
 |**`showSearch`**|boolean|false|Shows the search bar when the table toolbar rendered. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-search/index.js)
 |**`sort`**|boolean|true|Enable/disable sort on all columns.
 |**`sortFilterList`**|boolean|true|Enable/disable alphanumeric sorting of filter lists.
-|**`tableProps`**|object|{}|Props applied to the table. You can set the table up to be a "dense" table this way. [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-styling/index.js)
+|**`tableProps`**|object|{}|Props applied to the table. You can set the table up to be a "dense" table this way. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-styling/index.js)
 |**`textLabels `**|object||User provided labels to localize text
 |**`viewColumns`**|boolean|true|Show/hide viewColumns icon from toolbar.
 
@@ -234,8 +234,8 @@ const columns = [
 |**`hint`**|string||Display hint icon with string as tooltip on hover.
 |**`print`**|boolean|true|Display column when printing.
 |**`searchable`**|boolean|true|Exclude/include column from search results.
-|**`setCellProps`**|function||Is called for each cell and allows to you return custom props for this cell based on its data. `function(cellValue: string, rowIndex: number, columnIndex: number) => object` [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-styling/index.js)
-|**`setCellHeaderProps`**|function||Is called for each header cell and allows you to return custom props for the header cell based on its data. `function(columnMeta: object) => object` [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-styling/index.js)
+|**`setCellProps`**|function||Is called for each cell and allows to you return custom props for this cell based on its data. `function(cellValue: string, rowIndex: number, columnIndex: number) => object` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-styling/index.js)
+|**`setCellHeaderProps`**|function||Is called for each header cell and allows you to return custom props for the header cell based on its data. `function(columnMeta: object) => object` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-styling/index.js)
 |**`sort`**|boolean|true|Enable/disable sorting on column.
 |**`sortDirection`**|string||Set default sort order. `enum('asc', 'desc', 'none')`
 |**`viewColumns`**|boolean|true|Allow user to toggle column visibility through 'View Column' list.
