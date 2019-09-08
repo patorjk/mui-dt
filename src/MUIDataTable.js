@@ -973,7 +973,7 @@ class MUIDataTable extends React.Component {
       () => {
         this.setTableAction('resetFilters');
         if (this.options.onFilterChange) {
-          this.options.onFilterChange(null, this.state.filterList);
+          this.options.onFilterChange(null, this.state.filterList, null);
         }
       },
     );
@@ -1013,7 +1013,7 @@ class MUIDataTable extends React.Component {
       () => {
         this.setTableAction('filterChange');
         if (this.options.onFilterChange) {
-          this.options.onFilterChange(column, this.state.filterList);
+          this.options.onFilterChange(column, this.state.filterList, index);
         }
       },
     );
@@ -1080,7 +1080,11 @@ class MUIDataTable extends React.Component {
       () => {
         this.setTableAction('expandRow');
         if (this.options.onRowsExpand) {
-          this.options.onRowsExpand(curExpandedRows, this.state.expandedRows.data);
+          this.options.onRowsExpand(
+            curExpandedRows,
+            this.state.expandedRows.data,
+            this.state.expandedRows.data.map(item => item.dataIndex),
+          );
         }
       },
     );
@@ -1141,7 +1145,11 @@ class MUIDataTable extends React.Component {
         () => {
           this.setTableAction('rowsSelect');
           if (this.options.onRowsSelect) {
-            this.options.onRowsSelect(this.state.curSelectedRows, this.state.selectedRows.data);
+            this.options.onRowsSelect(
+              this.state.curSelectedRows,
+              this.state.selectedRows.data,
+              this.state.selectedRows.data.map(item => item.dataIndex),
+            );
           }
         },
       );
@@ -1199,7 +1207,11 @@ class MUIDataTable extends React.Component {
         () => {
           this.setTableAction('rowsSelect');
           if (this.options.onRowsSelect) {
-            this.options.onRowsSelect([value], this.state.selectedRows.data);
+            this.options.onRowsSelect(
+              [value],
+              this.state.selectedRows.data,
+              this.state.selectedRows.data.map(item => item.dataIndex),
+            );
           }
         },
       );
@@ -1217,7 +1229,11 @@ class MUIDataTable extends React.Component {
         () => {
           this.setTableAction('rowsSelect');
           if (this.options.onRowsSelect) {
-            this.options.onRowsSelect(this.state.selectedRows.data, this.state.selectedRows.data);
+            this.options.onRowsSelect(
+              this.state.selectedRows.data,
+              this.state.selectedRows.data,
+              this.state.selectedRows.data.map(item => item.dataIndex),
+            );
           }
         },
       );

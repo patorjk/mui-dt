@@ -144,6 +144,12 @@ class Example extends React.Component {
       filter: true,
       filterType: 'dropdown',
       responsive: 'scrollMaxHeight',
+      onFilterChange: (name, filterList, index) => {
+        console.log('onFilterChange callback');
+        console.log('Col Name:'+name);
+        console.log('Col Index:'+index);
+        console.log(filterList);
+      }
     };
 
     return (

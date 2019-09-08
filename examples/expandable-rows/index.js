@@ -88,6 +88,12 @@ class Example extends React.Component {
         return true;
       },
       rowsExpanded: [0, 1],
+      onRowsExpand: (rowExpanded, allRowsExpanded, rowsExpanded) => {
+        console.log('onRowsExpand');
+        console.dir(rowExpanded);
+        console.dir(allRowsExpanded);
+        console.dir(rowsExpanded);
+      },
       renderExpandableRow: (rowData, rowMeta) => {
         const colSpan = rowData.length + 1;
         return (
@@ -98,7 +104,6 @@ class Example extends React.Component {
           </TableRow>
         );
       },
-      onRowsExpand: (curExpanded, allExpanded) => console.log(curExpanded, allExpanded)
     };
 
     return (

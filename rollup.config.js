@@ -27,7 +27,7 @@ export default {
         ],
       ],
       plugins: [
-        '@babel/plugin-external-helpers',
+        //'@babel/plugin-external-helpers',
         '@babel/plugin-proposal-object-rest-spread',
         '@babel/plugin-proposal-class-properties',
         'transform-react-remove-prop-types',
@@ -54,6 +54,6 @@ export default {
     file: 'dist/index.js',
     format: 'cjs',
     exports: 'named',
+    sourcemap: true,
   },
-  sourcemap: true,
 };

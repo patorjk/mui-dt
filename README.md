@@ -28,7 +28,7 @@ For a simple table:
 
 ```js
 
-import MUIDataTable from "mui-dt";
+import MuiDt from "mui-dt";
 
 const columns = ["Name", "Company", "City", "State"];
 
@@ -43,7 +43,7 @@ const options = {
   filterType: 'checkbox',
 };
 
-<MUIDataTable
+<MuiDt
   title={"Employee List"}
   data={data}
   columns={columns}
@@ -56,7 +56,7 @@ Or customize columns:
 
 ```js
 
-import MUIDataTable from "mui-dt";
+import MuiDt from "mui-dt";
 
 const columns = [
  {
@@ -104,7 +104,7 @@ const options = {
   filterType: 'checkbox',
 };
 
-<MUIDataTable
+<MuiDt
   title={"Employee List"}
   data={data}
   columns={columns}
@@ -116,7 +116,7 @@ const options = {
 ## API
 
 
-#### &lt;MUIDataTable />
+#### &lt;MUIDT />
 
 The component accepts the following props:
 
@@ -137,18 +137,18 @@ The component accepts the following props:
 |**`customSearch `**|function||Override default search with custom function. `customSearch(searchQuery: string, currentRow: array, columns: array) => boolean`
 |**`customSearchRender `**|function||Render a custom table search. `customSearchRender(searchText: string, handleSearch, hideSearch, options) => React Component`
 |**`customSort`**|function||Override default sorting with custom function. `function(data: array, colIndex: number, order: string) => array`
-|**`customToolbar`**|function||Render a custom toolbar
+|**`customToolbar`**|function||Render a custom toolbar.
 |**`customToolbarSelect`**|function||Render a custom selected rows toolbar. `function(selectedRows, displayData, setSelectedRows) => void`
-|**`count`**|number||User provided override for total number of rows
+|**`count`**|number||User provided override for total number of rows.
 |**`disableToolbarSelect`**|boolean|false|Enable/disable the Select Toolbar that appears when a row is selected.
-|**`download`**|boolean|true|Show/hide download icon from toolbar
+|**`download`**|boolean|true|Show/hide download icon from toolbar.
 |**`downloadOptions`**|object|`{filename: 'tableDownload.csv', separator: ','}`|Options to change the output of the CSV file: `filename`: string, `separator`: string, `filterOptions`: object(`useDisplayedColumnsOnly`: boolean, `useDisplayedRowsOnly`: boolean)
-|**`elevation`**|number|4|Shadow depth applied to Paper component
-|**`expandableRows`**|boolean|false|Enable/disable expandable rows
+|**`elevation`**|number|4|Shadow depth applied to Paper component.
+|**`expandableRows`**|boolean|false|Enable/disable expandable rows.
 |**`expandableRowsOnClick`**|boolean|false|Enable/disable expand trigger when row is clicked. When False, only expand icon will trigger this action.
-|**`filter`**|boolean|true|Show/hide filter icon from toolbar
+|**`filter`**|boolean|true|Show/hide filter icon from toolbar.
 |**`filterType `**|string||Choice of filtering view. `enum('checkbox', 'dropdown', 'multiselect', 'textField')`
-|**`fixedHeader`**|boolean|true|Enable/disable fixed header columns
+|**`fixedHeader`**|boolean|true|Enable/disable fixed header columns.
 |**`isRowExpandable`**|function||Enable/disable expansion or collapse on certain expandable rows with custom function. Will be considered true if not provided. `function(dataIndex: number, expandedRows: object(lookup: {dataIndex: number}, data: arrayOfObjects: {index: number, dataIndex: number})) => bool`.
 |**`isRowSelectable`**|function||Enable/disable selection on certain rows with custom function. Returns true if not provided. `function(dataIndex: number, selectedRows: object(lookup: {[dataIndex]: boolean}, data: arrayOfObjects: {index: number, dataIndex: number})) => boolean`.
 |**`onCellClick`**|function||Callback function that triggers when a cell is clicked. `function(colData: any, cellMeta: { colIndex: number, rowIndex: number, dataIndex: number }) => void`
@@ -157,40 +157,41 @@ The component accepts the following props:
 |**`onColumnSortChange`**|function||Callback function that triggers when a column has been sorted. `function(changedColumn: string, direction: string) => void`
 |**`onColumnViewChange`**|function||Callback function that triggers when a column view has been changed. `function(changedColumn: string, action: string) => void`
 |**`onDownload`**|function||A callback function that triggers when the user downloads the CSV file. In the callback, you can control what is written to the CSV file. `function(buildHead: (columns) => string, buildBody: (data) => string, columns, data) => string`. Return `false` to cancel download of file.
-|**`onFilterChange`**|function||Callback function that triggers when filters have changed. `function(changedColumn: string, filterList: array) => void`
+|**`onFilterChange`**|function||Callback function that triggers when filters have changed. `function(changedColumnName: string, filterList: array, changedColumnIndex: number) => void`
 |**`onRowClick`**|function||Callback function that triggers when a row is clicked. `function(rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => void`
 |**`onRowsDelete`**|function||Callback function that triggers when row(s) are deleted. `function(rowsDeleted: object(lookup: {[dataIndex]: boolean}, data: arrayOfObjects: {index: number, dataIndex: number})) => void OR false` (Returning `false` prevents row deletion.)
-|**`onRowsExpand`**|function||Callback function that triggers when a row is expanded or collapsed. `function(affectedRows: array, allRowsExpanded: array) => void`
-|**`onRowsSelect`**|function||Callback function that triggers when row(s) are selected. `function(currentRowsSelected: array, allRowsSelected: array) => void`
+|**`onRowsExpand`**|function||Callback function that triggers when a row is expanded or collapsed. The rowsExpanded parameter can be used to save off the value for options.rowsExpanded for state changes. `function(affectedRows: array, allRowsExpanded: array, rowsExpanded: array) => void` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/expandable-rows/index.js)
+|**`onRowsSelect`**|function||Callback function that triggers when row(s) are selected. If setting state, the rowsSelected parameter can be used to set options.rowsSelected. `function(newRowsSelected: array, allRowsSelected: array, rowsSelected: rowsSelected) => void` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/selectable-rows/index.js)
 |**`onSearchChange`**|function||Callback function that triggers when the search text value has changed. `function(searchText: string) => void`
 |**`onSearchClose`**|function||Callback function that triggers when the searchbox closes. `function() => void`
 |**`onSearchOpen`**|function||Callback function that triggers when the searchbox opens. `function() => void`
 |**`onTableChange`**|function||Callback function that triggers when table state has changed. `function(action: string, tableState: object) => void`
 |**`onTableInit`**|function||Callback function that triggers when table state has been initialized. `function(action: string, tableState: object) => void`
-|**`page`**|number||User provided starting page for pagination
-|**`pagination`**|boolean|true|Enable/disable pagination
-|**`print`**|boolean|true|Show/hide print icon from toolbar
+|**`page`**|number||User provided starting page for pagination.
+|**`pagination`**|boolean|true|Enable/disable pagination.
+|**`print`**|boolean|true|Show/hide print icon from toolbar.
 |**`renderExpandableRow`**|function||Render expandable row. `function(rowData, rowMeta) => React Component`
-|**`resizableColumns`**|boolean|false|Enable/disable resizable columns
-|**`responsive`**|string|'stacked'|Enable/disable responsive table views. Options: 'stacked', 'scrollMaxHeight' (limits height of table), 'scrollFullHeight' (table takes on as much height as needed to display all rows set in rowsPerPage)
-|**`rowHover`**|boolean|true|Enable/disable hover style over rows
-|**`rowsExpanded`**|array||User provided expanded rows
-|**`rowsPerPage`**|number|10|Number of rows allowed per page
-|**`rowsPerPageOptions`**|array|[10,15,100]|Options to provide in pagination for number of rows a user can select
-|**`rowsSelected`**|array||User provided selected rows
+|**`resizableColumns`**|boolean|false|Enable/disable resizable columns.
+|**`responsive`**|string|'stacked'|Enable/disable responsive table views. Options: 'stacked', 'scrollMaxHeight' (limits height of table), 'scrollFullHeight' (table takes on as much height as needed to display all rows set in rowsPerPage).
+|**`rowHover`**|boolean|true|Enable/disable hover style over rows.
+|**`rowsExpanded`**|array||User provided expanded rows.
+|**`rowsPerPage`**|number|10|Number of rows allowed per page.
+|**`rowsPerPageOptions`**|array|[10,15,100]|Options to provide in pagination for number of rows a user can select.
+|**`rowsSelected`**|array||User provided selected rows.
 |**`selectableRows`**|string|'multiple'|Numbers of rows that can be selected. Options are 'multiple', 'single', 'none'.
 |**`selectableRowsHeader`**|boolean|true|Show/hide the select all/deselect all checkbox header for selectable rows.
 |**`selectableRowsOnClick`**|boolean|false|Enable/disable select toggle when row is clicked. When False, only checkbox will trigger this action.
-|**`search`**|boolean|true|Show/hide search icon from toolbar
-|**`searchText`**|string||Initial search text
+|**`search`**|boolean|true|Show/hide search icon from toolbar.
+|**`searchText`**|string||Initial search text.
 |**`searchProps`**|object|{}|Props applied to the search text box. You can set the placeholder text this way as well as add method callbacks like onBlur, onKeyUp, etc. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-search/index.js)
 |**`setRowProps`**|function||Is called for each row and allows you to return custom props for this row based on its data. `function(row: array, dataIndex: number) => object` [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-styling/index.js)
 |**`serverSide`**|boolean|false|Enable remote data source. When setting this option to true, the developer is responsible for the filtering, sorting, etc, of the data and for updating the options and columns inputs to the table (ex: sortDirection on a sorted column would need to be updated). [Example](https://github.com/patorjk/mui-dt/blob/master/examples/serverside-pagination/index.js)
-|**`sort`**|boolean|true|Enable/disable sort on all columns
-|**`sortFilterList`**|boolean|true|Enable/disable alphanumeric sorting of filter lists
+|**`showSearch`**|boolean|false|Shows the search bar when the table toolbar rendered. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-search/index.js)
+|**`sort`**|boolean|true|Enable/disable sort on all columns.
+|**`sortFilterList`**|boolean|true|Enable/disable alphanumeric sorting of filter lists.
 |**`tableProps`**|object|{}|Props applied to the table. You can set the table up to be a "dense" table this way. [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-styling/index.js)
 |**`textLabels `**|object||User provided labels to localize text
-|**`viewColumns`**|boolean|true|Show/hide viewColumns icon from toolbar
+|**`viewColumns`**|boolean|true|Show/hide viewColumns icon from toolbar.
 
 ## Customize Columns
 
@@ -223,21 +224,21 @@ const columns = [
 |**`customBodyRender`**|function||Function that returns a string or React component. Used as display data within all table cells of a given column. `function(value, tableMeta, updateValue) => string`&#124;` React Component` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/component/index.js)
 |**`customHeadRender`**|function||Function that returns a string or React component. Used as display for column header. `function(columnMeta, handleToggleColumn) => string`&#124;` React Component`
 |**`display`**|string|'true'|Display column in table. `enum('true', 'false', 'excluded')`
-|**`download`**|boolean|true|Display column in CSV download file
-|**`empty`**|boolean|false|This denotes whether the column has data or not (for use with intentionally empty columns)
-|**`filter`**|boolean|true|Display column in filter list
-|**`filterList`**|array||Filter value list [Example](https://github.com/patorjk/mui-dt/blob/master/examples/column-filters/index.js)
-|**`filterOptions`**|{names, logic, display}||With filter options, it's possible to use custom names for the filter fields [Example](https://github.com/patorjk/mui-dt/blob/master/examples/column-filters/index.js), custom filter logic [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-filter/index.js), and custom rendering [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-filter/index.js)
+|**`download`**|boolean|true|Display column in CSV download file.
+|**`empty`**|boolean|false|This denotes whether the column has data or not (for use with intentionally empty columns).
+|**`filter`**|boolean|true|Display column in filter list.
+|**`filterList`**|array||Filter value list. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/column-filters/index.js)
+|**`filterOptions`**|{names, logic, display}||With filter options, it's possible to use custom names for the filter fields. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/column-filters/index.js), custom filter logic [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-filter/index.js), and custom rendering. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-filter/index.js)
 |**`customFilterListRender`**|function||Function that returns a string used as the chip label. `function(value) => string` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/column-filters/index.js)
 |**`filterType `**|string|'dropdown'|Choice of filtering view. Takes priority over global filterType option.`enum('checkbox', 'dropdown', 'multiselect', 'textField', 'custom')` Use 'custom' if you are supplying your own rendering via `filterOptions`.
 |**`hint`**|string||Display hint icon with string as tooltip on hover.
-|**`print`**|boolean|true|Display column when printing
-|**`searchable`**|boolean|true|Exclude/include column from search results
+|**`print`**|boolean|true|Display column when printing.
+|**`searchable`**|boolean|true|Exclude/include column from search results.
 |**`setCellProps`**|function||Is called for each cell and allows to you return custom props for this cell based on its data. `function(cellValue: string, rowIndex: number, columnIndex: number) => object` [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-styling/index.js)
 |**`setCellHeaderProps`**|function||Is called for each header cell and allows you to return custom props for the header cell based on its data. `function(columnMeta: object) => object` [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/customize-styling/index.js)
-|**`sort`**|boolean|true|Enable/disable sorting on column
-|**`sortDirection`**|string||Set default sort order `enum('asc', 'desc', 'none')`
-|**`viewColumns`**|boolean|true|Allow user to toggle column visibility through 'View Column' list
+|**`sort`**|boolean|true|Enable/disable sorting on column.
+|**`sortDirection`**|string||Set default sort order. `enum('asc', 'desc', 'none')`
+|**`viewColumns`**|boolean|true|Allow user to toggle column visibility through 'View Column' list.
 
 `customHeadRender` is called with these arguments:
 
@@ -290,7 +291,7 @@ Using Material-UI theme overrides will allow you to customize styling to your li
 
 ```js
 import React from "react";
-import MUIDataTable from "mui-dt";
+import MuiDt from "mui-dt";
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 class BodyCellExample extends React.Component {
@@ -309,7 +310,7 @@ class BodyCellExample extends React.Component {
 
     return (
       <MuiThemeProvider theme={this.getMuiTheme()}>
-        <MUIDataTable title={"ACME Employee list"} data={data} columns={columns} options={options} />
+        <MuiDt title={"ACME Employee list"} data={data} columns={columns} options={options} />
       </MuiThemeProvider>
     );
 

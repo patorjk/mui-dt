@@ -4,7 +4,7 @@ import MUIDataTable from '../../src/';
 
 class Example extends React.Component {
   state = {
-    searchText: 'Computer'
+    searchText: ''
   };
 
   render() {
@@ -91,6 +91,7 @@ class Example extends React.Component {
           console.log('onKeyUp!');
         }
       },
+      showSearch: true,
       customSearch: (searchQuery, currentRow, columns) => {
         let isFound = false;
         currentRow.forEach(col => {
