@@ -22,6 +22,7 @@ class Example extends React.Component {
             // Here you can render a more complex display.
             // You're given access to tableMeta, which has
             // the rowData (as well as the original object data).
+            // See the console for a detailed look at this object.
             
             console.log('customBodyRender');
             console.dir(tableMeta);
@@ -174,7 +175,6 @@ class Example extends React.Component {
       responsive: 'scrollMaxHeight',
       serverSide: true,
       count: count,
-      page: page,
       rowsPerPage: rowsPerPage,
       rowsPerPageOptions: [],
       onTableChange: (action, tableState) => {

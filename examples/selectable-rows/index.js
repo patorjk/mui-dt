@@ -58,9 +58,9 @@ class Example extends React.Component {
       responsive: 'stacked',
       rowsPerPage: 10,
       rowsSelected: this.state.rowsSelected,
-      onRowsSelect: (rowsSelected, allRows) => {
-        console.log(rowsSelected, allRows);
-        this.setState({ rowsSelected: allRows.map(row => row.dataIndex) });
+      onRowsSelect: (newRowSelected, allRows, rowsSelected) => {
+        console.log(newRowSelected, allRows, rowsSelected);
+        this.setState({ rowsSelected: rowsSelected });
       },
       onRowsDelete: (rowsDeleted) => {
         if (rowsDeleted.data[0].dataIndex === 0) {

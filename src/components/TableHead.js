@@ -1,5 +1,4 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import MuiTableHead from '@material-ui/core/TableHead';
 import TableHeadRow from './TableHeadRow';
@@ -55,22 +54,25 @@ class TableHead extends React.Component {
       }
     }
 
+    //ref={el => setCellRef(0, findDOMNode(el))}
+    //ref={el => setCellRef(index + 1, findDOMNode(el))}
+
     return (
       <MuiTableHead
         className={classNames({ [classes.responsiveStacked]: options.responsive === 'stacked', [classes.main]: true })}>
         <TableHeadRow>
           <TableSelectCell
-            ref={el => setCellRef(0, findDOMNode(el))}
-            onChange={this.handleRowSelect.bind(null)}
-            indeterminate={isDeterminate}
-            checked={isChecked}
-            isHeaderCell={true}
-            expandableOn={options.expandableRows}
-            selectableOn={options.selectableRows}
-            fixedHeader={options.fixedHeader}
             checkboxColor={options.checkboxColor}
-            selectableRowsHeader={options.selectableRowsHeader}
+            checked={isChecked}
+            expandableOn={options.expandableRows}
+            fixedHeader={options.fixedHeader}
+            isHeaderCell={true}
             isRowSelectable={true}
+            indeterminate={isDeterminate}
+            onChange={this.handleRowSelect.bind(null)}
+            selectableOn={options.selectableRows}
+            selectableRowsHeader={options.selectableRowsHeader}
+            setCellRef={setCellRef}
           />
           {columns.map(
             (column, index) =>
@@ -82,7 +84,6 @@ class TableHead extends React.Component {
                   key={index}
                   index={index}
                   type={'cell'}
-                  ref={el => setCellRef(index + 1, findDOMNode(el))}
                   sort={column.sort}
                   sortDirection={column.sortDirection}
                   toggleSort={this.handleToggleColumn}
@@ -92,7 +93,8 @@ class TableHead extends React.Component {
                   cellHeaderProps={
                     columns[index].setCellHeaderProps ? columns[index].setCellHeaderProps({ index, ...column }) : {}
                   }
-                  options={options}>
+                  options={options}
+                  setCellRef={setCellRef}>
                   {column.label}
                 </TableHeadCell>
               )),

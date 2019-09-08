@@ -74,16 +74,20 @@ describe('<TableHeadCell />', function() {
     const options = { sort: true, textLabels };
     const toggleSort = spy();
 
-    const shallowWrapper = shallow(
-      <TableHeadCell options={options} index={0} sortDirection={'asc'} toggleSort={toggleSort} classes={classes}>
+    const fullWrapper = mount(
+      <TableHeadCell
+        options={options}
+        index={0}
+        sort={true}
+        sortDirection={'asc'}
+        toggleSort={toggleSort}
+        classes={classes}>
         some content
       </TableHeadCell>,
-    ).dive();
+    );
 
-    const instance = shallowWrapper.instance();
+    fullWrapper.find('span[data-column-label="true"]').simulate('click');
 
-    const event = { target: { value: 'All' } };
-    instance.handleSortClick();
     assert.strictEqual(toggleSort.callCount, 1);
   });
 });

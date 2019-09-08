@@ -57,7 +57,7 @@ export default {
     'OnTableInit': OnTableInit,
     'resizableColumns': ResizableColumns,
     'selectableRows': SelectableRows,
-    'serverSide Options': ServerSideOptions,
+    //'serverSide Options': ServerSideOptions, // this example does not do what it says it does, commenting it out
     'serverSide Pagination': ServerSidePagination,
     'Simple': Simple,
     'Simple No Toolbar': SimpleNoToolbar,
