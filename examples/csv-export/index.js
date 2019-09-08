@@ -73,7 +73,7 @@ class Example extends React.Component {
       rowsPerPage: 10,
       downloadOptions: {
           filename: 'excel-format.csv',
-          separator: ';',
+          separator: ',',
           filterOptions: {
             useDisplayedColumnsOnly: true,
             useDisplayedRowsOnly: true,

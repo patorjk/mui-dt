@@ -70,7 +70,7 @@ describe('<TableHeadCell />', function() {
     assert.strictEqual(actualResult.length, 0);
   });
 
-  it('should trigger toggleSort prop callback when calling method handleSortClick', () => {
+  it('should trigger toggleSort prop callback when clicking or pressing enter on column label', () => {
     const options = { sort: true, textLabels };
     const toggleSort = spy();
 
@@ -87,7 +87,9 @@ describe('<TableHeadCell />', function() {
     );
 
     fullWrapper.find('span[data-column-label="true"]').simulate('click');
-
     assert.strictEqual(toggleSort.callCount, 1);
+
+    fullWrapper.find('span[data-column-label="true"]').simulate('keyUp', {key: 'Enter'});
+    assert.strictEqual(toggleSort.callCount, 2);
   });
 });

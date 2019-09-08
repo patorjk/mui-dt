@@ -27,19 +27,16 @@ function sortCompare(order) {
 }
 
 function createCSVDownload(columns, data, options) {
-  const replaceDoubleQuoteInString = columnData =>
-    typeof columnData === 'string' ? columnData.replace(/\"/g, '""') : columnData;
+  const replaceDoubleQuoteInString = columnData => {
+    return typeof columnData === 'string' ? columnData.replace(/\"/g, '""') : columnData;
+  };
 
   const buildHead = columns => {
     return (
       columns
-        .reduce(
-          (soFar, column) =>
-            column.download
-              ? soFar + '"' + replaceDoubleQuoteInString(column.name) + '"' + options.downloadOptions.separator
-              : soFar,
-          '',
-        )
+        .reduce((soFar, column) => {
+            return column.download ? soFar + '"' + replaceDoubleQuoteInString(column.name) + '"' + options.downloadOptions.separator : soFar;
+        }, '')
         .slice(0, -1) + '\r\n'
     );
   };
