@@ -39,8 +39,7 @@ describe('<TableHead />', function() {
         options={options}
         setCellRef={() => {}}
         handleHeadUpdateRef={handleHeadUpdateRef}
-        toggleSort={toggleSort}
-      />,
+        toggleSort={toggleSort} />,
     );
     const actualResult = mountWrapper.find(TableHeadCell);
     assert.strictEqual(actualResult.length, 4);
@@ -56,8 +55,7 @@ describe('<TableHead />', function() {
         options={options}
         setCellRef={() => {}}
         handleHeadUpdateRef={handleHeadUpdateRef}
-        toggleSort={toggleSort}
-      />,
+        toggleSort={toggleSort} />,
     );
     const labels = mountWrapper.find(TableHeadCell).map(n => n.text());
     assert.deepEqual(labels, ['First Name', 'Company', 'City Label', 'States']);
@@ -74,8 +72,7 @@ describe('<TableHead />', function() {
         options={options}
         setCellRef={() => {}}
         handleHeadUpdateRef={handleHeadUpdateRef}
-        toggleSort={toggleSort}
-      />,
+        toggleSort={toggleSort} />,
     );
     const actualResult = mountWrapper.find(TableHeadCell);
     assert.strictEqual(actualResult.length, 0);
@@ -91,8 +88,7 @@ describe('<TableHead />', function() {
         options={options}
         setCellRef={() => {}}
         handleHeadUpdateRef={handleHeadUpdateRef}
-        toggleSort={toggleSort}
-      />,
+        toggleSort={toggleSort} />,
     ).dive();
 
     const instance = shallowWrapper.instance();
@@ -112,8 +108,7 @@ describe('<TableHead />', function() {
         options={options}
         setCellRef={() => {}}
         handleHeadUpdateRef={handleHeadUpdateRef}
-        selectRowUpdate={rowSelectUpdate}
-      />,
+        selectRowUpdate={rowSelectUpdate} />,
     ).dive();
 
     const instance = shallowWrapper.instance();
