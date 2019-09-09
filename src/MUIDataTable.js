@@ -144,6 +144,10 @@ class MUIDataTable extends React.Component {
       expandableRowsOnClick: PropTypes.bool,
       filter: PropTypes.bool,
       filterType: PropTypes.oneOf(['dropdown', 'checkbox', 'multiselect', 'textField', 'custom']),
+      filterPopoverOptions: PropTypes.shape({
+        mustConfirm: PropTypes.bool,
+        confirmButtonLabel: PropTypes.string,
+      }),
       fixedHeader: PropTypes.bool,
       isRowExpandable: PropTypes.func,
       isRowSelectable: PropTypes.func,
@@ -264,7 +268,7 @@ class MUIDataTable extends React.Component {
   updateOptions(options, props) {
     this.options = assignwith(options, props.options, (objValue, srcValue, key) => {
       // Merge any default options that are objects, as they will be overwritten otherwise
-      if (key === 'textLabels' || key === 'downloadOptions') return merge(objValue, srcValue);
+      if (key === 'textLabels' || key === 'downloadOptions' || key === 'filterPopoverOptions') return merge(objValue, srcValue);
       return;
     });
 
@@ -293,6 +297,10 @@ class MUIDataTable extends React.Component {
     expandableRowsOnClick: false,
     filter: true,
     filterType: 'dropdown',
+    filterPopoverOptions: {
+      mustConfirm: false,
+      confirmButtonLabel: 'Submit',
+    },
     fixedHeader: true,
     resizableColumns: false,
     responsive: 'stacked',
@@ -976,27 +984,32 @@ class MUIDataTable extends React.Component {
     );
   };
 
+  // filter = 
+  updateFilterByType = (filterList, index, value, column, type) => {
+    const filterPos = filterList[index].indexOf(value);
+
+    switch (type) {
+      case 'checkbox':
+        filterPos >= 0 ? filterList[index].splice(filterPos, 1) : filterList[index].push(value);
+        break;
+      case 'multiselect':
+      case 'dropdown':
+      case 'custom':
+        if (!Array.isArray(value)) {
+          console.warn('filterUpdate: Invalid value for filter.');
+        }
+        filterList[index] = value;
+        break;
+      default:
+        filterList[index] = filterPos >= 0 || value === '' ? [] : [value];
+    }
+  }
+
   filterUpdate = (index, value, column, type) => {
     this.setState(
       prevState => {
         const filterList = prevState.filterList.slice(0);
-        const filterPos = filterList[index].indexOf(value);
-
-        switch (type) {
-          case 'checkbox':
-            filterPos >= 0 ? filterList[index].splice(filterPos, 1) : filterList[index].push(value);
-            break;
-          case 'multiselect':
-          case 'dropdown':
-          case 'custom':
-            if (!Array.isArray(value)) {
-              console.warn('filterUpdate: Invalid value for filter.');
-            }
-            filterList[index] = value;
-            break;
-          default:
-            filterList[index] = filterPos >= 0 || value === '' ? [] : [value];
-        }
+        this.updateFilterByType(filterList, index, value, column, type);
 
         return {
           page: 0,
@@ -1328,15 +1341,17 @@ class MUIDataTable extends React.Component {
               data={data}
               filterData={filterData}
               filterList={filterList}
+              filterPopoverOptions={this.options.filterPopoverOptions}
               filterUpdate={this.filterUpdate}
               options={this.options}
               resetFilters={this.resetFilters}
               searchText={searchText}
               searchTextUpdate={this.searchTextUpdate}
+              setTableAction={this.setTableAction}
               tableRef={this.getTableContentRef}
               title={title}
-              toggleViewColumn={this.toggleViewColumn}
-              setTableAction={this.setTableAction} />
+              toggleViewColumn={this.toggleViewColumn} 
+              updateFilterByType={this.updateFilterByType} />
           )
         )}
         <TableFilterList

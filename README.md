@@ -148,6 +148,7 @@ The component accepts the following props:
 |**`expandableRowsOnClick`**|boolean|false|Enable/disable expand trigger when row is clicked. When False, only expand icon will trigger this action.
 |**`filter`**|boolean|true|Show/hide filter icon from toolbar.
 |**`filterType `**|string||Choice of filtering view. `enum('checkbox', 'dropdown', 'multiselect', 'textField')`
+|**`filterPopoverOptions`**|object|`{mustConfirm: false, confirmButtonLabel: 'Submit'}`|Options to change the filter popover. Can be useful for serverSide filtering where you want to confirm the filters before applying them. Options: `mustConfirm`: boolean, `confirmButtonLabel`: string
 |**`fixedHeader`**|boolean|true|Enable/disable fixed header columns.
 |**`isRowExpandable`**|function||Enable/disable expansion or collapse on certain expandable rows with custom function. Will be considered true if not provided. `function(dataIndex: number, expandedRows: object(lookup: {dataIndex: number}, data: arrayOfObjects: {index: number, dataIndex: number})) => bool`.
 |**`isRowSelectable`**|function||Enable/disable selection on certain rows with custom function. Returns true if not provided. `function(dataIndex: number, selectedRows: object(lookup: {[dataIndex]: boolean}, data: arrayOfObjects: {index: number, dataIndex: number})) => boolean`.

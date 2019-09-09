@@ -143,6 +143,9 @@ class Example extends React.Component {
       checkboxColor: 'secondary',
       filter: true,
       filterType: 'dropdown',
+      filterPopoverOptions: {
+        mustConfirm: true,
+      },
       responsive: 'scroll',
       onFilterChange: (name, filterList, index) => {
         console.log('onFilterChange callback');
