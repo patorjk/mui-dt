@@ -172,7 +172,7 @@ The component accepts the following props:
 |**`print`**|boolean|true|Show/hide print icon from toolbar.
 |**`renderExpandableRow`**|function||Render expandable row. `function(rowData, rowMeta) => React Component`
 |**`resizableColumns`**|boolean|false|Enable/disable resizable columns.
-|**`responsive`**|string|'stacked'|The responsive mode for the table. Options: 'stacked' or 'scroll'. Use the 'tableBodyMaxHeight' and 'tableBodyMinHeight' parameters to adjust the table height when using the "scroll" mode.
+|**`responsive`**|string|'stacked'|The responsive mode for the table. Options: 'stacked' or 'scroll'. Use the 'tableBodyMaxHeight' and 'tableBodyMinHeight' options to adjust the table height when using the "scroll" mode.
 |**`rowHover`**|boolean|true|Enable/disable hover style over rows.
 |**`rowsExpanded`**|array||User provided expanded rows.
 |**`rowsPerPage`**|number|10|Number of rows allowed per page.
