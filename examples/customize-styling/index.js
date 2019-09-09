@@ -148,7 +148,7 @@ class Example extends React.Component {
     const options = {
       filter: true,
       filterType: 'dropdown',
-      responsive: this.state.stacked ? 'stacked' : 'scrollMaxHeight',
+      responsive: this.state.stacked ? 'stacked' : 'scroll',
       fixedHeader: true,
       rowHover: false,
       setRowProps: (row) => {
@@ -186,8 +186,7 @@ class Example extends React.Component {
                 checked={this.state.stacked}
                 onChange={this.toggleResponsive}
                 value="stacked"
-                color="primary"
-              />
+                color="primary" />
             }
             label="Stacked Table"
           />

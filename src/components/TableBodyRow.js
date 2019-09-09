@@ -6,8 +6,20 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(
   theme => ({
-    root: {},
-    hover: {},
+    root: {
+      '&.MuiTableRow-root.Mui-selected': {
+        '& td': {
+          backgroundColor: '#ededed',
+        }        
+      }
+    },
+    hover: {
+      '&:hover': {
+        '& td': {
+          backgroundColor: '#ededed',
+        }
+      }
+    },
     hoverCursor: { cursor: 'pointer' },
     responsiveStacked: {
       [theme.breakpoints.down('sm')]: {
@@ -26,6 +38,7 @@ function TableBodyRow(props) {
     <TableRow
       hover={options.rowHover ? true : false}
       onClick={onClick}
+      style={{overflow:'auto'}}
       className={classNames(
         {
           [classes.root]: true,

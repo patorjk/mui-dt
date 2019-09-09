@@ -31,18 +31,6 @@ const defaultTableStyles = theme => ({
     height: '100%',
     maxHeight: '499px',
   },
-  responsiveScrollMaxHeight: {
-    overflowX: 'auto',
-    overflow: 'auto',
-    height: '100%',
-    maxHeight: '499px',
-  },
-  responsiveScrollFullHeight: {
-    overflowX: 'auto',
-    overflow: 'auto',
-    height: '100%',
-    maxHeight: 'none',
-  },
   responsiveStacked: {
     overflowX: 'auto',
     overflow: 'auto',
@@ -170,7 +158,7 @@ class MUIDataTable extends React.Component {
       print: PropTypes.bool,
       renderExpandableRow: PropTypes.func,
       resizableColumns: PropTypes.bool,
-      responsive: PropTypes.oneOf(['stacked', 'scrollMaxHeight', 'scrollFullHeight']),
+      responsive: PropTypes.oneOf(['stacked', 'scroll']),
       rowHover: PropTypes.bool,
       rowsExpanded: PropTypes.array,
       rowsPerPage: PropTypes.number,
@@ -186,6 +174,8 @@ class MUIDataTable extends React.Component {
       serverSide: PropTypes.bool,
       setRowProps: PropTypes.func,
       sort: PropTypes.bool,
+      tableBodyMaxHeight: PropTypes.string,
+      tableBodyMinHeight: PropTypes.string,
       tableProps: PropTypes.object,
       textLabels: PropTypes.object,
       viewColumns: PropTypes.bool,
@@ -319,6 +309,8 @@ class MUIDataTable extends React.Component {
     sortFilterList: true,
     pagination: true,
     print: true,
+    tableBodyMaxHeight: '499px',
+    tableBodyMinHeight: 'none',
     textLabels,
     viewColumns: true,
   });
@@ -335,15 +327,20 @@ class MUIDataTable extends React.Component {
         'options.searchPlaceholder is superfluous. Please use options.searchProps.placeholder to set the placeholder text.',
       );
     }
-    if (['scrollMaxHeight', 'scrollFullHeight', 'stacked'].indexOf(props.options.responsive) === -1) {
+    if (['scroll', 'stacked'].indexOf(props.options.responsive) === -1) {
       console.error(
-        'Invalid option value of "' +
-          props.options.responsive +
-          '" for responsive. Please use string option: scrollMaxHeight | scrollFullHeight | stacked',
-      );
-    }
-    if (props.options.responsive === 'scroll') {
-      console.error('This option has been deprecated. It is being replaced by scrollMaxHeight');
+        `Invalid option value of ${props.options.responsive} for responsive.
+  Please use string option: scroll | stacked
+  Also note that scrollMaxHeight and scrollFullHeight are deprecated. Use "scroll" along with setting the tableBodyMaxHeight option.
+        `);
+      if (props.options.responsive === 'scrollMaxHeight') {
+        this.options.responsive = 'scroll';
+        this.options.tableBodyMaxHeight = '499px';
+      }
+      if (props.options.responsive === 'scrollFullHeight') {
+        this.options.responsive = 'scroll';
+        this.options.tableBodyMaxHeight = 'none';
+      }
     }
   };
 
@@ -1296,17 +1293,11 @@ class MUIDataTable extends React.Component {
     const showToolbar = hasToolbarItem(this.options, title);
     const columnNames = columns.map(column => ({ name: column.name, filterType: column.filterType }));
     let responsiveClass;
-
+    
     switch (this.options.responsive) {
-      // DEPRECATED: This options is beign transitioned to `responsiveScrollMaxHeight`
+
       case 'scroll':
         responsiveClass = classes.responsiveScroll;
-        break;
-      case 'scrollMaxHeight':
-        responsiveClass = classes.responsiveScrollMaxHeight;
-        break;
-      case 'scrollFullHeight':
-        responsiveClass = classes.responsiveFullHeight;
         break;
       case 'stacked':
         responsiveClass = classes.responsiveStacked;
@@ -1328,8 +1319,7 @@ class MUIDataTable extends React.Component {
             selectedRows={selectedRows}
             onRowsDelete={this.selectRowDelete}
             displayData={displayData}
-            selectRowUpdate={this.selectRowUpdate}
-          />
+            selectRowUpdate={this.selectRowUpdate} />
         ) : (
           showToolbar && (
             <TableToolbar
@@ -1346,8 +1336,7 @@ class MUIDataTable extends React.Component {
               tableRef={this.getTableContentRef}
               title={title}
               toggleViewColumn={this.toggleViewColumn}
-              setTableAction={this.setTableAction}
-            />
+              setTableAction={this.setTableAction} />
           )
         )}
         <TableFilterList
@@ -1357,15 +1346,18 @@ class MUIDataTable extends React.Component {
           })}
           filterList={filterList}
           filterUpdate={this.filterUpdate}
-          columnNames={columnNames}
-        />
-        <div style={{ position: 'relative' }} className={responsiveClass}>
+          columnNames={columnNames} />
+        <div style={{ 
+            position: 'relative', 
+            maxHeight: this.options.responsive === 'stacked' ? 'none' : this.options.tableBodyMaxHeight,
+            minHeight: this.options.responsive === 'stacked' ? 'none' : this.options.tableBodyMinHeight,
+          }} 
+          className={responsiveClass}>
           {this.options.resizableColumns && (
             <TableResize
               key={rowCount}
               updateDividers={fn => (this.updateDividers = fn)}
-              setResizeable={fn => (this.setHeadResizeable = fn)}
-            />
+              setResizeable={fn => (this.setHeadResizeable = fn)} />
           )}
           <MuiTable
             ref={el => (this.tableRef = el)}
@@ -1386,8 +1378,7 @@ class MUIDataTable extends React.Component {
               selectRowUpdate={this.selectRowUpdate}
               toggleSort={this.toggleSortColumn}
               setCellRef={this.setHeadCellRef}
-              options={this.options}
-            />
+              options={this.options} />
             <TableBody
               data={displayData}
               count={rowCount}
@@ -1400,8 +1391,7 @@ class MUIDataTable extends React.Component {
               expandedRows={expandedRows}
               toggleExpandRow={this.toggleExpandRow}
               options={this.options}
-              filterList={filterList}
-            />
+              filterList={filterList} />
           </MuiTable>
         </div>
         <TableFooter
@@ -1411,8 +1401,7 @@ class MUIDataTable extends React.Component {
           rowsPerPageOptions={this.options.rowsPerPageOptions}
           rowsPerPage={rowsPerPage}
           changeRowsPerPage={this.changeRowsPerPage}
-          changePage={this.changePage}
-        />
+          changePage={this.changePage} />
         <div className={classes.liveAnnounce} aria-live={'polite'}>
           {announceText}
         </div>
