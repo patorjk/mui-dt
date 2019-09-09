@@ -191,7 +191,7 @@ The component accepts the following props:
 |**`sortFilterList`**|boolean|true|Enable/disable alphanumeric sorting of filter lists.
 |**`tableProps`**|object|{}|Props applied to the table. You can set the table up to be a "dense" table this way. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-styling/index.js)
 |**`tableBodyMaxHeight`**|string|'499px'|The max height of the body of the table. This comes into play only when the responsive mode is set to "scroll". This is a CSS string value (ex: '500px', 'none', '100%', etc). [Example](https://github.com/patorjk/mui-dt/blob/master/examples/data-as-objects/index.js)
-|**`tableBodyMinHeight`**|string|'none'|The min height of the body of the table. This comes into play only when the responsive mode is set to "scroll". This is a CSS string value (ex: '500px', 'none', '100%', etc). [Example](https://github.com/patorjk/mui-dt/blob/master/examples/data-as-objects/index.js)[Example](https://github.com/patorjk/mui-dt/blob/master/examples/data-as-objects/index.js)
+|**`tableBodyMinHeight`**|string|'none'|The min height of the body of the table. This comes into play only when the responsive mode is set to "scroll". This is a CSS string value (ex: '500px', 'none', '100%', etc). [Example](https://github.com/patorjk/mui-dt/blob/master/examples/data-as-objects/index.js)
 |**`textLabels `**|object||User provided labels to localize text
 |**`viewColumns`**|boolean|true|Show/hide viewColumns icon from toolbar.
 
