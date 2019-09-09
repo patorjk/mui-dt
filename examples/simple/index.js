@@ -13,7 +13,15 @@ class Example extends React.Component {
       ["Aiden Lloyd", "Business Consultant", "Dallas"],
       ["Jaden Collins", "Attorney", "Santa Ana"],
       ["Franky Rees", "Business Analyst", "St. Petersburg"],
-      ["Aaren Rose", null, "Toledo"]
+      ["Aaren Rose", null, "Toledo"],
+
+      ["Jack Jackson", "Business Analyst", "El Paso"],
+      ["Joe Campo", "Computer Programmer", "Severna Park"],
+      ["Justin Gerock", "Rock Star", "Seattle"],
+      ["Jim Gillespie", "Physicist", "Ellicott City"],
+      ["Patti Gillespie", "Physicist", "Ellicott City"],
+
+      ["Carl Adkins", "Donut Shop Owner", "Severna Park"],
     ];
 
 

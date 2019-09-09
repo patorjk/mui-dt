@@ -143,7 +143,7 @@ class Example extends React.Component {
       checkboxColor: 'secondary',
       filter: true,
       filterType: 'dropdown',
-      responsive: 'scrollMaxHeight',
+      responsive: 'scroll',
       onFilterChange: (name, filterList, index) => {
         console.log('onFilterChange callback');
         console.log('Col Name:'+name);

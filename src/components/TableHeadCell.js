@@ -10,11 +10,13 @@ import HelpIcon from '@material-ui/icons/Help';
 
 const useStyles = makeStyles(
   theme => ({
-    root: {},
+    root: {
+      backgroundColor: theme.palette.background.paper,
+    },
     fixedHeader: {
       position: 'sticky',
       top: '0px',
-      left: '0px',
+      //left: '0px',
       zIndex: 100,
       backgroundColor: theme.palette.background.paper,
     },

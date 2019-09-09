@@ -9,10 +9,17 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 const useStyles = makeStyles(
   theme => ({
-    root: {},
+    root: {
+      backgroundColor: theme.palette.background.paper,
+    },
     fixedHeader: {
       position: 'sticky',
       top: '0px',
+      left: '0px',
+      zIndex: 100,
+    },
+    fixedLeft: {
+      position: 'sticky',
       left: '0px',
       zIndex: 100,
     },
@@ -59,6 +66,7 @@ function TableSelectCell(props) {
   const cellClass = classNames({
     [classes.root]: true,
     [classes.fixedHeader]: fixedHeader && isHeaderCell,
+    [classes.fixedLeft]: fixedHeader && !isHeaderCell,
     [classes.headerCell]: isHeaderCell,
   });
 

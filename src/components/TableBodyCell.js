@@ -13,10 +13,15 @@ const useStyles = makeStyles(
       [theme.breakpoints.down('sm')]: {
         display: 'inline-block',
         fontSize: '16px',
-        height: '24px',
         width: '50%',
         boxSizing: 'border-box',
         whiteSpace: 'nowrap',
+        '&::after': {
+          content: "'\xa0'"
+        },
+        '&:nth-last-child(2)': {
+          borderBottom: 'none'
+        },
       },
     },
     responsiveStacked: {
@@ -26,7 +31,12 @@ const useStyles = makeStyles(
         width: '50%',
         boxSizing: 'border-box',
         whiteSpace: 'nowrap',
-        height: '24px',
+        '&::after': {
+          content: "'\xa0'"
+        },
+        '&:last-child': {
+          borderBottom: 'none'
+        },
       },
     },
   }),

@@ -67,7 +67,7 @@ class Example extends React.Component {
     filter: true,
     selectableRows: 'multiple',
     filterType: 'dropdown',
-    responsive: 'scrollMaxHeight',
+    responsive: 'scroll',
     rowsPerPage: 10,
     download: false, // hide csv download option
     onTableInit: this.handleTableInit,

@@ -19,8 +19,7 @@ class Example extends React.Component {
             <FormControlLabel
               value={value}
               control={<TextField value={value} />}
-              onChange={event => updateValue(event.target.value)}
-            />
+              onChange={event => updateValue(event.target.value)} />
           )
         }
       },
@@ -39,8 +38,7 @@ class Example extends React.Component {
               <Cities
                 value={value}
                 index={tableMeta.columnIndex}
-                change={event => updateValue(event)}
-              />
+                change={event => updateValue(event)} />
             );
           },
         }
@@ -52,8 +50,7 @@ class Example extends React.Component {
           customBodyRender: (value, tableMeta, updateValue) => (
             <FormControlLabel
               control={<TextField value={value || ''} type='number' />}
-              onChange={event => updateValue(event.target.value)}
-            />
+              onChange={event => updateValue(event.target.value)} />
           )
         }
       },
@@ -89,8 +86,7 @@ class Example extends React.Component {
                 }
                 onChange={event => {
                   updateValue(event.target.value === "Yes" ? false : true);
-                }}
-              />
+                }} />
             );
 
           }
@@ -126,7 +122,7 @@ class Example extends React.Component {
     const options = {
       filter: true,
       filterType: 'dropdown',
-      responsive: 'scrollMaxHeight'
+      responsive: 'scroll'
     };
 
     return (
