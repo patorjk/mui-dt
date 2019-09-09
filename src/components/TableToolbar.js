@@ -82,6 +82,8 @@ class TableToolbar extends React.Component {
     iconActive: null,
     showSearch: Boolean(this.props.searchText || this.props.options.searchText || this.props.options.showSearch),
     searchText: this.props.searchText || null,
+    filterPopoverKey: 0,
+    mustCloseFilterPopover: false,
   };
 
   componentDidUpdate(prevProps) {
@@ -129,6 +131,7 @@ class TableToolbar extends React.Component {
     this.setState(() => ({
       showSearch: this.isSearchShown(iconName),
       iconActive: iconName,
+      filterPopoverKey: this.state.filterPopoverKey + 1
     }));
   };
 
@@ -186,16 +189,27 @@ class TableToolbar extends React.Component {
       data,
       filterData,
       filterList,
+      filterPopoverOptions,
       filterUpdate,
       options,
       resetFilters,
       tableRef,
       title,
       toggleViewColumn,
+      updateFilterByType,
     } = this.props;
 
     const { search, downloadCsv, print, viewColumns, filterTable } = options.textLabels.toolbar;
     const { showSearch, searchText } = this.state;
+
+    const filterPopoverExit = () => {
+      this.setState({hideFilterPopover: false});
+      this.setActiveIcon.bind(null);
+    };
+
+    const closeFilterPopover = () => {
+      this.setState({hideFilterPopover: true});
+    };
 
     return (
       <Toolbar className={classes.root} role={'toolbar'} aria-label={'Table Toolbar'}>
@@ -285,7 +299,8 @@ class TableToolbar extends React.Component {
           )}
           {options.filter && (
             <Popover
-              refExit={this.setActiveIcon.bind(null)}
+              refExit={filterPopoverExit}
+              hide={this.state.hideFilterPopover}
               classes={{ paper: classes.filterPaper }}
               trigger={
                 <Tooltip title={filterTable} disableFocusListener>
@@ -300,12 +315,16 @@ class TableToolbar extends React.Component {
               }
               content={
                 <TableFilter
+                  key={this.state.filterPopoverKey}
                   columns={columns}
                   options={options}
                   filterList={filterList}
                   filterData={filterData}
+                  filterPopoverOptions={filterPopoverOptions}
+                  handleClose={closeFilterPopover}
                   onFilterUpdate={filterUpdate}
                   onFilterReset={resetFilters}
+                  updateFilterByType={updateFilterByType}
                 />
               }
             />
