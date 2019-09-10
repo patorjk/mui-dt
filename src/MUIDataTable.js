@@ -963,7 +963,7 @@ class MUIDataTable extends React.Component {
     );
   };
 
-  resetFilters = () => {
+  clearFilters = () => {
     this.setState(
       prevState => {
         const filterList = prevState.columns.map(() => []);
@@ -976,7 +976,7 @@ class MUIDataTable extends React.Component {
         };
       },
       () => {
-        this.setTableAction('resetFilters');
+        this.setTableAction('clearFilters');
         if (this.options.onFilterChange) {
           this.options.onFilterChange(null, this.state.filterList, null);
         }
@@ -1344,7 +1344,7 @@ class MUIDataTable extends React.Component {
               filterPopoverOptions={this.options.filterPopoverOptions}
               filterUpdate={this.filterUpdate}
               options={this.options}
-              resetFilters={this.resetFilters}
+              clearFilters={this.clearFilters}
               searchText={searchText}
               searchTextUpdate={this.searchTextUpdate}
               setTableAction={this.setTableAction}

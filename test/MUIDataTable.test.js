@@ -655,7 +655,7 @@ describe('<MUIDataTable />', function() {
     assert.deepEqual(state.filterList, [[], [], [], [], []]);
   });
 
-  it('should properly reset internal filterList when calling resetFilters method', () => {
+  it('should properly reset internal filterList when calling clearFilters method', () => {
     // set a filter
     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
@@ -667,7 +667,7 @@ describe('<MUIDataTable />', function() {
     let state = table.state();
     assert.deepEqual(state.filterList, [['Joe James'], [], [], [], []]);
 
-    instance.resetFilters();
+    instance.clearFilters();
     table.update();
     state = table.state();
     assert.deepEqual(state.filterList, [[], [], [], [], []]);
@@ -704,7 +704,7 @@ describe('<MUIDataTable />', function() {
     assert.strictEqual(changedColumn, 'Company');
 
     // test reset filters
-    instance.resetFilters();
+    instance.clearFilters();
     table.update();
     assert.strictEqual(changedColumn, null);
   });

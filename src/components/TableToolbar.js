@@ -192,7 +192,7 @@ class TableToolbar extends React.Component {
       filterPopoverOptions,
       filterUpdate,
       options,
-      resetFilters,
+      clearFilters,
       tableRef,
       title,
       toggleViewColumn,
@@ -323,7 +323,7 @@ class TableToolbar extends React.Component {
                   filterPopoverOptions={filterPopoverOptions}
                   handleClose={closeFilterPopover}
                   onFilterUpdate={filterUpdate}
-                  onFilterReset={resetFilters}
+                  onFilterClear={clearFilters}
                   updateFilterByType={updateFilterByType}
                 />
               }
