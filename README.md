@@ -381,7 +381,7 @@ const options = {
 ```
 
 ## Breaking Changes with mui-datatables
-This library started as a fork of mui-datatables. I'm aiming to keep it similar enough so that someone could use this as a drop in replacement, however, the more I work on this library, the more it will evolve. Below I list list "breaking" changes with mui-datatables.
+This library started as a fork of mui-datatables. I'm aiming to keep it similar enough so that someone could use this as a drop in replacement, however, the more I work on this library, the more it will evolve. Below I list "breaking" changes with mui-datatables.
 
 * The "resetFilters" event that occurs for the onTableChange function is now called "clearFilters". (reason: with the addition of filterPopoverOptions and the ability to confirm filters, there needed to be a reset and a clear function. "reset" already existed and functioned as a "clear", so it was renamed)
 
