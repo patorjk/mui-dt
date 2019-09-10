@@ -12,8 +12,6 @@ MUI-DT is a data tables component built on [Material-UI](https://www.material-ui
 
 You can try the table out live in a CodeSandbox here: https://codesandbox.io/s/github/patorjk/mui-dt
 
-This library was created as a drop-in replacement for mui-datatables with additional features, bug fixes, and tests (it's being developed for my own needs but others are welcome to use it). 
-
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/19170080/38026128-eac9d506-3258-11e8-92a7-b0d06e5faa82.gif" />
 </div>
@@ -385,7 +383,7 @@ const options = {
 ```
 
 ## Breaking Changes with mui-datatables
-This library started as a fork of mui-datatables. I'm aiming to keep it similar enough so that someone could use this as a drop in replacement, however, the more I work on this library, the more it will evolve. Below I list "breaking" changes with mui-datatables.
+This library started as a fork of mui-datatables, developed to solve several pain points I was having and to add several additional features. I'm aiming to keep it similar enough so that someone could use this as a drop in replacement (or, if the maintainer of mui-datatables decides to allow more features in - to hopefully merge this library into that library), however, the more I work on this library, the more it will evolve. Below I list "breaking" changes with mui-datatables.
 
 * The "resetFilters" event that occurs for the onTableChange function is now called "clearFilters". (reason: with the addition of filterPopoverOptions and the ability to confirm filters, there needed to be a reset and a clear function. "reset" already existed and functioned as a "clear", so it was renamed)
 
