@@ -25,6 +25,7 @@ const textLabels = {
     all: 'All',
     title: 'FILTERS',
     reset: 'RESET',
+    clear: 'CLEAR',
   },
   viewColumns: {
     title: 'Show Columns',

@@ -40,19 +40,40 @@ export const useStyles = makeStyles(theme => ({
   noMargin: {
     marginLeft: '0px',
   },
+  actionButtons: {
+    '@media screen and (max-width: 800px)': {
+      marginTop: '14px',
+    },
+  },
   confirmButton: {
-    marginLeft: '24px',
+    marginLeft: '0px',
     fontSize: '12px',
     cursor: 'pointer',
   },
-  reset: {
+  toolbar: {
     alignSelf: 'left',
+    display: 'flex',
+    justifyContent: 'space-between',
+    width:'100%',
   },
-  resetLink: {
+  withConfirm: {
+    '@media screen and (max-width: 800px)': {
+      display: 'block',
+    },
+  },
+  menuButtons: {
+    marginLeft: '8px',
+    fontSize: '12px',
+    cursor: 'pointer',
+    '@media screen and (max-width: 800px)': {
+      marginLeft: 0
+    },
+  },
+  normalToolbarButtons: {
     marginLeft: '16px',
     fontSize: '12px',
     cursor: 'pointer',
-  },
+  },  
   filtersSelected: {
     alignSelf: 'right',
   },
@@ -99,7 +120,7 @@ function TableFilter(props) {
   const handleCheckboxChange = (index, value, column) => {
     filterUpdate(index, value, column, 'checkbox');
 
-    if (props.filterPopoverOptions.mustConfirm === false) {
+    if (props.filterPopoverOptions.mustConfirm !== true) {
       props.onFilterUpdate(index, value, column, 'checkbox');
     }
   };
@@ -110,7 +131,7 @@ function TableFilter(props) {
     
     filterUpdate(index, value, column, 'dropdown');
 
-    if (props.filterPopoverOptions.mustConfirm === false) {
+    if (props.filterPopoverOptions.mustConfirm !== true) {
       props.onFilterUpdate(index, value, column, 'dropdown');
     }
   };
@@ -118,7 +139,7 @@ function TableFilter(props) {
   const handleMultiselectChange = (index, value, column) => {
     filterUpdate(index, value, column, 'multiselect');
 
-    if (props.filterPopoverOptions.mustConfirm === false) {
+    if (props.filterPopoverOptions.mustConfirm !== true) {
       props.onFilterUpdate(index, value, column, 'multiselect');
     }
   };
@@ -126,7 +147,7 @@ function TableFilter(props) {
   const handleTextFieldChange = (event, index, column) => {
     filterUpdate(index, event.target.value, column, 'textField');
 
-    if (props.filterPopoverOptions.mustConfirm === false) {
+    if (props.filterPopoverOptions.mustConfirm !== true) {
       props.onFilterUpdate(index, event.target.value, column, 'textField');
     }
   };
@@ -134,7 +155,7 @@ function TableFilter(props) {
   const handleCustomChange = (value, index, column) => {
     filterUpdate(index, value, column.name, column.filterType);
 
-    if (props.filterPopoverOptions.mustConfirm === false) {
+    if (props.filterPopoverOptions.mustConfirm !== true) {
       props.onFilterUpdate(index, value, column.name, column.filterType);
     }
   };
@@ -278,19 +299,36 @@ function TableFilter(props) {
       props.onFilterUpdate(index, filter, columns[index].name, 'custom');
     });
     props.handleClose();
+
+    if (options.onFilterConfirm) {
+      options.onFilterConfirm(filterList);
+    }
   };
 
-  const { columns, options, onFilterReset } = props;
+  // only available when filters need to be confirmed
+  const resetFilters = () => {
+    setFilterList(props.filterList.map(item => item.slice()));
+  };
+
+  const clearFilters = () => {
+    setFilterList(filterList.map(item => []));
+
+    if (props.filterPopoverOptions.mustConfirm !== true) {
+      props.onFilterClear();
+    }
+  };
+
+  const { columns, options } = props;
   const textLabels = options.textLabels.filter;
   const filterGridColumns = columns.filter(col => col.filter).length === 1 ? 1 : 2;
-  
-  console.log('TableFilter render');
-  console.dir(props);
   
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <div className={classes.reset}>
+        <div className={classNames({
+              [classes.toolbar]: true,
+              [classes.withConfirm]: props.filterPopoverOptions.mustConfirm
+            })}>
           <Typography
             variant="body2"
             className={classNames({
@@ -298,27 +336,48 @@ function TableFilter(props) {
             })}>
             {textLabels.title}
           </Typography>
-          {props.filterPopoverOptions.mustConfirm &&
+          <div className={classNames({
+              [classes.actionButtons]: props.filterPopoverOptions.mustConfirm
+            })}>
+            {props.filterPopoverOptions.mustConfirm &&
+              <>
+              <Button
+                color="primary"
+                variant="contained" 
+                className={classes.confirmButton}
+                tabIndex={0}
+                aria-label={props.filterPopoverOptions.confirmButtonLabel}
+                data-testid={'filterConfirm-button'}
+                onClick={applyFilters}>
+                {props.filterPopoverOptions.confirmButtonLabel}
+              </Button>
+              <Button
+                color="primary"
+                className={classNames({
+                  [classes.normalToolbarButtons]: props.filterPopoverOptions.mustConfirm ? false : true,
+                  [classes.menuButtons]: props.filterPopoverOptions.mustConfirm ? true : false,
+                })}
+                tabIndex={0}
+                aria-label={textLabels.reset}
+                data-testid={'filterReset-button'}
+                onClick={resetFilters}>
+                {textLabels.reset}
+              </Button>
+              </>
+            }
             <Button
               color="primary"
-              variant="contained" 
-              className={classes.confirmButton}
+              className={classNames({
+                [classes.normalToolbarButtons]: props.filterPopoverOptions.mustConfirm ? false : true,
+                [classes.menuButtons]: props.filterPopoverOptions.mustConfirm ? true : false,
+              })}
               tabIndex={0}
-              aria-label={props.filterPopoverOptions.confirmButtonLabel}
-              data-testid={'filterConfirm-button'}
-              onClick={applyFilters}>
-              {props.filterPopoverOptions.confirmButtonLabel}
+              aria-label={textLabels.clear}
+              data-testid={'filterClear-button'}
+              onClick={clearFilters}>
+              {textLabels.clear}
             </Button>
-        }
-          <Button
-            color="primary"
-            className={classes.resetLink}
-            tabIndex={0}
-            aria-label={textLabels.reset}
-            data-testid={'filterReset-button'}
-            onClick={onFilterReset}>
-            {textLabels.reset}
-          </Button>
+          </div>
         </div>
         <div className={classes.filtersSelected} />
       </div>
@@ -349,8 +408,8 @@ TableFilter.propTypes = {
   filterList: PropTypes.array.isRequired,
   /** Options for the filter popover */
   filterPopoverOptions: PropTypes.object.isRequired,
-  /** Callback to trigger filter reset */
-  onFilterRest: PropTypes.func,
+  /** Callback to trigger filter clear */
+  onFilterClear: PropTypes.func,
   /** Callback to trigger filter update */
   onFilterUpdate: PropTypes.func,
   /** Options used to describe table */

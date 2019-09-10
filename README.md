@@ -1,7 +1,3 @@
-<div align="center">
-  <img src="https://user-images.githubusercontent.com/19170080/34070522-e15d32e2-e235-11e7-8af5-fa704cdcad56.png" />
-</div>
-
 # MUI-DT - Datatables for Material-UI
 
 [![Build Status](https://travis-ci.org/patorjk/mui-dt.svg?branch=master)](https://travis-ci.org/patorjk/mui-dt)
@@ -159,6 +155,7 @@ The component accepts the following props:
 |**`onColumnViewChange`**|function||Callback function that triggers when a column view has been changed. `function(changedColumn: string, action: string) => void`
 |**`onDownload`**|function||A callback function that triggers when the user downloads the CSV file. In the callback, you can control what is written to the CSV file. `function(buildHead: (columns) => string, buildBody: (data) => string, columns, data) => string`. Return `false` to cancel download of file.
 |**`onFilterChange`**|function||Callback function that triggers when filters have changed. `function(changedColumnName: string, filterList: array, changedColumnIndex: number) => void`
+|**`onFilterConfirm`**|function||Callback function that is triggered when a user presses the "confirm" button on the filter popover. This occurs only if you've set filterPopoverOptions.mustConfirm option to true. `function(filterList: array) => void`
 |**`onRowClick`**|function||Callback function that triggers when a row is clicked. `function(rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => void`
 |**`onRowsDelete`**|function||Callback function that triggers when row(s) are deleted. `function(rowsDeleted: object(lookup: {[dataIndex]: boolean}, data: arrayOfObjects: {index: number, dataIndex: number})) => void OR false` (Returning `false` prevents row deletion.)
 |**`onRowsExpand`**|function||Callback function that triggers when a row is expanded or collapsed. The rowsExpanded parameter can be used to save off the value for options.rowsExpanded for state changes. `function(affectedRows: array, allRowsExpanded: array, rowsExpanded: array) => void` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/expandable-rows/index.js)
@@ -382,6 +379,11 @@ const options = {
   ...
 }
 ```
+
+## Breaking Changes with mui-datatables
+This library started as a fork of mui-datatables. I'm aiming to keep it similar enough so that someone could use this as a drop in replacement, however, the more I work on this library, the more it will evolve. Below I list list "breaking" changes with mui-datatables.
+
+* The "resetFilters" event that occurs for the onTableChange function is now called "clearFilters". (reason: with the addition of filterPopoverOptions and the ability to confirm filters, there needed to be a reset and a clear function. "reset" already existed and functioned as a "clear", so it was renamed)
 
 ## Contributing
 Thanks for taking an interest in the library and the github community!

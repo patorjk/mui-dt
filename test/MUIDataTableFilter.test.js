@@ -41,7 +41,13 @@ describe('<TableFilter />', function() {
     const options = { filterType: 'checkbox', textLabels };
     const filterList = [[], [], [], []];
     const shallowWrapper = mount(
-      <TableFilter columns={columns} filterData={filterData} filterList={filterList} options={options} />,
+      <TableFilter 
+        columns={columns} 
+        filterData={filterData} 
+        filterList={filterList} 
+        options={options} 
+        updateFilterByType={() => {}}
+        filterPopoverOptions={{}}/>,
     );
     const labels = shallowWrapper
       .find(Typography)
@@ -54,7 +60,13 @@ describe('<TableFilter />', function() {
     const options = { filterType: 'checkbox', textLabels };
     const filterList = [[], [], [], []];
     const shallowWrapper = mount(
-      <TableFilter columns={columns} filterData={filterData} filterList={filterList} options={options} />,
+      <TableFilter 
+        columns={columns} 
+        filterData={filterData} 
+        filterList={filterList} 
+        options={options} 
+        updateFilterByType={() => {}}
+        filterPopoverOptions={{}} />,
     );
 
     const actualResult = shallowWrapper.find(Checkbox);
@@ -67,7 +79,13 @@ describe('<TableFilter />', function() {
     columns = columns.map(item => (item.filter = false));
 
     const mountWrapper = mount(
-      <TableFilter columns={columns} filterData={filterData} filterList={filterList} options={options} />,
+      <TableFilter 
+        columns={columns} 
+        filterData={filterData} 
+        filterList={filterList} 
+        options={options} 
+        updateFilterByType={() => {}}
+        filterPopoverOptions={{}} />,
     );
 
     const actualResult = mountWrapper.find(Checkbox);
@@ -79,7 +97,13 @@ describe('<TableFilter />', function() {
     const filterList = [['Joe James'], [], [], []];
 
     const mountWrapper = mount(
-      <TableFilter columns={columns} filterData={filterData} filterList={filterList} options={options} />,
+      <TableFilter 
+        columns={columns} 
+        filterData={filterData} 
+        filterList={filterList} 
+        options={options} 
+        updateFilterByType={() => {}}
+        filterPopoverOptions={{}} />,
     );
 
     const actualResult = mountWrapper.find(Select);
@@ -92,7 +116,13 @@ describe('<TableFilter />', function() {
     columns = columns.map(item => (item.filter = false));
 
     const mountWrapper = mount(
-      <TableFilter columns={columns} filterData={filterData} filterList={filterList} options={options} />,
+      <TableFilter 
+        columns={columns} 
+        filterData={filterData} 
+        filterList={filterList} 
+        options={options} 
+        updateFilterByType={() => {}}
+        filterPopoverOptions={{}} />,
     );
 
     const actualResult = mountWrapper.find(Select);
@@ -104,7 +134,13 @@ describe('<TableFilter />', function() {
     const filterList = [['Joe James', 'John Walsh'], [], [], []];
 
     const mountWrapper = mount(
-      <TableFilter columns={columns} filterData={filterData} filterList={filterList} options={options} />,
+      <TableFilter 
+        columns={columns} 
+        filterData={filterData} 
+        filterList={filterList} 
+        options={options} 
+        updateFilterByType={() => {}}
+        filterPopoverOptions={{}} />,
     );
 
     const actualResult = mountWrapper.find(Select);
@@ -129,7 +165,13 @@ describe('<TableFilter />', function() {
     };
     const filterList = [[], [], [], []];
     const mountWrapper = mount(
-      <TableFilter columns={columns} filterData={filterData} filterList={filterList} options={options} />,
+      <TableFilter 
+        columns={columns} 
+        filterData={filterData} 
+        filterList={filterList} 
+        options={options} 
+        updateFilterByType={() => {}}
+        filterPopoverOptions={{}} />,
     );
 
     const actualResult = mountWrapper.find('#custom-filter-render');
@@ -140,7 +182,13 @@ describe('<TableFilter />', function() {
     const options = { filterType: 'textField', textLabels };
     const filterList = [[], [], [], []];
     const shallowWrapper = mount(
-      <TableFilter columns={columns} filterData={filterData} filterList={filterList} options={options} />,
+      <TableFilter 
+        columns={columns} 
+        filterData={filterData} 
+        filterList={filterList} 
+        options={options} 
+        updateFilterByType={() => {}}
+        filterPopoverOptions={{}} />,
     );
     const labels = shallowWrapper
       .find(TextField)
@@ -153,7 +201,13 @@ describe('<TableFilter />', function() {
     const options = { filterType: 'textField', textLabels };
     const filterList = [[], [], [], []];
     const shallowWrapper = mount(
-      <TableFilter columns={columns} filterData={filterData} filterList={filterList} options={options} />,
+      <TableFilter 
+        columns={columns} 
+        filterData={filterData} 
+        filterList={filterList} 
+        options={options} 
+        updateFilterByType={() => {}}
+        filterPopoverOptions={{}} />,
     );
 
     const actualResult = shallowWrapper.find(TextField);
@@ -166,7 +220,13 @@ describe('<TableFilter />', function() {
     columns = columns.map(item => (item.filter = false));
 
     const shallowWrapper = mount(
-      <TableFilter columns={columns} filterData={filterData} filterList={filterList} options={options} />,
+      <TableFilter 
+        columns={columns} 
+        filterData={filterData} 
+        filterList={filterList} 
+        options={options} 
+        updateFilterByType={() => {}}
+        filterPopoverOptions={{}} />,
     );
 
     const actualResult = shallowWrapper.find(TextField);
@@ -179,126 +239,124 @@ describe('<TableFilter />', function() {
     columns.forEach(item => (item.filterType = 'checkbox'));
 
     const shallowWrapper = mount(
-      <TableFilter columns={columns} filterData={filterData} filterList={filterList} options={options} />,
+      <TableFilter 
+        columns={columns} 
+        filterData={filterData} 
+        filterList={filterList} 
+        options={options} 
+        updateFilterByType={() => {}}
+        filterPopoverOptions={{}} />,
     );
 
     const actualResult = shallowWrapper.find(Checkbox);
     assert.strictEqual(actualResult.length, 13);
   });
 
-  it('should trigger onFilterUpdate prop callback when calling method handleCheckboxChange', () => {
+  it('should trigger onFilterUpdate prop callback when calling method checkbox onchange triggered', () => {
     const options = { filterType: 'checkbox', textLabels };
     const filterList = [[], [], [], []];
     const onFilterUpdate = spy();
 
-    const shallowWrapper = shallow(
+    const fullWrapper = mount(
       <TableFilter
         columns={columns}
         onFilterUpdate={onFilterUpdate}
         filterData={filterData}
         filterList={filterList}
         options={options}
-      />,
-    ).dive();
-    const instance = shallowWrapper.instance();
+        updateFilterByType={() => {}}
+        filterPopoverOptions={{}} />,
+    );
 
-    //const event = { target: { value: 0 }};
-    instance.handleCheckboxChange(0, 0);
+    fullWrapper.find('input[type="checkbox"]').at(0).simulate('change');
     assert.strictEqual(onFilterUpdate.callCount, 1);
   });
 
-  it('should trigger onFilterUpdate prop callback when calling method handleDropdownChange', () => {
+  it('should trigger onFilterUpdate prop callback when Select onChange event occurs for dropdown', () => {
     const options = { filterType: 'select', textLabels };
     const filterList = [[], [], [], []];
     const onFilterUpdate = spy();
 
-    const shallowWrapper = shallow(
+    const fullWrapper = mount(
       <TableFilter
         columns={columns}
         onFilterUpdate={onFilterUpdate}
         filterData={filterData}
         filterList={filterList}
         options={options}
-      />,
-    ).dive();
-    const instance = shallowWrapper.instance();
+        updateFilterByType={() => {}}
+        filterPopoverOptions={{}} />,
+    );
 
-    let event = { target: { value: 'All' } };
-    instance.handleDropdownChange(event, 0);
+    let event = { target: { value: 'Joe James' } };
+    fullWrapper.find(Select).at(0).props().onChange(event);
     assert.strictEqual(onFilterUpdate.callCount, 1);
 
-    event = { target: { value: 'test' } };
-    instance.handleDropdownChange(event, 0);
+    event = { target: { value: 'All' } };
+    fullWrapper.find(Select).at(0).props().onChange(event);
     assert.strictEqual(onFilterUpdate.callCount, 2);
 
-    shallowWrapper
-      .find(Select)
-      .first()
-      .simulate('change', event);
+    event = { target: { value: 'Joe James' } };
+    fullWrapper.find(Select).at(0).props().onChange(event);
     assert.strictEqual(onFilterUpdate.callCount, 3);
   });
 
-  it('should trigger onFilterUpdate prop callback when calling method handleMultiselectChange', () => {
+  it('should trigger onFilterUpdate prop callback when Select onChange event occurs for multi-select', () => {
     const options = { filterType: 'multiselect', textLabels };
     const filterList = [[], [], [], []];
     const onFilterUpdate = spy();
 
-    const shallowWrapper = shallow(
+    const fullWrapper = mount(
       <TableFilter
         columns={columns}
         onFilterUpdate={onFilterUpdate}
         filterData={filterData}
         filterList={filterList}
         options={options}
-      />,
-    ).dive();
-    const instance = shallowWrapper.instance();
+        updateFilterByType={() => {}}
+        filterPopoverOptions={{}} />,
+    );
 
-    let event = { target: { value: 'All' } };
-
-    instance.handleMultiselectChange(event, 0);
+    let event = { target: { value: 'Joe James' } };
+    fullWrapper.find(Select).at(0).props().onChange(event);
     assert.strictEqual(onFilterUpdate.callCount, 1);
 
-    event = { target: { value: 'test' } };
-    instance.handleMultiselectChange(event, 0);
+    event = { target: { value: 'All' } };
+    fullWrapper.find(Select).at(0).props().onChange(event);
     assert.strictEqual(onFilterUpdate.callCount, 2);
 
-    shallowWrapper
-      .find(Select)
-      .first()
-      .simulate('change', event);
+    event = { target: { value: 'Joe James' } };
+    fullWrapper.find(Select).at(0).props().onChange(event);
     assert.strictEqual(onFilterUpdate.callCount, 3);
   });
 
-  it('should trigger onFilterUpdate prop callback when calling method handleTextFieldChange', () => {
+  it('should trigger onFilterUpdate prop callback when calling onChange for text filter', () => {
     const options = { filterType: 'textField', textLabels };
     const filterList = [[], [], [], []];
     const onFilterUpdate = spy();
 
-    const shallowWrapper = shallow(
+    const fullWrapper = mount(
       <TableFilter
         columns={columns}
         onFilterUpdate={onFilterUpdate}
         filterData={filterData}
         filterList={filterList}
         options={options}
-      />,
-    ).dive();
-    const instance = shallowWrapper.instance();
+        updateFilterByType={() => {}}
+        filterPopoverOptions={{}} />,
+    );
 
-    let event = { target: { value: 'All' } };
-
-    instance.handleTextFieldChange(event, 0);
+    let event = { target: { value: 'Joe James' } };
+    fullWrapper.find(TextField).at(0).props().onChange(event);
     assert.strictEqual(onFilterUpdate.callCount, 1);
 
-    event = { target: { value: 'test' } };
-    instance.handleTextFieldChange(event, 0);
+    event = { target: { value: '' } };
+    fullWrapper.find(TextField).at(0).props().onChange(event);
     assert.strictEqual(onFilterUpdate.callCount, 2);
 
-    shallowWrapper
-      .find(TextField)
-      .first()
-      .simulate('change', event);
+    event = { target: { value: 'La la la' } };
+    fullWrapper.find(TextField).at(0).props().onChange(event);
     assert.strictEqual(onFilterUpdate.callCount, 3);
+
   });
 });
