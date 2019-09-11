@@ -1,11 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
+import Switch from '@material-ui/core/Switch';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 import MUIDataTable from "../../src/";
 
 class Example extends React.Component {
   state = {
-    rowsSelected: []
+    rowsSelected: [],
+    disableSelectToolbar: false,
   };
+
+  toogleSelectToolbar = () => {
+    this.setState({
+      disableSelectToolbar: !this.state.disableSelectToolbar
+    });
+  }
 
   render() {
 
@@ -58,8 +70,8 @@ class Example extends React.Component {
       responsive: 'stacked',
       rowsPerPage: 10,
       rowsSelected: this.state.rowsSelected,
-      onRowsSelect: (newRowSelected, allRows, rowsSelected) => {
-        console.log(newRowSelected, allRows, rowsSelected);
+      onRowSelectionChange: (affectedRows, allSelectedRows, rowsSelected) => {
+        console.log(affectedRows, allSelectedRows, rowsSelected);
         this.setState({ rowsSelected: rowsSelected });
       },
       onRowsDelete: (rowsDeleted) => {
@@ -96,11 +108,27 @@ class Example extends React.Component {
         //prevents selection of row with title "Attorney"
         return data[dataIndex][1] != "Attorney";
       },
-      selectableRowsHeader: false
+      selectableRowsHeader: false,
+      disableSelectToolbar: this.state.disableSelectToolbar,
     };
 
     return (
-      <MUIDataTable title={"ACME Employee list"} data={data} columns={columns} options={options} />
+      <>
+        <FormGroup row>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={this.state.disableSelectToolbar}
+                onChange={this.toogleSelectToolbar}
+                value={true}
+                color="primary"
+              />
+            }
+            label="Disable Select Toolbar"
+          />
+        </FormGroup>
+        <MUIDataTable title={"ACME Employee list"} data={data} columns={columns} options={options} />
+      </>
     );
 
   }

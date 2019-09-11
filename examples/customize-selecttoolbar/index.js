@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import MUIDataTable from "../../src/";
-import CustomToolbarSelect from "./CustomToolbarSelect";
+import CustomSelectToolbar from "./CustomSelectToolbar";
 
 class Example extends React.Component {
   render() {
@@ -46,8 +46,8 @@ class Example extends React.Component {
       filterType: "dropdown",
       responsive: "stacked",
       rowsPerPage: 10,
-      customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-        <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
+      customSelectToolbar: (selectedRows, displayData, setSelectedRows) => (
+        <CustomSelectToolbar selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
       ),
     };
 

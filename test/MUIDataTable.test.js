@@ -1042,7 +1042,7 @@ describe('<MUIDataTable />', function() {
     assert.deepEqual(state.selectedRows.data, expectedResult);
   });
 
-  it('should call onRowsExpand when row is expanded or collapsed', () => {
+  it('should call onRowExpansionChange when row is expanded or collapsed', () => {
     const options = {
       expandableRows: true,
       renderExpandableRow: () => (
@@ -1051,7 +1051,7 @@ describe('<MUIDataTable />', function() {
         </tr>
       ),
       expandableRowsOnClick: true,
-      onRowsExpand: spy(),
+      onRowExpansionChange: spy(),
     };
     const mountWrapper = mount(<MUIDataTable columns={columns} data={data} options={options} />);
 
@@ -1060,16 +1060,16 @@ describe('<MUIDataTable />', function() {
       .first()
       .simulate('click');
 
-    assert.strictEqual(options.onRowsExpand.callCount, 1);
-    assert(options.onRowsExpand.calledWith([{ index: 2, dataIndex: 2 }], [{ index: 2, dataIndex: 2 }]));
+    assert.strictEqual(options.onRowExpansionChange.callCount, 1);
+    assert(options.onRowExpansionChange.calledWith([{ index: 2, dataIndex: 2 }], [{ index: 2, dataIndex: 2 }]));
 
     mountWrapper
       .find('#MUIDataTableBodyRow-2')
       .first()
       .simulate('click');
 
-    assert.strictEqual(options.onRowsExpand.callCount, 2);
-    assert(options.onRowsExpand.calledWith([{ index: 2, dataIndex: 2 }], []));
+    assert.strictEqual(options.onRowExpansionChange.callCount, 2);
+    assert(options.onRowExpansionChange.calledWith([{ index: 2, dataIndex: 2 }], []));
   });
 
   it('should update selectedRows when using rowsSelected option with type=multiple', () => {

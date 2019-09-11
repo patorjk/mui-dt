@@ -13,7 +13,7 @@ import CustomizeSearchRender from "./customize-search-render";
 import CustomizeSorting from "./customize-sorting";
 import CustomizeStyling from "./customize-styling";
 import CustomizeToolbar from "./customize-toolbar";
-import CustomizeToolbarSelect from "./customize-toolbarselect";
+import CustomizeSelectToolbar from "./customize-selecttoolbar";
 import DataAsObjects from "./data-as-objects";
 import ExpandableRows from "./expandable-rows";
 import FixedHeader from "./fixed-header";
@@ -48,7 +48,7 @@ export default {
     'Customize Sorting': CustomizeSorting,
     'Customize Styling': CustomizeStyling,
     'Customize Toolbar': CustomizeToolbar,
-    'Customize Toolbar Select': CustomizeToolbarSelect,
+    'Customize Select Toolbar': CustomizeSelectToolbar,
     'Data As Objects': DataAsObjects,
     'expandableRows': ExpandableRows,
     'fixedHeader': FixedHeader,

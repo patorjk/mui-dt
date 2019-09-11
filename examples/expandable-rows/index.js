@@ -88,8 +88,8 @@ class Example extends React.Component {
         return true;
       },
       rowsExpanded: [0, 1],
-      onRowsExpand: (rowExpanded, allRowsExpanded, rowsExpanded) => {
-        console.log('onRowsExpand');
+      onRowExpansionChange: (rowExpanded, allRowsExpanded, rowsExpanded) => {
+        console.log('onRowExpansionChange');
         console.dir(rowExpanded);
         console.dir(allRowsExpanded);
         console.dir(rowsExpanded);

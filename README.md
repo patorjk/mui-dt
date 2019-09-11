@@ -8,7 +8,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/patorjk/mui-dt/badge.svg?branch=master)](https://coveralls.io/github/patorjk/mui-dt?branch=master)
 [![npm version](https://badge.fury.io/js/mui-dt.svg)](https://badge.fury.io/js/mui-dt)
 
-MUI-DT is a data tables component built on [Material-UI](https://www.material-ui.com).  It comes with features like responsive modes for mobile/tablet devices, filtering, resizable + view/hide columns, search, export to CSV download, printing, selectable rows, expandable rows, pagination, and sorting. 
+MUI-DT is a data tables component built on [Material-UI](https://www.material-ui.com).  It comes with features like filtering, resizable + view/hide columns, search, export to CSV download, printing, selectable rows, expandable rows, pagination, and sorting. On top of the ability to customize styling on most views, there are two responsive modes "stacked" and "scroll" for mobile/tablet devices.
 
 You can try the table out live in a CodeSandbox here: https://codesandbox.io/s/github/patorjk/mui-dt
 
@@ -138,7 +138,7 @@ The component accepts the following props:
 |**`customToolbar`**|function||Render a custom toolbar.
 |**`customToolbarSelect`**|function||Render a custom selected rows toolbar. `function(selectedRows, displayData, setSelectedRows) => void`
 |**`count`**|number||User provided override for total number of rows.
-|**`disableToolbarSelect`**|boolean|false|Enable/disable the Select Toolbar that appears when a row is selected.
+|**`disableSelectToolbar`**|boolean|false|Enable/disable the Select Toolbar that appears when a row is selected.
 |**`download`**|boolean|true|Show/hide download icon from toolbar.
 |**`downloadOptions`**|object|`{filename: 'tableDownload.csv', separator: ','}`|Options to change the output of the CSV file: `filename`: string, `separator`: string, `filterOptions`: object(`useDisplayedColumnsOnly`: boolean, `useDisplayedRowsOnly`: boolean)
 |**`elevation`**|number|4|Shadow depth applied to Paper component.
@@ -159,9 +159,9 @@ The component accepts the following props:
 |**`onFilterChange`**|function||Callback function that triggers when filters have changed. `function(changedColumnName: string, filterList: array, changedColumnIndex: number) => void`
 |**`onFilterConfirm`**|function||Callback function that is triggered when a user presses the "confirm" button on the filter popover. This occurs only if you've set filterPopoverOptions.mustConfirm option to true. `function(filterList: array) => void`
 |**`onRowClick`**|function||Callback function that triggers when a row is clicked. `function(rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => void`
+|**`onRowExpansionChange`**|function||Callback function that triggers when a row is expanded or collapsed. The rowsExpanded parameter can be used to save off the value for options.rowsExpanded for state changes. `function(affectedRows: array, allRowsExpanded: array, rowsExpanded: array) => void` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/expandable-rows/index.js)
 |**`onRowsDelete`**|function||Callback function that triggers when row(s) are deleted. `function(rowsDeleted: object(lookup: {[dataIndex]: boolean}, data: arrayOfObjects: {index: number, dataIndex: number})) => void OR false` (Returning `false` prevents row deletion.)
-|**`onRowsExpand`**|function||Callback function that triggers when a row is expanded or collapsed. The rowsExpanded parameter can be used to save off the value for options.rowsExpanded for state changes. `function(affectedRows: array, allRowsExpanded: array, rowsExpanded: array) => void` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/expandable-rows/index.js)
-|**`onRowsSelect`**|function||Callback function that triggers when row(s) are selected. If setting state, the rowsSelected parameter can be used to set options.rowsSelected. `function(newRowsSelected: array, allRowsSelected: array, rowsSelected: rowsSelected) => void` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/selectable-rows/index.js)
+|**`onRowSelectionChange`**|function||Callback function that triggers when row(s) are selected/unselected. If setting state, the rowsSelected parameter can be used to set options.rowsSelected. `function(affectedRows: array, allSelectedRows: array, rowsSelected: rowsSelected) => void` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/selectable-rows/index.js)
 |**`onSearchChange`**|function||Callback function that triggers when the search text value has changed. `function(searchText: string) => void`
 |**`onSearchClose`**|function||Callback function that triggers when the searchbox closes. `function() => void`
 |**`onSearchOpen`**|function||Callback function that triggers when the searchbox opens. `function() => void`
@@ -383,9 +383,14 @@ const options = {
 ```
 
 ## Breaking Changes with mui-datatables
-This library started as a fork of mui-datatables, developed to solve several pain points I was having and to add several additional features. I'm aiming to keep it similar enough so that someone could use this as a drop in replacement (or, if the maintainer of mui-datatables decides to allow more features in - to hopefully merge this library into that library), however, the more I work on this library, the more it will evolve. Below I list "breaking" changes with mui-datatables.
+This library started as a fork of mui-datatables. Below I list breaking changes with mui-datatables.
 
-* The "resetFilters" event that occurs for the onTableChange function is now called "clearFilters". (reason: with the addition of filterPopoverOptions and the ability to confirm filters, there needed to be a reset and a clear function. "reset" already existed and functioned as a "clear", so it was renamed)
+* The "resetFilters" event that occurs for the onTableChange function is now called "clearFilters".
+* The responsiveScrollMaxHeight responsiveScrollFullHeight classes on MUIDataTable have been removed.
+* customToolbarSelect renamed customSelectToolbar.
+* disableToolbarSelect renamed disableSelectToolbar.
+* onRowsSelect renamed onRowSelectionChange.
+* onRowsExpand renamed onRowExpansionChange.
 
 ## Contributing
 Thanks for taking an interest in the library and the github community!

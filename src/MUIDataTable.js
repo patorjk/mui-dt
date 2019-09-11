@@ -129,8 +129,8 @@ class MUIDataTable extends React.Component {
       customSearch: PropTypes.func,
       customSort: PropTypes.func,
       customToolbar: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-      customToolbarSelect: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-      disableToolbarSelect: PropTypes.bool,
+      customSelectToolbar: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+      disableSelectToolbar: PropTypes.bool,
       download: PropTypes.bool,
       downloadOptions: PropTypes.shape({
         filename: PropTypes.string,
@@ -153,8 +153,8 @@ class MUIDataTable extends React.Component {
       isRowSelectable: PropTypes.func,
       onDownload: PropTypes.func,
       onRowClick: PropTypes.func,
-      onRowsExpand: PropTypes.func,
-      onRowsSelect: PropTypes.func,
+      onRowExpansionChange: PropTypes.func,
+      onRowSelectionChange: PropTypes.func,
       onTableChange: PropTypes.func,
       onTableInit: PropTypes.func,
       page: PropTypes.number,
@@ -286,7 +286,7 @@ class MUIDataTable extends React.Component {
   getDefaultOptions = () => ({
     caseSensitive: false,
     checkboxColor: 'primary',
-    disableToolbarSelect: false,
+    disableSelectToolbar: false,
     download: true,
     downloadOptions: {
       filename: 'tableDownload.csv',
@@ -1089,8 +1089,8 @@ class MUIDataTable extends React.Component {
       },
       () => {
         this.setTableAction('expandRow');
-        if (this.options.onRowsExpand) {
-          this.options.onRowsExpand(
+        if (this.options.onRowExpansionChange) {
+          this.options.onRowExpansionChange(
             curExpandedRows,
             this.state.expandedRows.data,
             this.state.expandedRows.data.map(item => item.dataIndex),
@@ -1126,7 +1126,7 @@ class MUIDataTable extends React.Component {
           let selectedMap = buildMap(newRows);
 
           // if the select toolbar is disabled, the rules are a little different
-          if (this.options.disableToolbarSelect === true) {
+          if (this.options.disableSelectToolbar === true) {
             if (selectedRowsLen > displayData.length) {
               isDeselect = true;
             } else {
@@ -1154,8 +1154,8 @@ class MUIDataTable extends React.Component {
         },
         () => {
           this.setTableAction('rowsSelect');
-          if (this.options.onRowsSelect) {
-            this.options.onRowsSelect(
+          if (this.options.onRowSelectionChange) {
+            this.options.onRowSelectionChange(
               this.state.curSelectedRows,
               this.state.selectedRows.data,
               this.state.selectedRows.data.map(item => item.dataIndex),
@@ -1216,8 +1216,8 @@ class MUIDataTable extends React.Component {
         },
         () => {
           this.setTableAction('rowsSelect');
-          if (this.options.onRowsSelect) {
-            this.options.onRowsSelect(
+          if (this.options.onRowSelectionChange) {
+            this.options.onRowSelectionChange(
               [value],
               this.state.selectedRows.data,
               this.state.selectedRows.data.map(item => item.dataIndex),
@@ -1238,8 +1238,8 @@ class MUIDataTable extends React.Component {
         },
         () => {
           this.setTableAction('rowsSelect');
-          if (this.options.onRowsSelect) {
-            this.options.onRowsSelect(
+          if (this.options.onRowSelectionChange) {
+            this.options.onRowSelectionChange(
               this.state.selectedRows.data,
               this.state.selectedRows.data,
               this.state.selectedRows.data.map(item => item.dataIndex),
@@ -1326,7 +1326,7 @@ class MUIDataTable extends React.Component {
         elevation={this.options.elevation}
         ref={this.tableContent}
         className={classnames(classes.paper, className)}>
-        {selectedRows.data.length && this.options.disableToolbarSelect !== true ? (
+        {selectedRows.data.length && this.options.disableSelectToolbar !== true ? (
           <TableToolbarSelect
             options={this.options}
             selectedRows={selectedRows}
