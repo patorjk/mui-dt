@@ -19,28 +19,28 @@ describe('<TableToolbarSelect />', function() {
     assert.strictEqual(actualResult.length, 1);
   });
 
-  it('should call customToolbarSelect with 3 arguments', () => {
+  it('should call customSelectToolbar with 3 arguments', () => {
     const onRowsDelete = () => {};
-    const customToolbarSelect = spy();
+    const customSelectToolbar = spy();
     const selectedRows = { data: [1] };
     const displayData = [1];
 
     const mountWrapper = mount(
       <TableToolbarSelect
-        options={{ textLabels, customToolbarSelect }}
+        options={{ textLabels, customSelectToolbar }}
         selectedRows={selectedRows}
         onRowsDelete={onRowsDelete}
         displayData={displayData}
       />,
     );
 
-    assert.strictEqual(customToolbarSelect.calledWith(selectedRows, displayData, match.typeOf('function')), true);
+    assert.strictEqual(customSelectToolbar.calledWith(selectedRows, displayData, match.typeOf('function')), true);
   });
 
   it('should throw TypeError if selectedRows is not an array of numbers', done => {
     const onRowsDelete = () => {};
     const selectRowUpdate = () => {};
-    const customToolbarSelect = (_, __, setSelectedRows) => {
+    const customSelectToolbar = (_, __, setSelectedRows) => {
       const spySetSelectedRows = spy(setSelectedRows);
       try {
         spySetSelectedRows('');
@@ -62,7 +62,7 @@ describe('<TableToolbarSelect />', function() {
 
     const mountWrapper = mount(
       <TableToolbarSelect
-        options={{ textLabels, customToolbarSelect }}
+        options={{ textLabels, customSelectToolbar }}
         selectedRows={selectedRows}
         onRowsDelete={onRowsDelete}
         displayData={displayData}
@@ -71,10 +71,10 @@ describe('<TableToolbarSelect />', function() {
     );
   });
 
-  it('should call selectRowUpdate when customToolbarSelect passed and setSelectedRows was called', () => {
+  it('should call selectRowUpdate when customSelectToolbar passed and setSelectedRows was called', () => {
     const onRowsDelete = () => {};
     const selectRowUpdate = spy();
-    const customToolbarSelect = (_, __, setSelectedRows) => {
+    const customSelectToolbar = (_, __, setSelectedRows) => {
       setSelectedRows([1]);
     };
     const selectedRows = { data: [1] };
@@ -82,7 +82,7 @@ describe('<TableToolbarSelect />', function() {
 
     const mountWrapper = mount(
       <TableToolbarSelect
-        options={{ textLabels, customToolbarSelect }}
+        options={{ textLabels, customSelectToolbar }}
         selectedRows={selectedRows}
         onRowsDelete={onRowsDelete}
         displayData={displayData}
