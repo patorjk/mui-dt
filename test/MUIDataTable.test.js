@@ -544,7 +544,7 @@ describe('<MUIDataTable />', function() {
     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
-    instance.filterUpdate(0, 'Joe James', 'Name', 'checkbox');
+    instance.filterUpdate(0, 'Joe James', 'checkbox');
     table.update();
     const state = table.state();
     assert.deepEqual(state.filterList, [['Joe James'], [], [], [], []]);
@@ -554,7 +554,7 @@ describe('<MUIDataTable />', function() {
     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
-    instance.filterUpdate(0, 'Joe James', 'Name', 'checkbox');
+    instance.filterUpdate(0, 'Joe James', 'checkbox');
     table.update();
 
     let state = table.state();
@@ -571,7 +571,7 @@ describe('<MUIDataTable />', function() {
     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
-    instance.filterUpdate(0, ['Joe James'], 'Name', 'dropdown');
+    instance.filterUpdate(0, ['Joe James'], 'dropdown');
     table.update();
 
     const state = table.state();
@@ -642,13 +642,13 @@ describe('<MUIDataTable />', function() {
     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
-    instance.filterUpdate(0, ['Joe James'], 'Name', 'dropdown');
+    instance.filterUpdate(0, ['Joe James'], 'dropdown');
     table.update();
 
     let state = table.state();
     assert.deepEqual(state.filterList, [['Joe James'], [], [], [], []]);
 
-    instance.filterUpdate(0, [], 'Name', 'dropdown');
+    instance.filterUpdate(0, [], 'dropdown');
     table.update();
 
     state = table.state();
@@ -660,7 +660,7 @@ describe('<MUIDataTable />', function() {
     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
-    instance.filterUpdate(0, 'Joe James', 'Name', 'checkbox');
+    instance.filterUpdate(0, 'Joe James', 'checkbox');
     table.update();
 
     // now remove it
@@ -684,24 +684,24 @@ describe('<MUIDataTable />', function() {
     const instance = table.instance();
 
     // test checkbox filter
-    instance.filterUpdate(0, 'Joe James', 'Name', 'checkbox');
+    instance.filterUpdate(0, 'Joe James', 'checkbox');
     table.update();
-    assert.strictEqual(changedColumn, 'Name');
+    assert.strictEqual(changedColumn, 0);
 
     // test dropdown filter
-    instance.filterUpdate(0, ['Test Corp'], 'Company', 'dropdown');
+    instance.filterUpdate(1, ['Test Corp'], 'dropdown');
     table.update();
-    assert.strictEqual(changedColumn, 'Company');
+    assert.strictEqual(changedColumn, 1);
 
     // test textField filter
-    instance.filterUpdate(0, 'Joe James', 'Name', 'textField');
+    instance.filterUpdate(2, 'Joe James', 'textField');
     table.update();
-    assert.strictEqual(changedColumn, 'Name');
+    assert.strictEqual(changedColumn, 2);
 
     // test multiselect filter
-    instance.filterUpdate(0, ['Test Corp'], 'Company', 'multiselect');
+    instance.filterUpdate(0, ['Test Corp'], 'multiselect');
     table.update();
-    assert.strictEqual(changedColumn, 'Company');
+    assert.strictEqual(changedColumn, 0);
 
     // test reset filters
     instance.clearFilters();
@@ -1239,7 +1239,7 @@ describe('<MUIDataTable />', function() {
     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
-    instance.filterUpdate(0, 'James, Joe', 'Name', 'checkbox');
+    instance.filterUpdate(0, 'James, Joe', 'checkbox');
     table.update();
     const state = table.state();
 
@@ -1256,7 +1256,7 @@ describe('<MUIDataTable />', function() {
     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} options={options} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
-    instance.filterUpdate(0, 'James', 'Name', 'textField');
+    instance.filterUpdate(0, 'James', 'textField');
     table.update();
     const state = table.state();
 
@@ -1273,7 +1273,7 @@ describe('<MUIDataTable />', function() {
     const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} options={options} />);
     const table = shallowWrapper.dive();
     const instance = table.instance();
-    instance.filterUpdate(0, ['Joe James'], 'Name', 'dropdown');
+    instance.filterUpdate(0, ['Joe James'], 'dropdown');
     table.update();
     const state = table.state();
 
@@ -1395,7 +1395,7 @@ describe('<MUIDataTable />', function() {
       const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} options={options} />);
       const table = shallowWrapper.dive();
       const instance = table.instance();
-      instance.filterUpdate(1, ['b'], 'Name', 'dropdown');
+      instance.filterUpdate(1, ['b'], 'dropdown');
       table.update();
       const { displayData } = table.state();
 
@@ -1443,7 +1443,7 @@ describe('<MUIDataTable />', function() {
       const shallowWrapper = shallow(<MUIDataTable columns={columns} data={data} options={options} />);
       const table = shallowWrapper.dive();
       const instance = table.instance();
-      instance.filterUpdate(1, ['b'], 'Name', 'dropdown');
+      instance.filterUpdate(1, ['b'], 'dropdown');
       table.update();
       const { displayData } = table.state();
 

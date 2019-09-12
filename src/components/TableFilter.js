@@ -36,14 +36,19 @@ export const useStyles = makeStyles(theme => ({
     color: theme.palette.text.primary,
     fontSize: '14px',
     fontWeight: 500,
+    marginRight: '32px',
   },
   noMargin: {
     marginLeft: '0px',
   },
   actionButtons: {
+    marginTop: '-5px',
     '@media screen and (max-width: 800px)': {
       marginTop: '14px',
     },
+  },
+  clearAlone: {
+    marginTop: '-5px',
   },
   confirmButton: {
     marginLeft: '0px',
@@ -111,17 +116,17 @@ function TableFilter(props) {
   const classes = useStyles();
   const [filterList, setFilterList] = useState( cloneDeep(props.filterList) );
 
-  const filterUpdate = (index, value, column, type) => {
+  const filterUpdate = (index, value, type) => {
     let newFilterList = filterList.slice(0);
-    props.updateFilterByType(newFilterList, index, value, column, type);
+    props.updateFilterByType(newFilterList, index, value, type);
     setFilterList(newFilterList);
   };
 
   const handleCheckboxChange = (index, value, column) => {
-    filterUpdate(index, value, column, 'checkbox');
+    filterUpdate(index, value, 'checkbox');
 
     if (props.filterPopoverOptions.mustConfirm !== true) {
-      props.onFilterUpdate(index, value, column, 'checkbox');
+      props.onFilterUpdate(index, value, 'checkbox');
     }
   };
 
@@ -129,34 +134,34 @@ function TableFilter(props) {
     const labelFilterAll = props.options.textLabels.filter.all;
     const value = event.target.value === labelFilterAll ? [] : [event.target.value];
     
-    filterUpdate(index, value, column, 'dropdown');
+    filterUpdate(index, value, 'dropdown');
 
     if (props.filterPopoverOptions.mustConfirm !== true) {
-      props.onFilterUpdate(index, value, column, 'dropdown');
+      props.onFilterUpdate(index, value, 'dropdown');
     }
   };
 
   const handleMultiselectChange = (index, value, column) => {
-    filterUpdate(index, value, column, 'multiselect');
+    filterUpdate(index, value, 'multiselect');
 
     if (props.filterPopoverOptions.mustConfirm !== true) {
-      props.onFilterUpdate(index, value, column, 'multiselect');
+      props.onFilterUpdate(index, value, 'multiselect');
     }
   };
 
   const handleTextFieldChange = (event, index, column) => {
-    filterUpdate(index, event.target.value, column, 'textField');
+    filterUpdate(index, event.target.value, 'textField');
 
     if (props.filterPopoverOptions.mustConfirm !== true) {
-      props.onFilterUpdate(index, event.target.value, column, 'textField');
+      props.onFilterUpdate(index, event.target.value, 'textField');
     }
   };
 
   const handleCustomChange = (value, index, column) => {
-    filterUpdate(index, value, column.name, column.filterType);
+    filterUpdate(index, value, column.filterType);
 
     if (props.filterPopoverOptions.mustConfirm !== true) {
-      props.onFilterUpdate(index, value, column.name, column.filterType);
+      props.onFilterUpdate(index, value, column.filterType);
     }
   };
 
@@ -296,7 +301,7 @@ function TableFilter(props) {
 
   const applyFilters = () => {
     filterList.forEach( (filter, index) => {
-      props.onFilterUpdate(index, filter, columns[index].name, 'custom');
+      props.onFilterUpdate(index, filter, 'custom');
     });
     props.handleClose();
 
@@ -337,7 +342,8 @@ function TableFilter(props) {
             {textLabels.title}
           </Typography>
           <div className={classNames({
-              [classes.actionButtons]: props.filterPopoverOptions.mustConfirm
+              [classes.actionButtons]: props.filterPopoverOptions.mustConfirm,
+              [classes.clearAlone]: !props.filterPopoverOptions.mustConfirm
             })}>
             {props.filterPopoverOptions.mustConfirm &&
               <>

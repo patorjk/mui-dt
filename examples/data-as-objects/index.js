@@ -15,6 +15,11 @@ class Example extends React.Component {
           //display: 'excluded',
           setCellProps: () => ({style:{whiteSpace:'pre'}}),
           setCellHeaderProps: () => ({style:{whiteSpace:'pre'}}),
+          customBodyRender: (value, tableMeta, updateValue) => {
+            console.dir(value);
+            console.dir(tableMeta);
+            console.dir(updateValue);
+          }
         }
       },      
       {
