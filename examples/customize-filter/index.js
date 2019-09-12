@@ -18,6 +18,7 @@ class Example extends React.Component {
         name: 'Title',
         options: {
           filter: true,
+          filterType: 'multiselect',
         },
       },
       {
@@ -147,10 +148,15 @@ class Example extends React.Component {
         mustConfirm: true,
       },
       responsive: 'scroll',
-      onFilterChange: (name, filterList, index) => {
+      onFilterChange: (index, filterList) => {
         console.log('onFilterChange callback');
-        console.log('Col Name:'+name);
         console.log('Col Index:'+index);
+        console.log(filterList);
+      },
+      onFilterChipClose: (index, removedFilter, filterList) => {
+        console.log('onFilterChipClose');
+        console.log(index);
+        console.log(removedFilter);
         console.log(filterList);
       }
     };

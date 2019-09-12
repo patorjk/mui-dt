@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(
   theme => ({
     root: {
-      '&.MuiTableRow-root.Mui-selected': {
+      '&.Mui-selected': {
         '& td': {
           backgroundColor: '#ededed',
         }        

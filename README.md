@@ -156,7 +156,8 @@ The component accepts the following props:
 |**`onColumnSortChange`**|function||Callback function that triggers when a column has been sorted. `function(changedColumn: string, direction: string) => void`
 |**`onColumnViewChange`**|function||Callback function that triggers when a column view has been changed. `function(changedColumn: string, action: string) => void`
 |**`onDownload`**|function||A callback function that triggers when the user downloads the CSV file. In the callback, you can control what is written to the CSV file. `function(buildHead: (columns) => string, buildBody: (data) => string, columns, data) => string`. Return `false` to cancel download of file.
-|**`onFilterChange`**|function||Callback function that triggers when filters have changed. `function(changedColumnName: string, filterList: array, changedColumnIndex: number) => void`
+|**`onFilterChipClose`**|function||Callback function that triggers when a filter is removed via the user pressing X on a filter chip to remove one of the filters. `function(changedColumnIndex: number, removedFilter: array, filterList: array,) => void`
+|**`onFilterChange`**|function||Callback function that triggers when filters have changed. `function(changedColumnIndex: number, filterList: array) => void`
 |**`onFilterConfirm`**|function||Callback function that is triggered when a user presses the "confirm" button on the filter popover. This occurs only if you've set filterPopoverOptions.mustConfirm option to true. `function(filterList: array) => void`
 |**`onRowClick`**|function||Callback function that triggers when a row is clicked. `function(rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => void`
 |**`onRowExpansionChange`**|function||Callback function that triggers when a row is expanded or collapsed. The rowsExpanded parameter can be used to save off the value for options.rowsExpanded for state changes. `function(affectedRows: array, allRowsExpanded: array, rowsExpanded: array) => void` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/expandable-rows/index.js)
@@ -391,6 +392,7 @@ This library started as a fork of mui-datatables. Below I list breaking changes 
 * disableToolbarSelect renamed disableSelectToolbar.
 * onRowsSelect renamed onRowSelectionChange.
 * onRowsExpand renamed onRowExpansionChange.
+* onFilterChange now takes the column index instead of the column name.
 
 ## Contributing
 Thanks for taking an interest in the library and the github community!
