@@ -141,6 +141,7 @@ class MUIDataTable extends React.Component {
         }),
       }),
       expandableRows: PropTypes.bool,
+      expandableRowsHeader: PropTypes.bool,
       expandableRowsOnClick: PropTypes.bool,
       filter: PropTypes.bool,
       filterType: PropTypes.oneOf(['dropdown', 'checkbox', 'multiselect', 'textField', 'custom']),
@@ -294,6 +295,7 @@ class MUIDataTable extends React.Component {
     },
     elevation: 4,
     expandableRows: false,
+    expandableRowsHeader: true,
     expandableRowsOnClick: false,
     filter: true,
     filterType: 'dropdown',
@@ -1059,6 +1061,8 @@ class MUIDataTable extends React.Component {
   };
 
   toggleExpandRow = row => {
+    console.log('toggleExpandRow');
+
     const { dataIndex } = row;
     let removedRow;
     const { isRowExpandable } = this.options;
@@ -1103,6 +1107,64 @@ class MUIDataTable extends React.Component {
       },
     );
   };
+
+  // Collapses or expands all expanded rows
+  toggleAllExpandableRows = () => {
+    let expandedRowsData = [...this.state.expandedRows.data];
+    const { isRowExpandable } = this.options;
+    let affecttedRows = [];
+
+    if (expandedRowsData.length > 0) {
+      // collapse all
+      
+      for (let ii = expandedRowsData.length - 1; ii >= 0; ii--) {
+        let item = expandedRowsData[ii];
+        if (!isRowExpandable || (isRowExpandable && isRowExpandable(item.dataIndex, this.state.expandedRows))) {
+          affecttedRows.push(expandedRowsData.splice(ii, 1));
+        }
+      }
+
+    } else {
+      // expand all
+
+      for (let ii = 0; ii < this.state.data.length; ii++) {
+        let item = this.state.data[ii];
+        if (!isRowExpandable || (isRowExpandable && isRowExpandable(item.dataIndex, this.state.expandedRows))) {
+          if ( this.state.expandedRows.lookup[item.index] !== true ) {
+            let newItem = {
+              index: ii,
+              dataIndex: item.index
+            };
+            expandedRowsData.push(newItem);
+            affecttedRows.push(newItem);
+          }
+        }
+      }
+    }
+
+    this.setState(
+      {
+        expandedRows: {
+          lookup: buildMap(expandedRowsData),
+          data: expandedRowsData,
+        },
+      },
+      () => {
+        this.setTableAction('expandRow');
+        if (this.options.onRowExpansionChange) {
+          this.options.onRowExpansionChange(
+            affecttedRows,
+            this.state.expandedRows.data,
+            this.state.expandedRows.data.map(item => item.dataIndex),
+          );
+        }
+      },
+    );
+  }
+
+  areAllRowsExpanded = () => {
+    return this.state.expandedRows.data.length === this.state.data.length;
+  }
 
   selectRowUpdate = (type, value, shiftAdjacentRows = []) => {
     // safety check
@@ -1397,6 +1459,9 @@ class MUIDataTable extends React.Component {
               selectRowUpdate={this.selectRowUpdate}
               toggleSort={this.toggleSortColumn}
               setCellRef={this.setHeadCellRef}
+              expandedRows={expandedRows}
+              toggleAllExpandableRows={this.toggleAllExpandableRows}
+              areAllRowsExpanded={this.areAllRowsExpanded}
               options={this.options} />
             <TableBody
               data={displayData}
