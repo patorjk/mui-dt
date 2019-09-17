@@ -143,6 +143,7 @@ The component accepts the following props:
 |**`downloadOptions`**|object|`{filename: 'tableDownload.csv', separator: ','}`|Options to change the output of the CSV file: `filename`: string, `separator`: string, `filterOptions`: object(`useDisplayedColumnsOnly`: boolean, `useDisplayedRowsOnly`: boolean)
 |**`elevation`**|number|4|Shadow depth applied to Paper component.
 |**`expandableRows`**|boolean|false|Enable/disable expandable rows.
+|**`expandableRowsHeader`**|boolean|true|Show/hide the expand all/collapse all row header for expandable rows.
 |**`expandableRowsOnClick`**|boolean|false|Enable/disable expand trigger when row is clicked. When False, only expand icon will trigger this action.
 |**`filter`**|boolean|true|Show/hide filter icon from toolbar.
 |**`filterType `**|string||Choice of filtering view. `enum('checkbox', 'dropdown', 'multiselect', 'textField')`

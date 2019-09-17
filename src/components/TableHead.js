@@ -62,6 +62,10 @@ class TableHead extends React.Component {
             checkboxColor={options.checkboxColor}
             checked={isChecked}
             expandableOn={options.expandableRows}
+            expandedRows={this.props.expandedRows}
+            expandableRowsHeader={options.expandableRowsHeader}
+            areAllRowsExpanded={this.props.areAllRowsExpanded}
+            onExpand={this.props.toggleAllExpandableRows}
             fixedHeader={options.fixedHeader}
             isHeaderCell={true}
             isRowSelectable={true}

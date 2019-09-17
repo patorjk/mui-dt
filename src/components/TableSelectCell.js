@@ -6,6 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import TableCell from '@material-ui/core/TableCell';
 import { makeStyles } from '@material-ui/core/styles';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import Remove from '@material-ui/icons/Remove';
 
 const useStyles = makeStyles(
   theme => ({
@@ -58,6 +59,9 @@ function TableSelectCell(props) {
     selectableOn = 'none',
     selectableRowsHeader,
     setCellRef,
+    expandableRowsHeader,
+    expandedRows,
+    areAllRowsExpanded = () => (false),
     ...otherProps
   } = props;
 
@@ -72,8 +76,12 @@ function TableSelectCell(props) {
 
   const iconClass = classNames({
     [classes.icon]: true,
-    [classes.hide]: isHeaderCell,
-    [classes.expanded]: isRowExpanded,
+    [classes.hide]: isHeaderCell && !expandableRowsHeader,
+    [classes.expanded]: isRowExpanded || (isHeaderCell && areAllRowsExpanded()),
+  });
+  const iconIndeterminateClass = classNames({
+    [classes.icon]: true,
+    [classes.hide]: isHeaderCell && !expandableRowsHeader,
   });
 
   const renderCheckBox = () => {
@@ -103,7 +111,13 @@ function TableSelectCell(props) {
   return (
     <TableCell className={cellClass} padding="checkbox" {...refProp}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        {expandableOn && <KeyboardArrowRight id="expandable-button" className={iconClass} onClick={onExpand} />}
+        {expandableOn && <>
+          {(isHeaderCell && !areAllRowsExpanded() && props.expandedRows.data.length > 0 ) ?
+            <Remove id="expandable-button" className={iconIndeterminateClass} onClick={onExpand} />
+            :
+            <KeyboardArrowRight id="expandable-button" className={iconClass} onClick={onExpand} />
+          }
+          </>}
         {selectableOn !== 'none' && renderCheckBox()}
       </div>
     </TableCell>

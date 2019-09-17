@@ -82,11 +82,15 @@ class Example extends React.Component {
       responsive: 'scroll',
       expandableRows: true,
       expandableRowsOnClick: true,
+      expandableRowsHeader: true,
+      /*
       isRowExpandable: (dataIndex, expandedRows) => {
         // Prevent expand/collapse of any row after the 5th (but allow those already expanded to be collapsed)
         if (expandedRows.data.length > 4 && expandedRows.data.filter(d => d.dataIndex === dataIndex).length === 0) return false;
         return true;
       },
+      */
+
       rowsExpanded: [0, 1],
       onRowExpansionChange: (rowExpanded, allRowsExpanded, rowsExpanded) => {
         console.log('onRowExpansionChange');
