@@ -13,6 +13,9 @@ const defaultHeadStyles = theme => ({
       display: 'none',
     },
   },
+  stacked: {
+    display: 'none',
+  },
 });
 
 class TableHead extends React.Component {
@@ -56,7 +59,11 @@ class TableHead extends React.Component {
 
     return (
       <MuiTableHead
-        className={classNames({ [classes.responsiveStacked]: options.responsive === 'stacked', [classes.main]: true })}>
+        className={classNames({ 
+          [classes.responsiveStacked]: options.displayMode === 'responsiveStacked', 
+          [classes.stacked]: options.displayMode === 'stacked', 
+          [classes.main]: true,
+        })}>
         <TableHeadRow>
           <TableSelectCell
             checkboxColor={options.checkboxColor}

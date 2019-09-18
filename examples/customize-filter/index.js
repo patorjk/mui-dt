@@ -147,7 +147,7 @@ class Example extends React.Component {
       filterPopoverOptions: {
         mustConfirm: true,
       },
-      responsive: 'scroll',
+      displayMode: 'scroll',
       onFilterChange: (index, filterList) => {
         console.log('onFilterChange callback');
         console.log('Col Index:'+index);

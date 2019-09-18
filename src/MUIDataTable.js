@@ -25,19 +25,9 @@ const defaultTableStyles = theme => ({
   tableRoot: {
     outline: 'none',
   },
-  responsiveScroll: {
+  tableWrapper: {
     overflowX: 'auto',
     overflow: 'auto',
-    height: '100%',
-    maxHeight: '499px',
-  },
-  responsiveStacked: {
-    overflowX: 'auto',
-    overflow: 'auto',
-    [theme.breakpoints.down('sm')]: {
-      overflowX: 'hidden',
-      overflow: 'hidden',
-    },
   },
   caption: {
     position: 'absolute',
@@ -163,7 +153,7 @@ class MUIDataTable extends React.Component {
       print: PropTypes.bool,
       renderExpandableRow: PropTypes.func,
       resizableColumns: PropTypes.bool,
-      responsive: PropTypes.oneOf(['stacked', 'scroll']),
+      displayMode: PropTypes.oneOf(['stacked', 'scroll', 'responsiveStacked']),
       rowHover: PropTypes.bool,
       rowsExpanded: PropTypes.array,
       rowsPerPage: PropTypes.number,
@@ -179,8 +169,7 @@ class MUIDataTable extends React.Component {
       serverSide: PropTypes.bool,
       setRowProps: PropTypes.func,
       sort: PropTypes.bool,
-      tableBodyMaxHeight: PropTypes.string,
-      tableBodyMinHeight: PropTypes.string,
+      tableBodyHeight: PropTypes.string,
       tableProps: PropTypes.object,
       textLabels: PropTypes.object,
       viewColumns: PropTypes.bool,
@@ -216,7 +205,6 @@ class MUIDataTable extends React.Component {
       data: [],
       lookup: {},
     },
-    showResponsive: false,
     searchText: null,
   };
 
@@ -288,6 +276,7 @@ class MUIDataTable extends React.Component {
     caseSensitive: false,
     checkboxColor: 'primary',
     disableSelectToolbar: false,
+    displayMode: 'scroll',
     download: true,
     downloadOptions: {
       filename: 'tableDownload.csv',
@@ -305,7 +294,6 @@ class MUIDataTable extends React.Component {
     },
     fixedHeader: true,
     resizableColumns: false,
-    responsive: 'stacked',
     rowHover: true,
     rowsPerPage: 10,
     rowsPerPageOptions: [10, 15, 100],
@@ -319,8 +307,7 @@ class MUIDataTable extends React.Component {
     sortFilterList: true,
     pagination: true,
     print: true,
-    tableBodyMaxHeight: '499px',
-    tableBodyMinHeight: 'none',
+    tableBodyHeight: 'none',
     textLabels,
     viewColumns: true,
   });
@@ -337,20 +324,8 @@ class MUIDataTable extends React.Component {
         'options.searchPlaceholder is superfluous. Please use options.searchProps.placeholder to set the placeholder text.',
       );
     }
-    if (['scroll', 'stacked'].indexOf(props.options.responsive) === -1) {
-      console.error(
-        `Invalid option value of ${props.options.responsive} for responsive.
-  Please use string option: scroll | stacked
-  Also note that scrollMaxHeight and scrollFullHeight are deprecated. Use "scroll" along with setting the tableBodyMaxHeight option.
-        `);
-      if (props.options.responsive === 'scrollMaxHeight') {
-        this.options.responsive = 'scroll';
-        this.options.tableBodyMaxHeight = '499px';
-      }
-      if (props.options.responsive === 'scrollFullHeight') {
-        this.options.responsive = 'scroll';
-        this.options.tableBodyMaxHeight = 'none';
-      }
+    if (['scroll', 'stacked', 'responsiveStacked'].indexOf(props.options.displayMode) === -1) {
+      console.error(`Invalid option value of ${props.options.displayMode} for displayMode.`);
     }
   };
 
@@ -1371,17 +1346,6 @@ class MUIDataTable extends React.Component {
     const rowsPerPage = this.options.pagination ? this.state.rowsPerPage : displayData.length;
     const showToolbar = hasToolbarItem(this.options, title);
     const columnNames = columns.map(column => ({ name: column.name, filterType: column.filterType }));
-    let responsiveClass;
-    
-    switch (this.options.responsive) {
-
-      case 'scroll':
-        responsiveClass = classes.responsiveScroll;
-        break;
-      case 'stacked':
-        responsiveClass = classes.responsiveStacked;
-        break;
-    }
 
     let tableProps = Object.assign({}, this.options.tableProps);
     let tableClassNames = classnames(classes.tableRoot, tableProps.className);
@@ -1430,10 +1394,9 @@ class MUIDataTable extends React.Component {
           columnNames={columnNames} />
         <div style={{ 
             position: 'relative', 
-            maxHeight: this.options.responsive === 'stacked' ? 'none' : this.options.tableBodyMaxHeight,
-            minHeight: this.options.responsive === 'stacked' ? 'none' : this.options.tableBodyMinHeight,
+            height: this.options.tableBodyHeight,
           }} 
-          className={responsiveClass}>
+          className={classes.tableWrapper}>
           {this.options.resizableColumns && (
             <TableResize
               key={rowCount}

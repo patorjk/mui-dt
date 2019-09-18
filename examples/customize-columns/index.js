@@ -153,7 +153,7 @@ function Example(props) {
   const options = {
     filter: true,
     filterType: 'dropdown',
-    responsive: 'stacked',
+    displayMode: 'responsiveStacked',
   };
 
   return (

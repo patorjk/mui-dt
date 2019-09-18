@@ -71,7 +71,7 @@ function Example() {
       ]}
       options={{
         selectableRows: "none",
-        responsive: "scroll",
+        displayMode: "scroll",
         customRowRender: data => {
           const [ name, cardNumber, cvc, expiry ] = data;
           

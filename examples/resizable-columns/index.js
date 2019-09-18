@@ -58,7 +58,7 @@ class Example extends React.Component {
       filter: true,
       filterType: 'dropdown',
       resizableColumns: true,
-      responsive: 'scroll',
+      displayMode: 'scroll',
     };
 
     return (

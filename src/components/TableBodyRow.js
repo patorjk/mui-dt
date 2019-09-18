@@ -26,6 +26,9 @@ const useStyles = makeStyles(
         border: 'solid 2px rgba(0, 0, 0, 0.15)',
       },
     },
+    stacked: {
+      border: 'solid 2px rgba(0, 0, 0, 0.15)',
+    },
   }),
   { name: 'MUIDataTableBodyRow' },
 );
@@ -44,7 +47,8 @@ function TableBodyRow(props) {
           [classes.root]: true,
           [classes.hover]: options.rowHover,
           [classes.hoverCursor]: options.selectableRowsOnClick || options.expandableRowsOnClick,
-          [classes.responsiveStacked]: options.responsive === 'stacked',
+          [classes.responsiveStacked]: options.displayMode === 'responsiveStacked',
+          [classes.stacked]: options.displayMode === 'stacked',
         },
         className,
       )}

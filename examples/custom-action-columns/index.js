@@ -167,7 +167,7 @@ class Example extends React.Component {
     const options = {
       filter: true,
       filterType: 'dropdown',
-      responsive: 'stacked',
+      displayMode: 'responsiveStacked',
       onColumnSortChange: (changedColumn, direction) => console.log('changedColumn: ', changedColumn, 'direction: ', direction),
       onChangeRowsPerPage: numberOfRows => console.log('numberOfRows: ', numberOfRows),
       onChangePage: currentPage => console.log('currentPage: ', currentPage)
