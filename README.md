@@ -8,7 +8,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/patorjk/mui-dt/badge.svg?branch=master)](https://coveralls.io/github/patorjk/mui-dt?branch=master)
 [![npm version](https://badge.fury.io/js/mui-dt.svg)](https://badge.fury.io/js/mui-dt)
 
-MUI-DT is a data tables component built on [Material-UI](https://www.material-ui.com).  It comes with features like filtering, resizable + view/hide columns, search, export to CSV download, printing, selectable rows, expandable rows, pagination, and sorting. On top of the ability to customize styling on most views, there are two responsive modes "stacked" and "scroll" for mobile/tablet devices.
+MUI-DT is a data tables component built on [Material-UI](https://www.material-ui.com).  It comes with features like filtering, resizable + view/hide columns, search, export to CSV download, printing, selectable rows, expandable rows, pagination, and sorting. On top of the ability to customize styling on most views, there are 3 display modes "stacked", "scroll", and "responsiveStacked".
 
 You can try the table out live in a CodeSandbox here: https://codesandbox.io/s/github/patorjk/mui-dt
 
@@ -139,6 +139,7 @@ The component accepts the following props:
 |**`customToolbarSelect`**|function||Render a custom selected rows toolbar. `function(selectedRows, displayData, setSelectedRows) => void`
 |**`count`**|number||User provided override for total number of rows.
 |**`disableSelectToolbar`**|boolean|false|Enable/disable the Select Toolbar that appears when a row is selected.
+|**`displayMode`**|string|'stacked'|The display mode for the table. Options: 'stacked', 'scroll', or 'responsiveStacked'. 'responsiveStacked' will have the table in 'stacked' mode when on smaller screens and 'scroll' mode on larger screens. Use the 'tableBodyHeight to adjust the table's height.
 |**`download`**|boolean|true|Show/hide download icon from toolbar.
 |**`downloadOptions`**|object|`{filename: 'tableDownload.csv', separator: ','}`|Options to change the output of the CSV file: `filename`: string, `separator`: string, `filterOptions`: object(`useDisplayedColumnsOnly`: boolean, `useDisplayedRowsOnly`: boolean)
 |**`elevation`**|number|4|Shadow depth applied to Paper component.
@@ -174,7 +175,6 @@ The component accepts the following props:
 |**`print`**|boolean|true|Show/hide print icon from toolbar.
 |**`renderExpandableRow`**|function||Render expandable row. `function(rowData, rowMeta) => React Component`
 |**`resizableColumns`**|boolean|false|Enable/disable resizable columns.
-|**`responsive`**|string|'stacked'|The responsive mode for the table. Options: 'stacked' or 'scroll'. Use the 'tableBodyMaxHeight' and 'tableBodyMinHeight' options to adjust the table height when using the "scroll" mode.
 |**`rowHover`**|boolean|true|Enable/disable hover style over rows.
 |**`rowsExpanded`**|array||User provided expanded rows.
 |**`rowsPerPage`**|number|10|Number of rows allowed per page.
@@ -192,8 +192,7 @@ The component accepts the following props:
 |**`sort`**|boolean|true|Enable/disable sort on all columns.
 |**`sortFilterList`**|boolean|true|Enable/disable alphanumeric sorting of filter lists.
 |**`tableProps`**|object|{}|Props applied to the table. You can set the table up to be a "dense" table this way. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-styling/index.js)
-|**`tableBodyMaxHeight`**|string|'499px'|The max height of the body of the table. This comes into play only when the responsive mode is set to "scroll". This is a CSS string value (ex: '500px', 'none', '100%', etc). [Example](https://github.com/patorjk/mui-dt/blob/master/examples/data-as-objects/index.js)
-|**`tableBodyMinHeight`**|string|'none'|The min height of the body of the table. This comes into play only when the responsive mode is set to "scroll". This is a CSS string value (ex: '500px', 'none', '100%', etc). [Example](https://github.com/patorjk/mui-dt/blob/master/examples/data-as-objects/index.js)
+|**`tableBodyHeight`**|string|'none'|The height of the body of the table. This is a CSS string value (ex: '500px', 'none', '100%', etc). [Example](https://github.com/patorjk/mui-dt/blob/master/examples/data-as-objects/index.js)
 |**`textLabels `**|object||User provided labels to localize text
 |**`viewColumns`**|boolean|true|Show/hide viewColumns icon from toolbar.
 
@@ -283,7 +282,6 @@ function(value: any, tableMeta: {
       data: array,
       lookup: object,
     },
-    showResponsive: boolean,
     searchText: null|string,
   },
 }, updateValue: function)
@@ -394,6 +392,7 @@ This library started as a fork of mui-datatables. Below I list breaking changes 
 * onRowsSelect renamed onRowSelectionChange.
 * onRowsExpand renamed onRowExpansionChange.
 * onFilterChange now takes the column index instead of the column name.
+* responsive option is now "displayMode". "stacked" mode is not tied to smaller screens, instead "responsiveStacked" should be used for this behavior.
 
 ## Contributing
 Thanks for taking an interest in the library and the github community!

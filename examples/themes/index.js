@@ -75,7 +75,7 @@ class Example extends React.Component {
       filter: true,
       selectableRows: 'multiple',
       filterType: 'dropdown',
-      responsive: 'stacked',
+      displayMode: 'stacked',
       rowsPerPage: 10,
     };
 

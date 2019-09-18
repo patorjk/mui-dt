@@ -45,7 +45,7 @@ class Example extends React.Component {
     const options = {
       filter: true,
       filterType: 'dropdown',
-      responsive: 'scroll',
+      displayMode: 'scroll',
       rowsPerPage: 10,
       customFooter: (count, page, rowsPerPage, changeRowsPerPage, changePage, textLabels) => {
         return (  

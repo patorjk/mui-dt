@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   root: {
-    '& .MuiTableFooter-root td': {
+    '& tfoot td': {
       borderBottom: 'none'
     }
   }

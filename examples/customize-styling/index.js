@@ -148,7 +148,7 @@ class Example extends React.Component {
     const options = {
       filter: true,
       filterType: 'dropdown',
-      responsive: this.state.stacked ? 'stacked' : 'scroll',
+      displayMode: this.state.stacked ? 'stacked' : 'scroll',
       fixedHeader: true,
       rowHover: false,
       setRowProps: (row) => {

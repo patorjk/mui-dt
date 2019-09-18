@@ -146,9 +146,8 @@ class Example extends React.Component {
       filter: true,
       rowsPerPage: 10,
       filterType: 'dropdown',
-      responsive: 'scroll',//stacked
-      tableBodyMaxHeight: '600px',
-      tableBodyMinHeight: '600px',
+      displayMode: 'scroll',//stacked
+      tableBodyHeight: '400px',
     };
 
     return (
