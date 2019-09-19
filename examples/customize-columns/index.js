@@ -59,7 +59,10 @@ function Example(props) {
       name: "Title",
       options: {
         filter: true,
-        sortDirection: 'asc'
+        sortDirection: 'asc',
+        customHeadLabelRender: (columnMeta) => {
+          return columnMeta.label + '!!';
+        }
       }
     },
     {

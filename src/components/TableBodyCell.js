@@ -16,9 +16,9 @@ const useStyles = makeStyles(
         width: '50%',
         boxSizing: 'border-box',
         whiteSpace: 'nowrap',
-        '&::after': {
-          content: "'\xa0'"
-        },
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+        height: props => 1/props.visibleColumnCount + '%',
         '&:nth-last-child(2)': {
           borderBottom: 'none'
         },
@@ -30,9 +30,9 @@ const useStyles = makeStyles(
       width: '50%',
       boxSizing: 'border-box',
       whiteSpace: 'nowrap',
-      '&::after': {
-        content: "'\xa0'"
-      },
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      height: props => 1/props.visibleColumnCount + '%',
       '&:nth-last-child(2)': {
         borderBottom: 'none'
       },
@@ -46,9 +46,9 @@ const useStyles = makeStyles(
         width: '50%',
         boxSizing: 'border-box',
         whiteSpace: 'nowrap',
-        '&::after': {
-          content: "'\xa0'"
-        },
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+        height: props => 1/props.visibleColumnCount + '%',
         '&:last-child': {
           borderBottom: 'none'
         },
@@ -60,9 +60,9 @@ const useStyles = makeStyles(
       width: '50%',
       boxSizing: 'border-box',
       whiteSpace: 'nowrap',
-      '&::after': {
-        content: "'\xa0'"
-      },
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      height: props => 1/props.visibleColumnCount + '%',
       '&:last-child': {
         borderBottom: 'none'
       },
@@ -74,7 +74,7 @@ const useStyles = makeStyles(
 );
 
 function TableBodyCell(props) {
-  const classes = useStyles();
+  const classes = useStyles(props);
   const { children, className, colIndex, columnHeader, dataIndex, options, print, rowIndex, ...otherProps } = props;
 
   const handleClick = event => {
@@ -84,37 +84,38 @@ function TableBodyCell(props) {
     }
   };
 
-  return [
-    <TableCell
-      key={1}
-      className={classNames(
-        {
-          [classes.root]: true,
-          [classes.cellHide]: true,
-          [classes.cellHeaderResponsiveStacked]: options.displayMode === 'responsiveStacked',
-          [classes.cellHeaderStacked]: options.displayMode === 'stacked',
-          'datatables-noprint': !print,
-        },
-        className,
-      )}>
-      {columnHeader}
-    </TableCell>,
-    <TableCell
-      key={2}
-      onClick={handleClick}
-      className={classNames(
-        {
-          [classes.root]: true,
-          [classes.responsiveStacked]: options.displayMode === 'responsiveStacked',
-          [classes.stacked]: options.displayMode === 'stacked',
-          'datatables-noprint': !print,
-        },
-        className,
-      )}
-      {...otherProps}>
-      {children}
-    </TableCell>,
-  ];
+  return (
+    <>
+      {options.displayMode !== 'scroll' &&
+        <TableCell
+          className={classNames(
+            {
+              [classes.root]: true,
+              [classes.cellHide]: true,
+              [classes.cellHeaderResponsiveStacked]: options.displayMode === 'responsiveStacked',
+              [classes.cellHeaderStacked]: options.displayMode === 'stacked',
+              'datatables-noprint': !print,
+            },
+            className)}>
+          {columnHeader}
+        </TableCell>
+      }
+      <TableCell
+        onClick={handleClick}
+        className={classNames(
+          {
+            [classes.root]: true,
+            [classes.responsiveStacked]: options.displayMode === 'responsiveStacked',
+            [classes.stacked]: options.displayMode === 'stacked',
+            'datatables-noprint': !print,
+          },
+          className,
+        )}
+        {...otherProps}>
+        {children}
+      </TableCell>
+    </>
+  );
 }
 
 export default TableBodyCell;

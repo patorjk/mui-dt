@@ -259,6 +259,7 @@ class TableBody extends React.Component {
                           columnHeader={columns[columnIndex].label}
                           print={columns[columnIndex].print}
                           options={options}
+                          visibleColumnCount={visibleColCnt}
                           key={columnIndex}>
                           {column}
                         </TableBodyCell>
