@@ -28,6 +28,10 @@ const useStyles = makeStyles(
     data: {
       display: 'inline-block',
     },
+    noSortAction: {
+      display: 'flex',
+      verticalAlign: 'top',
+    },
     sortAction: {
       display: 'flex',
       verticalAlign: 'top',
@@ -151,7 +155,7 @@ function TableHeadCell(props) {
           </span>
         </Tooltip>
       ) : (
-        <div className={classes.sortAction}>
+        <div className={hint ? classes.sortAction : classes.noSortAction}>
           {children}
           {hint && (
             <Tooltip title={hint} placement={'bottom-end'} enterDelay={300} classes={{ popper: classes.mypopper }}>

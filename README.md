@@ -225,7 +225,8 @@ const columns = [
 |Name|Type|Default|Description
 |:--:|:-----|:--|:-----|
 |**`customBodyRender`**|function||Function that returns a string or React component. Used as display data within all table cells of a given column. `function(value, tableMeta, updateValue) => string`&#124;` React Component` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/component/index.js)
-|**`customHeadRender`**|function||Function that returns a string or React component. Used as display for column header. `function(columnMeta, handleToggleColumn) => string`&#124;` React Component`
+|**`customHeadLabelRender`**|function||Function that returns a string or React component. Used to replace the display for the column header's label. `function(columnMeta, handleToggleColumn) => string`&#124;` React Component`
+|**`customHeadRender`**|function||Function that returns a string or React component. Used as display for column header. In most cases you want customHeadLabelRender instead, as this method is for overriding the full header cell. `function(columnMeta, handleToggleColumn) => string`&#124;` React Component`
 |**`display`**|string|'true'|Display column in table. `enum('true', 'false', 'excluded')`
 |**`download`**|boolean|true|Display column in CSV download file.
 |**`empty`**|boolean|false|This denotes whether the column has data or not (for use with intentionally empty columns).

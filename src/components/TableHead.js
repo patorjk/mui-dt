@@ -102,7 +102,7 @@ class TableHead extends React.Component {
                   }
                   options={options}
                   setCellRef={setCellRef}>
-                  {column.label}
+                  {column.customHeadLabelRender ? column.customHeadLabelRender({ index, ...column }) : column.label}
                 </TableHeadCell>
               )),
           )}
