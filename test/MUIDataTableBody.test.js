@@ -560,7 +560,7 @@ describe('<TableBody />', function() {
     );
 
     mountWrapper
-      .find('TableSelectCell')
+      .find('Memo(TableSelectCell)')
       .first()
       .find('input')
       .simulate('click');
@@ -591,8 +591,9 @@ describe('<TableBody />', function() {
     );
 
     mountWrapper
-      .find('TableSelectCell')
+      .find('Memo(TableSelectCell)')
       .first()
+      .find('td')
       .simulate('click');
 
     assert.strictEqual(options.onRowClick.callCount, 0);

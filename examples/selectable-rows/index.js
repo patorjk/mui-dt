@@ -67,7 +67,7 @@ class Example extends React.Component {
       selectableRows: 'multiple',
       selectableRowsOnClick: true,
       filterType: 'dropdown',
-      displayMode: 'stacked',
+      displayMode: 'scroll',
       rowsPerPage: 10,
       rowsSelected: this.state.rowsSelected,
       onRowSelectionChange: (affectedRows, allSelectedRows, rowsSelected) => {
@@ -104,7 +104,7 @@ class Example extends React.Component {
       },
       isRowSelectable: (dataIndex, selectedRows) => {
         //prevents selection of any additional row after the third
-        if (selectedRows.data.length > 2 && selectedRows.data.filter(d => d.dataIndex === dataIndex).length === 0) return false;
+        if (selectedRows.data.length > 7 && selectedRows.data.filter(d => d.dataIndex === dataIndex).length === 0) return false;
         //prevents selection of row with title "Attorney"
         return data[dataIndex][1] != "Attorney";
       },

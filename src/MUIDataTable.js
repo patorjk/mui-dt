@@ -623,7 +623,7 @@ class MUIDataTable extends React.Component {
         count: this.options.count,
         data: tableData,
         displayData: this.getDisplayData(columns, tableData, filterList, searchText, tableMeta),
-        previousSelectedRow: null,
+        //previousSelectedRow: null,
       },
       callback,
     );
