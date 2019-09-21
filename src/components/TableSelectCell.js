@@ -55,13 +55,17 @@ function TableSelectCell(props) {
     isHeaderCell = false,
     isRowExpanded = false,
     isRowSelectable,
-    onExpand,
     selectableOn = 'none',
     selectableRowsHeader,
     setCellRef,
     expandableRowsHeader,
     expandedRows,
     areAllRowsExpanded = () => (false),
+    onChange,
+    handleRowSelect,
+    toggleExpandRow,
+    dataIndex,
+    rowIndex,
     ...otherProps
   } = props;
 
@@ -84,6 +88,20 @@ function TableSelectCell(props) {
     [classes.hide]: isHeaderCell && !expandableRowsHeader,
   });
 
+  const checkboxChange = (event) => {
+    handleRowSelect({
+      index: props.rowIndex,
+      dataIndex: props.dataIndex,
+    }, event);
+  };
+
+  const onExpand = () => {
+    toggleExpandRow({
+      index: props.rowIndex,
+      dataIndex: props.dataIndex,
+    });
+  };
+
   const renderCheckBox = () => {
     if (isHeaderCell && (selectableOn !== 'multiple' || selectableRowsHeader === false)) {
       // only display the header checkbox for multiple selection.
@@ -98,6 +116,7 @@ function TableSelectCell(props) {
         }}
         color={checkboxColor}
         disabled={!isRowSelectable}
+        onChange={checkboxChange}
         {...otherProps}
       />
     );
@@ -133,12 +152,10 @@ TableSelectCell.propTypes = {
   expandableOn: PropTypes.bool,
   /** Select cell part of fixed header */
   fixedHeader: PropTypes.bool.isRequired,
-  /** Callback to trigger cell update */
-  onChange: PropTypes.func,
   /** Is selectable option enabled */
   selectableOn: PropTypes.string,
   /** If there should be a select-all checkbox */
   selectableRowsHeader: PropTypes.bool,
 };
 
-export default TableSelectCell;
+export default React.memo(TableSelectCell);

@@ -154,7 +154,7 @@ class Example extends React.Component {
     const locations = ['New York', 'El Paso', 'DC', 'Dallas', 'Santa Ana','St. Petersburg', 'London','Paris'];
     const salarys = ['$100,000', '$50,000', '$75,000', '$80,000'];
 
-    for (var ii = 0; ii < 0; ii++) {
+    for (var ii = 0; ii < 3000; ii++) {
       data.push({
         name: firstNames[ rand(firstNames.length)] + ' ' + lastNames[ rand(lastNames.length) ],
         title: titles[ rand(titles.length)],
@@ -170,7 +170,6 @@ class Example extends React.Component {
       filterType: 'dropdown',
       displayMode: 'scroll',//stacked
       tableBodyHeight: '400px',
-      serverSide: true
     };
 
     return (

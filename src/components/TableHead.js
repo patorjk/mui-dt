@@ -56,7 +56,7 @@ class TableHead extends React.Component {
         }
       }
     }
-
+//onChange={this.handleRowSelect.bind(null)}
     return (
       <MuiTableHead
         className={classNames({ 
@@ -72,12 +72,15 @@ class TableHead extends React.Component {
             expandedRows={this.props.expandedRows}
             expandableRowsHeader={options.expandableRowsHeader}
             areAllRowsExpanded={this.props.areAllRowsExpanded}
-            onExpand={this.props.toggleAllExpandableRows}
+            
             fixedHeader={options.fixedHeader}
             isHeaderCell={true}
             isRowSelectable={true}
             indeterminate={isDeterminate}
-            onChange={this.handleRowSelect.bind(null)}
+            
+            handleRowSelect={this.handleRowSelect}
+            toggleExpandRow={this.props.toggleAllExpandableRows}
+
             selectableOn={options.selectableRows}
             selectableRowsHeader={options.selectableRowsHeader}
             setCellRef={setCellRef} />

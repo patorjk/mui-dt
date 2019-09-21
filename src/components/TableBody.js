@@ -119,7 +119,7 @@ class TableBody extends React.Component {
     // If the user is pressing shift and has previously clicked another row.
     if (shiftKey && previousSelectedRow && previousSelectedRow.index < this.props.data.length) {
       let curIndex = previousSelectedRow.index;
-
+      
       // Create a copy of the selectedRows object. This will be used and modified
       // below when we see if we can add adjacent rows.
       let selectedRows = cloneDeep(this.props.selectedRows);
@@ -218,6 +218,17 @@ class TableBody extends React.Component {
               return options.customRowRender(row, dataIndex, rowIndex);
             }
             
+/*
+                    onChange={this.handleRowSelect.bind(null, {
+                      index: this.getRowIndex(rowIndex),
+                      dataIndex: dataIndex,
+                    })}
+                    onExpand={toggleExpandRow.bind(null, {
+                      index: this.getRowIndex(rowIndex),
+                      dataIndex: dataIndex,
+                    })}
+*/
+
             return (
               <React.Fragment key={rowIndex}>
                 <TableBodyRow
@@ -228,14 +239,11 @@ class TableBody extends React.Component {
                   data-testid={'MUIDataTableBodyRow-' + dataIndex}
                   id={'MUIDataTableBodyRow-' + dataIndex}>
                   <TableSelectCell
-                    onChange={this.handleRowSelect.bind(null, {
-                      index: this.getRowIndex(rowIndex),
-                      dataIndex: dataIndex,
-                    })}
-                    onExpand={toggleExpandRow.bind(null, {
-                      index: this.getRowIndex(rowIndex),
-                      dataIndex: dataIndex,
-                    })}
+                    handleRowSelect={this.handleRowSelect}
+                    toggleExpandRow={toggleExpandRow}
+                    dataIndex={dataIndex}
+                    rowIndex={this.getRowIndex(rowIndex)}
+
                     fixedHeader={options.fixedHeader}
                     checkboxColor={options.checkboxColor}
                     checked={this.isRowSelected(dataIndex)}
