@@ -490,7 +490,7 @@ class MUIDataTable extends React.Component {
           });
         }
 
-        if (typeof column.customBodyRender === 'function') {
+        if (typeof column.customBodyRender === 'function' && column.filterWithRenderData !== false) {
           const rowData = tableData[rowIndex].data;
           tableMeta = this.getTableMeta(rowIndex, colIndex, rowData, column, data, this.state);
           const funcResult = column.customBodyRender(value, tableMeta);
@@ -514,12 +514,7 @@ class MUIDataTable extends React.Component {
       }
 
       if (column.filterOptions) {
-        if (Array.isArray(column.filterOptions)) {
-          filterData[colIndex] = cloneDeep(column.filterOptions);
-          console.error(
-            'Deprecated: filterOptions must now be an object. see https://github.com/patorjk/mui-dt/tree/master/examples/customize-filter example',
-          );
-        } else if (Array.isArray(column.filterOptions.names)) {
+        if (Array.isArray(column.filterOptions.names)) {
           filterData[colIndex] = cloneDeep(column.filterOptions.names);
         }
       }
@@ -662,13 +657,15 @@ class MUIDataTable extends React.Component {
         );
         columnDisplay = funcResult;
 
-        /* drill down to get the value of a cell */
-        columnValue =
-          typeof funcResult === 'string' || !funcResult
-            ? funcResult
-            : funcResult.props && funcResult.props.value
-            ? funcResult.props.value
-            : columnValue;
+        // drill down to get the value of a cell
+        if (column.filterWithRenderData !== false) {
+          columnValue =
+            typeof funcResult === 'string' || !funcResult
+              ? funcResult
+              : funcResult.props && funcResult.props.value
+              ? funcResult.props.value
+              : columnValue;
+          }
       }
 
       displayRow.push(columnDisplay);
@@ -1036,8 +1033,6 @@ class MUIDataTable extends React.Component {
   };
 
   toggleExpandRow = row => {
-    console.log('toggleExpandRow');
-
     const { dataIndex } = row;
     let removedRow;
     const { isRowExpandable } = this.options;
@@ -1325,6 +1320,9 @@ class MUIDataTable extends React.Component {
     };
   }
 
+  setTableRef = (el) => (this.tableRef = el)
+  handleHeadUpdateRef = (fn) => (this.updateToolbarSelect = fn)
+
   render() {
     const { classes, className, title } = this.props;
     const {
@@ -1404,7 +1402,7 @@ class MUIDataTable extends React.Component {
               setResizeable={fn => (this.setHeadResizeable = fn)} />
           )}
           <MuiTable
-            ref={el => (this.tableRef = el)}
+            ref={this.setTableRef}
             tabIndex={'0'}
             role={'grid'}
             className={tableClassNames}
@@ -1417,7 +1415,7 @@ class MUIDataTable extends React.Component {
               count={rowCount}
               page={page}
               rowsPerPage={rowsPerPage}
-              handleHeadUpdateRef={fn => (this.updateToolbarSelect = fn)}
+              handleHeadUpdateRef={this.handleHeadUpdateRef}
               selectedRows={selectedRows}
               selectRowUpdate={this.selectRowUpdate}
               toggleSort={this.toggleSortColumn}

@@ -16,10 +16,12 @@ class Example extends React.Component {
           setCellProps: () => ({style:{whiteSpace:'pre'}}),
           setCellHeaderProps: () => ({style:{whiteSpace:'pre'}}),
           customBodyRender: (value, tableMeta, updateValue) => {
-            console.dir(value);
-            console.dir(tableMeta);
-            console.dir(updateValue);
-          }
+            //console.dir(value);
+            //console.dir(tableMeta);
+            //console.dir(updateValue);
+            return value;
+          },
+          filterWithRenderData: false,
         }
       },      
       {
@@ -142,12 +144,33 @@ class Example extends React.Component {
       { name: "Franky Rees Jr", title: "Business Analyst", location: "St. Petersburg", age: 22, salary: "$50,000", phone: { home: '867-5312', cell: '123-4569' } },
     ];
 
+    const rand = (size) => {
+      return Math.floor( Math.random() * size );
+    };
+
+    const firstNames = ['Adam', 'Jack', 'Edward', 'Donna', 'Sarah', 'Suzie', 'Sam', 'RJ', 'Henry', 'Ryan', 'Ricky', 'James'];
+    const lastNames  = ['Ronson', 'Johnson', 'Jackson', 'Campo', 'Edwards', 'Brown', 'Green', 'White', 'Simmons', 'Gates', 'Jobs'];
+    const titles = ['Owner', 'Unemployed', 'Burger Flipper', 'Coder', 'Business Analyst', 'Attorney', 'Consultant', 'Singer','Painter'];
+    const locations = ['New York', 'El Paso', 'DC', 'Dallas', 'Santa Ana','St. Petersburg', 'London','Paris'];
+    const salarys = ['$100,000', '$50,000', '$75,000', '$80,000'];
+
+    for (var ii = 0; ii < 0; ii++) {
+      data.push({
+        name: firstNames[ rand(firstNames.length)] + ' ' + lastNames[ rand(lastNames.length) ],
+        title: titles[ rand(titles.length)],
+        location: locations[ rand(locations.length) ],
+        salary: salarys[ rand(salarys.length )],
+      });
+    }
+
     const options = {
       filter: true,
       rowsPerPage: 10,
+      rowsPerPageOptions: [10,100,200,500],
       filterType: 'dropdown',
       displayMode: 'scroll',//stacked
       tableBodyHeight: '400px',
+      serverSide: true
     };
 
     return (

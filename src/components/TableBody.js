@@ -217,7 +217,7 @@ class TableBody extends React.Component {
             if (options.customRowRender) {
               return options.customRowRender(row, dataIndex, rowIndex);
             }
-
+            
             return (
               <React.Fragment key={rowIndex}>
                 <TableBodyRow
