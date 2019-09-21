@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import classNames from 'classnames';
 import TableCell from '@material-ui/core/TableCell';
 import { makeStyles } from '@material-ui/core/styles';
@@ -75,14 +75,14 @@ const useStyles = makeStyles(
 
 function TableBodyCell(props) {
   const classes = useStyles(props);
-  const { children, className, colIndex, columnHeader, dataIndex, options, print, rowIndex, ...otherProps } = props;
+  const { children, className, colIndex, columnHeader, dataIndex, options, print, rowIndex, visibleColumnCount, ...otherProps } = props;
+  const onCellClick = options.onCellClick;
 
-  const handleClick = event => {
-    const { colIndex, options, children, dataIndex, rowIndex } = props;
-    if (options.onCellClick) {
-      options.onCellClick(children, { colIndex, rowIndex, dataIndex, event });
+  const handleClick = useCallback(event => {
+    if (onCellClick) {
+      onCellClick(children, { colIndex, rowIndex, dataIndex, event });
     }
-  };
+  }, [onCellClick, children, colIndex, rowIndex, dataIndex]);
 
   return (
     <>

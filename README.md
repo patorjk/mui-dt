@@ -235,6 +235,7 @@ const columns = [
 |**`filterOptions`**|{names, logic, display}||With filter options, it's possible to use custom names for the filter fields. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/column-filters/index.js), custom filter logic [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-filter/index.js), and custom rendering. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-filter/index.js)
 |**`customFilterListRender`**|function||Function that returns a string used as the chip label. `function(value) => string` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/column-filters/index.js)
 |**`filterType `**|string|'dropdown'|Choice of filtering view. Takes priority over global filterType option.`enum('checkbox', 'dropdown', 'multiselect', 'textField', 'custom')` Use 'custom' if you are supplying your own rendering via `filterOptions`.
+|**`filterWithRenderData`**|string|true|The table will call all of your customBodyRender functions to get values for the filter dropdowns. If your raw data is fine for these dropdowns, set this option to false as a way to improve performance for the table.
 |**`hint`**|string||Display hint icon with string as tooltip on hover.
 |**`print`**|boolean|true|Display column when printing.
 |**`searchable`**|boolean|true|Exclude/include column from search results.
