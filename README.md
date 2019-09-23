@@ -111,6 +111,8 @@ const options = {
 
 ```
 
+Cell data values should be a string, number, boolean, undefined, null, or array. Cells with data values of objects {} can cause issues.
+
 ## API
 
 
