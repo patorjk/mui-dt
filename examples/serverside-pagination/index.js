@@ -9,8 +9,7 @@ class Example extends React.Component {
     page: 0,
     count: 1,
     rowsPerPage: 5,
-    sortField: undefined,
-    sortDir: undefined,
+    sortOrder: {},
     data: [["Loading Data..."]],
     columns: [
       {
@@ -84,45 +83,30 @@ class Example extends React.Component {
     ];
   }
 
-  sort = (page, sortField, sortDir) => {
+  sort = (page, sortOrder) => {
+
     this.setState({ isLoading: true });
-    this.xhrRequest("", page, sortField, sortDir).then(res => {
-      //console.dir(res);
-
-      var columns = this.state.columns.map(function(col) {
-        var myCol = Object.assign({}, col);
-        if (myCol.name === sortField) {
-          myCol.options = Object.assign({}, myCol.options, {
-            sortDirection: sortDir
-          });
-        } else {
-          myCol.options = Object.assign({}, myCol.options);
-          delete myCol.options.sortDirection;
-        }
-        console.log(myCol);
-        return myCol;
-      });
-      console.dir( JSON.parse(JSON.stringify(columns)) );
-
+    this.xhrRequest("", page, sortOrder).then(res => {
       this.setState({ 
         data: res.data, 
         page: res.page, 
-        sortField, 
-        sortDir, 
+        sortOrder,
         isLoading: false, 
         count: res.total,
-        columns,
       });
     });
   }
 
   // mock async function
-  xhrRequest = (url, page, sortField, sortDir) => {
+  xhrRequest = (url, page, sortOrder = {}) => {
 
     return new Promise((resolve, reject) => {
       // mock page data
       let fullData = this.getSrcData();
       const total = fullData.length;  // mock record count from server - normally this would be a number attached to the return data
+
+      let sortField = sortOrder.columnName;
+      let sortDir = sortOrder.sortDirection;
 
       if (sortField) {
         fullData = fullData.sort((a, b) => {
@@ -149,16 +133,15 @@ class Example extends React.Component {
 
   }
 
-  changePage = (page, sortField, sortDir) => {
+  changePage = (page, sortOrder) => {
     this.setState({
       isLoading: true,
     });
-    this.xhrRequest(`/myApiServer?page=${page}`, page, sortField, sortDir).then(res => {
+    this.xhrRequest(`/myApiServer?page=${page}`, page, sortOrder).then(res => {
       this.setState({
         isLoading: false,
         page: res.page,
-        sortField: sortField,
-        sortDir: sortDir,
+        sortOrder,
         data: res.data,
         count: res.total,
       });
@@ -167,7 +150,7 @@ class Example extends React.Component {
 
   render() {
 
-    const { data, page, count, isLoading, rowsPerPage } = this.state;
+    const { data, page, count, isLoading, rowsPerPage, sortOrder } = this.state;
 
     const options = {
       filter: true,
@@ -177,6 +160,7 @@ class Example extends React.Component {
       count: count,
       rowsPerPage: rowsPerPage,
       rowsPerPageOptions: [],
+      sortOrder: sortOrder,
       onTableChange: (action, tableState) => {
 
         console.log(action, tableState);
@@ -186,11 +170,10 @@ class Example extends React.Component {
 
         switch (action) {
           case 'changePage':
-            this.changePage(tableState.page, this.state.sortField, this.state.sortDir);
+            this.changePage(tableState.page, tableState.sortOrder);
             break;
           case 'sort':
-            var col = tableState.columns.filter(col => col.sortDirection !== 'none');
-            this.sort(tableState.page, col[0].name, col[0].sortDirection);
+            this.sort(tableState.page, tableState.sortOrder);
             break;
           default:
             console.log('action not handled.');

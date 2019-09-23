@@ -131,7 +131,7 @@ The component accepts the following props:
 |**`caseSensitive `**|boolean|false|Enable/disable case sensitivity for search.
 |**`checkboxColor `**|string|'primary'|Color of the checkbox. Options are: 'primary', 'secondary', 'default'.
 |**`customFooter`**|function||Render a custom table footer. `function(count, page, rowsPerPage, changeRowsPerPage, changePage, `[`textLabels: object`](https://github.com/patorjk/mui-dt/blob/master/src/textLabels.js)`) => string`&#124;` React Component` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-footer/index.js)
-|**`customRowRender `**|function||Override default row rendering with custom function. `customRowRender(data, dataIndex, rowIndex) => React Component`
+|**`customRowRender `**|function||Override default row rendering with custom function. You probably don't need to use this, see the setRowProps method instead (this render method is more powerful, but it will be more work for you). `customRowRender(data, dataIndex, rowIndex) => React Component`
 |**`customSearch `**|function||Override default search with custom function. `customSearch(searchQuery: string, currentRow: array, columns: array) => boolean`
 |**`customSearchRender `**|function||Render a custom table search. `customSearchRender(searchText: string, handleSearch, hideSearch, options) => React Component`
 |**`customSort`**|function||Override default sorting with custom function. `function(data: array, colIndex: number, order: string) => array`
@@ -187,9 +187,10 @@ The component accepts the following props:
 |**`searchText`**|string||Initial search text.
 |**`searchProps`**|object|{}|Props applied to the search text box. You can set the placeholder text this way as well as add method callbacks like onBlur, onKeyUp, etc. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-search/index.js)
 |**`setRowProps`**|function||Is called for each row and allows you to return custom props for this row based on its data. `function(row: array, dataIndex: number) => object` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-styling/index.js)
-|**`serverSide`**|boolean|false|Enable remote data source. When setting this option to true, the developer is responsible for the filtering, sorting, etc, of the data and for updating the options and columns inputs to the table (ex: sortDirection on a sorted column would need to be updated). [Example](https://github.com/patorjk/mui-dt/blob/master/examples/serverside-pagination/index.js)
+|**`serverSide`**|boolean|false|Enable remote data source. When setting this option to true, the developer is responsible for the filtering, sorting, etc, of the data and for updating the options and columns inputs to the table. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/serverside-pagination/index.js)
 |**`showSearch`**|boolean|false|Shows the search bar when the table toolbar rendered. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-search/index.js)
 |**`sort`**|boolean|true|Enable/disable sort on all columns.
+|**`sortOrder`**|object|`{}`|Sets the column to sort by and the sort direction. To remove/reset sorting, input in an empty object. Options: `columnName`: string, `sortDirection`: enum('asc', 'desc') [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-columns/index.js)
 |**`sortFilterList`**|boolean|true|Enable/disable alphanumeric sorting of filter lists.
 |**`tableProps`**|object|{}|Props applied to the table. You can set the table up to be a "dense" table this way. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-styling/index.js)
 |**`tableBodyHeight`**|string|'none'|The height of the body of the table. This is a CSS string value (ex: '500px', 'none', '100%', etc). [Example](https://github.com/patorjk/mui-dt/blob/master/examples/data-as-objects/index.js)
@@ -225,7 +226,7 @@ const columns = [
 |Name|Type|Default|Description
 |:--:|:-----|:--|:-----|
 |**`customBodyRender`**|function||Function that returns a string or React component. Used as display data within all table cells of a given column. `function(value, tableMeta, updateValue) => string`&#124;` React Component` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/component/index.js)
-|**`customHeadLabelRender`**|function||Function that returns a string or React component. Used to replace the display for the column header's label. `function(columnMeta, handleToggleColumn) => string`&#124;` React Component`
+|**`customHeadLabelRender`**|function||Function that returns a string or React component. Used to replace the display for the column header's label. `function(columnMeta, sortOrder, handleToggleColumn) => string`&#124;` React Component`
 |**`customHeadRender`**|function||Function that returns a string or React component. Used as display for column header. In most cases you want customHeadLabelRender instead, as this method is for overriding the full header cell. `function(columnMeta, handleToggleColumn) => string`&#124;` React Component`
 |**`display`**|string|'true'|Display column in table. `enum('true', 'false', 'excluded')`
 |**`download`**|boolean|true|Display column in CSV download file.
@@ -242,7 +243,6 @@ const columns = [
 |**`setCellProps`**|function||Is called for each cell and allows to you return custom props for this cell based on its data. `function(cellValue: string, rowIndex: number, columnIndex: number) => object` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-styling/index.js)
 |**`setCellHeaderProps`**|function||Is called for each header cell and allows you to return custom props for the header cell based on its data. `function(columnMeta: object) => object` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-styling/index.js)
 |**`sort`**|boolean|true|Enable/disable sorting on column.
-|**`sortDirection`**|string||Set default sort order. `enum('asc', 'desc', 'none')`
 |**`viewColumns`**|boolean|true|Allow user to toggle column visibility through 'View Column' list.
 
 `customHeadRender` is called with these arguments:
@@ -253,7 +253,6 @@ function(columnMeta: {
   display: enum('true', 'false', 'excluded'),
   filter: boolean,
   sort: boolean,
-  sortDirection: boolean,
   download: boolean,
   empty: boolean,
   index: number,
@@ -395,6 +394,8 @@ This library started as a fork of mui-datatables. Below I list breaking changes 
 * onRowsExpand renamed onRowExpansionChange.
 * onFilterChange now takes the column index instead of the column name.
 * responsive option is now "displayMode". "stacked" mode is not tied to smaller screens, instead "responsiveStacked" should be used for this behavior.
+* customHeadRender function signature changed.
+* sortDirection property removed from Column API. Sorting is now handled via a sortOrder property on the options object.
 
 ## Contributing
 Thanks for taking an interest in the library and the github community!

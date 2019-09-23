@@ -102,7 +102,6 @@ class MUIDataTable extends React.Component {
             setCellProps: PropTypes.func,
             setCellHeaderProps: PropTypes.func,
             sort: PropTypes.bool,
-            sortDirection: PropTypes.oneOf(['asc', 'desc', 'none']),
             viewColumns: PropTypes.bool,
           }),
         }),
@@ -169,6 +168,7 @@ class MUIDataTable extends React.Component {
       serverSide: PropTypes.bool,
       setRowProps: PropTypes.func,
       sort: PropTypes.bool,
+      sortOrder: PropTypes.object,
       tableBodyHeight: PropTypes.string,
       tableProps: PropTypes.object,
       textLabels: PropTypes.object,
@@ -206,6 +206,7 @@ class MUIDataTable extends React.Component {
       lookup: {},
     },
     searchText: null,
+    sortOrder: {},
   };
 
   constructor() {
@@ -304,6 +305,7 @@ class MUIDataTable extends React.Component {
     selectableRowsOnClick: false,
     serverSide: false,
     sort: true,
+    sortOrder: {},
     sortFilterList: true,
     pagination: true,
     print: true,
@@ -393,7 +395,6 @@ class MUIDataTable extends React.Component {
     let columnData = [];
     let filterData = [];
     let filterList = [];
-    let sortDirectionSet = false;
 
     newColumns.forEach((column, colIndex) => {
       let columnOptions = {
@@ -405,29 +406,12 @@ class MUIDataTable extends React.Component {
         searchable: true,
         download: true,
         viewColumns: true,
-        sortDirection: 'none',
       };
 
       if (typeof column === 'object') {
         if (column.options) {
           if (column.options.display !== undefined) {
             column.options.display = column.options.display.toString();
-          }
-
-          if (column.options.sortDirection === null) {
-            console.error(
-              'The "null" option for sortDirection is deprecated. sortDirection is an enum, use "asc" | "desc" | "none"',
-            );
-            column.options.sortDirection = 'none';
-          }
-
-          if (column.options.sortDirection !== undefined) {
-            if (sortDirectionSet) {
-              console.error('sortDirection is set for more than one column. Only the first column will be considered.');
-              column.options.sortDirection = 'none';
-            } else {
-              sortDirectionSet = true;
-            }
           }
         }
 
@@ -475,6 +459,12 @@ class MUIDataTable extends React.Component {
     let sortIndex = null;
     let sortDirection = 'none';
     let tableMeta;
+    let sortOrder;
+    if (this.options.sortOrder) {
+      sortOrder = Object.assign({}, this.options.sortOrder);
+    } else {
+      sortOrder = Object.assign({}, this.state.sortOrder);
+    }
 
     const data = status === TABLE_LOAD.INITIAL ? this.transformData(columns, props.data) : props.data;
     const searchText = status === TABLE_LOAD.INITIAL ? this.options.searchText : null;
@@ -528,9 +518,9 @@ class MUIDataTable extends React.Component {
         filterData[colIndex].sort(comparator);
       }
 
-      if (column.sortDirection !== 'none') {
+      if (column.name === sortOrder.columnName) {
+        sortDirection = sortOrder.sortDirection;
         sortIndex = colIndex;
-        sortDirection = column.sortDirection;
       }
     });
 
@@ -622,6 +612,7 @@ class MUIDataTable extends React.Component {
         expandedRows: expandedRowsData,
         count: this.options.count,
         data: tableData,
+        sortOrder: sortOrder,
         displayData: this.getDisplayData(columns, tableData, filterList, searchText, tableMeta),
         //previousSelectedRow: null,
       },
@@ -827,7 +818,10 @@ class MUIDataTable extends React.Component {
   };
 
   getSortDirection(column) {
-    return column.sortDirection === 'asc' ? 'ascending' : 'descending';
+    if (column.name === this.state.sortOrder.columnName) {
+      return this.state.sortOrder.sortDirection === 'asc' ? 'ascending' : 'descending';
+    }
+    return null;
   }
 
   toggleSortColumn = index => {
@@ -835,15 +829,12 @@ class MUIDataTable extends React.Component {
       prevState => {
         let columns = cloneDeep(prevState.columns);
         let data = prevState.data;
-        const newOrder = columns[index].sortDirection === 'desc' ? 'asc' : 'desc';
-
-        for (let pos = 0; pos < columns.length; pos++) {
-          if (index !== pos) {
-            columns[pos].sortDirection = 'none';
-          } else {
-            columns[pos].sortDirection = newOrder;
-          }
-        }
+        const newOrder = (columns[index].name === this.state.sortOrder.columnName && 
+          this.state.sortOrder.sortDirection === 'desc') ? 'asc' : 'desc';
+        const newSortOrder = {
+          columnName: columns[index].name,
+          sortDirection: newOrder,
+        };
 
         const orderLabel = this.getSortDirection(columns[index]);
         const announceText = `Table now sorted by ${columns[index].name} : ${orderLabel}`;
@@ -860,6 +851,7 @@ class MUIDataTable extends React.Component {
             data: prevState.data,
             displayData: prevState.displayData,
             selectedRows: prevState.selectedRows,
+            sortOrder: newSortOrder,
           };
         } else {
           const sortedData = this.sortTable(data, index, newOrder);
@@ -869,6 +861,7 @@ class MUIDataTable extends React.Component {
             data: sortedData.data,
             displayData: this.getDisplayData(columns, sortedData.data, prevState.filterList, prevState.searchText),
             selectedRows: sortedData.selectedRows,
+            sortOrder: newSortOrder,
             previousSelectedRow: null,
           };
         }
@@ -1338,6 +1331,7 @@ class MUIDataTable extends React.Component {
       previousSelectedRow,
       expandedRows,
       searchText,
+      sortOrder,
     } = this.state;
 
     const rowCount = this.state.count || displayData.length;
@@ -1423,6 +1417,7 @@ class MUIDataTable extends React.Component {
               expandedRows={expandedRows}
               toggleAllExpandableRows={this.toggleAllExpandableRows}
               areAllRowsExpanded={this.areAllRowsExpanded}
+              sortOrder={sortOrder}
               options={this.options} />
             <TableBody
               data={displayData}

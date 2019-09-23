@@ -32,7 +32,7 @@ class TableHead extends React.Component {
   };
 
   render() {
-    const { classes, columns, count, options, data, page, setCellRef, selectedRows } = this.props;
+    const { classes, columns, count, options, data, page, setCellRef, selectedRows, sortOrder = {} } = this.props;
 
     const numSelected = (selectedRows && selectedRows.data.length) || 0;
     let isDeterminate = numSelected > 0 && numSelected < count;
@@ -56,7 +56,7 @@ class TableHead extends React.Component {
         }
       }
     }
-//onChange={this.handleRowSelect.bind(null)}
+
     return (
       <MuiTableHead
         className={classNames({ 
@@ -88,14 +88,14 @@ class TableHead extends React.Component {
             (column, index) =>
               column.display === 'true' &&
               (column.customHeadRender ? (
-                column.customHeadRender({ index, ...column }, this.handleToggleColumn)
+                column.customHeadRender({ index, ...column }, sortOrder, this.handleToggleColumn)
               ) : (
                 <TableHeadCell
                   key={index}
                   index={index}
                   type={'cell'}
                   sort={column.sort}
-                  sortDirection={column.sortDirection}
+                  sortDirection={column.name === sortOrder.columnName ? sortOrder.sortDirection : 'none'}
                   toggleSort={this.handleToggleColumn}
                   hint={column.hint}
                   print={column.print}
