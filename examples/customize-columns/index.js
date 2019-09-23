@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import ReactDOM from "react-dom";
 import MUIDataTable from "../../src/";
 import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
 import {makeStyles} from "@material-ui/core/styles";
+
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   data: {
@@ -46,6 +48,15 @@ function Example(props) {
     return false;
   };
 
+  const [sortOrder, setSortOrder] = useState({
+    columnName: 'Title',
+    sortDirection: 'asc',
+  });
+
+  const removeOrder = () => {
+    setSortOrder({});
+  };
+
   const columns = [
     {
       name: "Name",
@@ -69,14 +80,14 @@ function Example(props) {
       name: "Location",
       options: {
         filter: false,
-        customHeadRender: (columnMeta, updateDirection) => {
+        customHeadRender: (columnMeta, sortOrder, updateDirection) => {
           
           var sortDirProps = {
             height:'10px',
             classes: { root: classes.sortLabelRoot },
           };
-          if (['asc','desc'].indexOf(columnMeta.sortDirection) !== -1) {
-            sortDirProps.direction = columnMeta.sortDirection;
+          if (columnMeta.name === sortOrder.columnName && ['asc','desc'].indexOf(sortOrder.sortDirection) !== -1) {
+            sortDirProps.direction = sortOrder.sortDirection;
             sortDirProps.active = true;
           } else {
             sortDirProps.active = false;
@@ -157,10 +168,14 @@ function Example(props) {
     filter: true,
     filterType: 'dropdown',
     displayMode: 'responsiveStacked',
+    sortOrder: sortOrder // defined above
   };
 
   return (
-    <MUIDataTable title={"ACME Employee list"} data={data} columns={columns} options={options} />
+    <>
+      <Button onClick={removeOrder}>Remove Sort Order</Button>
+      <MUIDataTable title={"ACME Employee list"} data={data} columns={columns} options={options} />
+    </>
   );
 }
 
