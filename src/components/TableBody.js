@@ -217,17 +217,6 @@ class TableBody extends React.Component {
             if (options.customRowRender) {
               return options.customRowRender(row, dataIndex, rowIndex);
             }
-            
-/*
-                    onChange={this.handleRowSelect.bind(null, {
-                      index: this.getRowIndex(rowIndex),
-                      dataIndex: dataIndex,
-                    })}
-                    onExpand={toggleExpandRow.bind(null, {
-                      index: this.getRowIndex(rowIndex),
-                      dataIndex: dataIndex,
-                    })}
-*/
 
             return (
               <React.Fragment key={rowIndex}>

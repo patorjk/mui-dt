@@ -65,6 +65,7 @@ class Example extends React.Component {
         name: "phone.home",
         label: "Home Phone",
         options: {
+          filter: true,
           setCellProps: () => ({style:{whiteSpace:'pre'}}),
           setCellHeaderProps: () => ({style:{whiteSpace:'pre'}}),
         }
@@ -73,6 +74,7 @@ class Example extends React.Component {
         name: "phone.fake",
         label: "Not a Phone #",
         options: {
+          filter: false,
           setCellProps: () => ({style:{whiteSpace:'pre'}}),
           setCellHeaderProps: () => ({style:{whiteSpace:'pre'}}),
         }
@@ -81,6 +83,7 @@ class Example extends React.Component {
         name: "phone2.cell",
         label: "Cell Phone",
         options: {
+          filter: false,
           setCellProps: () => ({style:{whiteSpace:'pre'}}),
           setCellHeaderProps: () => ({style:{whiteSpace:'pre'}}),
         }
@@ -89,6 +92,7 @@ class Example extends React.Component {
         name: "phone3.home",
         label: "Not An Attribute",
         options: {
+          filter: false,
           setCellProps: () => ({style:{whiteSpace:'pre'}}),
           setCellHeaderProps: () => ({style:{whiteSpace:'pre'}}),
         }
@@ -97,6 +101,7 @@ class Example extends React.Component {
         name: "phone4.home",
         label: "Not An Attribute",
         options: {
+          filter: false,
           setCellProps: () => ({style:{whiteSpace:'pre'}}),
           setCellHeaderProps: () => ({style:{whiteSpace:'pre'}}),
         }
@@ -105,6 +110,7 @@ class Example extends React.Component {
         name: "phone4.home",
         label: "Not An Attribute",
         options: {
+          filter: false,
           setCellProps: () => ({style:{whiteSpace:'pre'}}),
           setCellHeaderProps: () => ({style:{whiteSpace:'pre'}}),
         }
@@ -165,7 +171,7 @@ class Example extends React.Component {
 
     const options = {
       filter: true,
-      rowsPerPage: 10,
+      rowsPerPage: 100,
       rowsPerPageOptions: [10,100,200,500],
       filterType: 'dropdown',
       displayMode: 'scroll',//stacked

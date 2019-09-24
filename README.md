@@ -388,6 +388,7 @@ const options = {
 ## Breaking Changes with mui-datatables
 This library started as a fork of mui-datatables. Below I list breaking changes with mui-datatables.
 
+* The table now retains internal state through re-renders. When you override a table option or column option you take control, but if you opt not to control an option the table will maintain the state and not reset it when the table re-renders.
 * The "resetFilters" event that occurs for the onTableChange function is now called "clearFilters".
 * The responsiveScrollMaxHeight responsiveScrollFullHeight classes on MUIDataTable have been removed.
 * customToolbarSelect renamed customSelectToolbar.
