@@ -391,7 +391,7 @@ class MUIDataTable extends React.Component {
    *  Build the source table data
    */
 
-  buildColumns = newColumns => {
+  buildColumns = (newColumns, prevColumns) => {
     let columnData = [];
     let filterData = [];
     let filterList = [];
@@ -412,6 +412,8 @@ class MUIDataTable extends React.Component {
         if (column.options) {
           if (column.options.display !== undefined) {
             column.options.display = column.options.display.toString();
+          } else if (prevColumns[colIndex] && prevColumns[colIndex].name === column.name && prevColumns[colIndex].display) {
+            column.options.display = prevColumns[colIndex].display;
           }
         }
 
@@ -455,7 +457,7 @@ class MUIDataTable extends React.Component {
 
   setTableData(props, status, callback = () => {}) {
     let tableData = [];
-    let { columns, filterData, filterList } = this.buildColumns(props.columns);
+    let { columns, filterData, filterList } = this.buildColumns(props.columns, this.state.columns);
     let sortIndex = null;
     let sortDirection = 'none';
     let tableMeta;
@@ -467,7 +469,11 @@ class MUIDataTable extends React.Component {
     }
 
     const data = status === TABLE_LOAD.INITIAL ? this.transformData(columns, props.data) : props.data;
-    const searchText = status === TABLE_LOAD.INITIAL ? this.options.searchText : null;
+    let searchText = status === TABLE_LOAD.INITIAL ? this.options.searchText : null;
+
+    if (typeof this.options.searchText === 'undefined' && typeof this.state.searchText !== 'undefined') {
+      searchText = this.state.searchText;
+    }
 
     columns.forEach((column, colIndex) => {
       for (let rowIndex = 0; rowIndex < data.length; rowIndex++) {
@@ -480,26 +486,28 @@ class MUIDataTable extends React.Component {
           });
         }
 
-        if (typeof column.customBodyRender === 'function' && column.filterWithRenderData !== false) {
-          const rowData = tableData[rowIndex].data;
-          tableMeta = this.getTableMeta(rowIndex, colIndex, rowData, column, data, this.state);
-          const funcResult = column.customBodyRender(value, tableMeta);
+        if (column.filter !== false) {
+          if (typeof column.customBodyRender === 'function' && column.filterWithRenderData !== false) {
+            const rowData = tableData[rowIndex].data;
+            tableMeta = this.getTableMeta(rowIndex, colIndex, rowData, column, data, this.state);
+            const funcResult = column.customBodyRender(value, tableMeta);
 
-          if (React.isValidElement(funcResult) && funcResult.props.value) {
-            value = funcResult.props.value;
-          } else if (typeof funcResult === 'string') {
-            value = funcResult;
-          }
-        }
-
-        if (filterData[colIndex].indexOf(value) < 0 && !Array.isArray(value)) {
-          filterData[colIndex].push(value);
-        } else if (Array.isArray(value)) {
-          value.forEach(element => {
-            if (filterData[colIndex].indexOf(element) < 0) {
-              filterData[colIndex].push(element);
+            if (React.isValidElement(funcResult) && funcResult.props.value) {
+              value = funcResult.props.value;
+            } else if (typeof funcResult === 'string') {
+              value = funcResult;
             }
-          });
+          }
+
+          if (filterData[colIndex].indexOf(value) < 0 && !Array.isArray(value)) {
+            filterData[colIndex].push(value);
+          } else if (Array.isArray(value)) {
+            value.forEach(element => {
+              if (filterData[colIndex].indexOf(element) < 0) {
+                filterData[colIndex].push(element);
+              }
+            });
+          }
         }
       }
 
@@ -511,6 +519,8 @@ class MUIDataTable extends React.Component {
 
       if (column.filterList) {
         filterList[colIndex] = cloneDeep(column.filterList);
+      } else if ( this.state.filterList && this.state.filterList[colIndex] && this.state.filterList[colIndex].length > 0) {
+        filterList[colIndex] = cloneDeep(this.state.filterList[colIndex]);
       }
 
       if (this.options.sortFilterList) {
@@ -550,14 +560,14 @@ class MUIDataTable extends React.Component {
           selectedRowsData.data.push({ index: rowPos, dataIndex: row });
           selectedRowsData.lookup[row] = true;
         });
-      }
 
       // Single row selection customization
-      if (
+      } else if (
         this.options.rowsSelected &&
         this.options.rowsSelected.length === 1 &&
         this.options.selectableRows === 'single'
       ) {
+
         let rowPos = this.options.rowsSelected[0];
 
         for (let cIndex = 0; cIndex < this.state.displayData.length; cIndex++) {
@@ -577,6 +587,10 @@ class MUIDataTable extends React.Component {
         console.error(
           'Multiple values provided for selectableRows, but selectableRows set to "single". Either supply only a single value or use "multiple".',
         );
+      } else {
+        if (this.state.selectedRows) {
+          selectedRowsData = Object.assign({}, this.state.selectedRows);
+        }
       }
 
       if (this.options.rowsExpanded && this.options.rowsExpanded.length && this.options.expandableRows) {
@@ -593,6 +607,8 @@ class MUIDataTable extends React.Component {
           expandedRowsData.data.push({ index: rowPos, dataIndex: row });
           expandedRowsData.lookup[row] = true;
         });
+      } else if (this.state.expandedRows) {
+        expandedRowsData = Object.assign({}, this.state.expandedRows);
       }
     }
 
@@ -614,7 +630,6 @@ class MUIDataTable extends React.Component {
         data: tableData,
         sortOrder: sortOrder,
         displayData: this.getDisplayData(columns, tableData, filterList, searchText, tableMeta),
-        //previousSelectedRow: null,
       },
       callback,
     );
