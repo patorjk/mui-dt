@@ -20,13 +20,20 @@ export const defaultToolbarStyles = theme => ({
   root: {},
   left: {
     flex: '1 1 auto',
+    overflow: 'hidden',
   },
   actions: {
-    flex: '1 1 auto',
+    //flex: '1 1 auto',
     textAlign: 'right',
+    whiteSpace: 'nowrap',
   },
   titleRoot: {},
-  titleText: {},
+  titleText: {
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    minWidth: 0,
+  },
   icon: {
     '&:hover': {
       color: theme.palette.primary.main,
@@ -52,11 +59,9 @@ export const defaultToolbarStyles = theme => ({
       display: 'none',
     },
     left: {
-      // flex: "1 1 40%",
       padding: '8px 0px',
     },
     actions: {
-      // flex: "1 1 60%",
       textAlign: 'right',
     },
   },
