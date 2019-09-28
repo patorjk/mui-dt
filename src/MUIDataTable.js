@@ -230,9 +230,15 @@ class MUIDataTable extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.data !== prevProps.data || this.props.columns !== prevProps.columns) {
+    if (this.props.data !== prevProps.data || this.props.columns !== prevProps.columns || this.props.options !== prevProps.options) {
       this.updateOptions(this.options, this.props);
-      this.setTableData(this.props, TABLE_LOAD.INITIAL, () => {
+
+      var didDataUpdate = this.props.data !== prevProps.data;
+      if ( this.props.data && prevProps.data ) {
+        didDataUpdate = didDataUpdate && (this.props.data.length === prevProps.data.length);
+      }
+
+      this.setTableData(this.props, TABLE_LOAD.INITIAL, didDataUpdate, () => {
         this.setTableAction('propsUpdate');
       });
     }
@@ -268,7 +274,7 @@ class MUIDataTable extends React.Component {
   initializeTable(props) {
     this.mergeDefaultOptions(props);
     this.setTableOptions();
-    this.setTableData(props, TABLE_LOAD.INITIAL, () => {
+    this.setTableData(props, TABLE_LOAD.INITIAL, true, () => {
       this.setTableInit('tableInitialized');
     });
   }
@@ -455,7 +461,7 @@ class MUIDataTable extends React.Component {
         });
   };
 
-  setTableData(props, status, callback = () => {}) {
+  setTableData(props, status, dataUpdated, callback = () => {}) {
     let tableData = [];
     let { columns, filterData, filterList } = this.buildColumns(props.columns, this.state.columns);
     let sortIndex = null;
@@ -587,7 +593,7 @@ class MUIDataTable extends React.Component {
         console.error(
           'Multiple values provided for selectableRows, but selectableRows set to "single". Either supply only a single value or use "multiple".',
         );
-      } else {
+      } else if (typeof this.options.rowsSelected === 'undefined' && dataUpdated === false) {
         if (this.state.selectedRows) {
           selectedRowsData = Object.assign({}, this.state.selectedRows);
         }
@@ -607,7 +613,7 @@ class MUIDataTable extends React.Component {
           expandedRowsData.data.push({ index: rowPos, dataIndex: row });
           expandedRowsData.lookup[row] = true;
         });
-      } else if (this.state.expandedRows) {
+      } else if (typeof this.options.rowsExpanded === 'undefined' && dataUpdated === false &&  this.state.expandedRows) {
         expandedRowsData = Object.assign({}, this.state.expandedRows);
       }
     }
@@ -1032,6 +1038,7 @@ class MUIDataTable extends React.Component {
         },
       },
       TABLE_LOAD.UPDATE,
+      true,
       () => {
         this.setTableAction('rowDelete');
       },
