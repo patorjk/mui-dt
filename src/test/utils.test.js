@@ -8,7 +8,7 @@ import { expect } from "chai";
         separator: ";"
       },
       onDownload: null
-    }
+    };
 
      const columns = [
       {
@@ -35,7 +35,7 @@ import { expect } from "chai";
           '"anton";"abraham"\r\n' +
           '"berta";"buchel"'
         );
-      })
+      });
     });
 
      describe("when given an empty dataset", () => {
@@ -60,7 +60,7 @@ import { expect } from "chai";
 
        it("returns an empty csv with header", () => {
         expect(csv).to.equal('"firstname";"lastname"');
-      })
-    })
-  })
+      });
+    });
+  });
 });
