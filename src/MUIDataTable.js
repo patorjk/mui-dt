@@ -17,7 +17,7 @@ import TableResize from './components/TableResize';
 import TableToolbar from './components/TableToolbar';
 import TableToolbarSelect from './components/TableToolbarSelect';
 import textLabels from './textLabels';
-import { buildMap, getCollatorComparator, sortCompare } from './utils';
+import { buildMap, getCollatorComparator, sortCompare, getPageValue } from './utils';
 
 const defaultTableStyles = theme => ({
   root: {},
@@ -268,7 +268,7 @@ class MUIDataTable extends React.Component {
       return;
     });
 
-    this.handleOptionDeprecation(props);
+    this.handleOptionDeprecation();
   }
 
   initializeTable(props) {
@@ -320,20 +320,20 @@ class MUIDataTable extends React.Component {
     viewColumns: true,
   });
 
-  handleOptionDeprecation = props => {
-    if (typeof props.options.selectableRows === 'boolean') {
+  handleOptionDeprecation = () => {
+    if (typeof this.options.selectableRows === 'boolean') {
       console.error(
         'Using a boolean for selectableRows has been deprecated. Please use string option: multiple | single | none',
       );
-      this.options.selectableRows = props.options.selectableRows ? 'multiple' : 'none';
+      this.options.selectableRows = this.options.selectableRows ? 'multiple' : 'none';
     }
-    if (typeof props.options.searchPlaceholder === 'string' && props.options.searchPlaceholder) {
+    if (typeof this.options.searchPlaceholder === 'string' && this.options.searchPlaceholder) {
       console.warn(
         'options.searchPlaceholder is superfluous. Please use options.searchProps.placeholder to set the placeholder text.',
       );
     }
-    if (['scroll', 'stacked', 'responsiveStacked'].indexOf(props.options.displayMode) === -1) {
-      console.error(`Invalid option value of ${props.options.displayMode} for displayMode.`);
+    if (['scroll', 'stacked', 'responsiveStacked'].indexOf(this.options.displayMode) === -1) {
+      console.error(`Invalid option value of ${this.options.displayMode} for displayMode.`);
     }
   };
 
@@ -415,11 +415,12 @@ class MUIDataTable extends React.Component {
       };
 
       if (typeof column === 'object') {
-        if (column.options) {
-          if (column.options.display !== undefined) {
-            column.options.display = column.options.display.toString();
+        const options = { ...column.options };
+        if (options) {
+          if (options.display !== undefined) {
+            options.display = options.display.toString();
           } else if (prevColumns[colIndex] && prevColumns[colIndex].name === column.name && prevColumns[colIndex].display) {
-            column.options.display = prevColumns[colIndex].display;
+            options.display = prevColumns[colIndex].display;
           }
         }
 
@@ -427,7 +428,7 @@ class MUIDataTable extends React.Component {
           name: column.name,
           label: column.label ? column.label : column.name,
           ...columnOptions,
-          ...(column.options ? column.options : {}),
+          ...options,
         };
       } else {
         columnOptions = { ...columnOptions, name: column, label: column };
@@ -648,7 +649,6 @@ class MUIDataTable extends React.Component {
     let isFiltered = false;
     let isSearchFound = false;
     let displayRow = [];
-    const data = this.state.data.length ? this.state.data : this.props.data;
 
     for (let index = 0; index < row.length; index++) {
       let columnDisplay = row[index];
@@ -902,20 +902,35 @@ class MUIDataTable extends React.Component {
   };
 
   changeRowsPerPage = rows => {
-    // After changing rows per page, determine if our current page is too high
-    // for the number of rows, and adjust accordingly (pages are 0-indexed).
     const rowCount = this.options.count || this.state.displayData.length;
-    const totalPages = rowCount === rows ? 0 : Math.floor(rowCount / rows);
 
     this.setState(
       () => ({
         rowsPerPage: rows,
-        page: this.state.page > totalPages ? totalPages : this.state.page,
+        page: getPageValue(rowCount, rows, this.state.page),
       }),
       () => {
         this.setTableAction('changeRowsPerPage');
+
         if (this.options.onChangeRowsPerPage) {
           this.options.onChangeRowsPerPage(this.state.rowsPerPage);
+        }
+      },
+    );
+  };
+
+  searchClose = () => {
+    this.setState(
+      prevState => ({
+        searchText: null,
+        displayData: this.options.serverSide
+          ? prevState.displayData
+          : this.getDisplayData(prevState.columns, prevState.data, prevState.filterList, null),
+      }),
+      () => {
+        this.setTableAction('search');
+        if (this.options.onSearchChange) {
+          this.options.onSearchChange(this.state.searchText);
         }
       },
     );
@@ -1389,6 +1404,7 @@ class MUIDataTable extends React.Component {
               clearFilters={this.clearFilters}
               searchText={searchText}
               searchTextUpdate={this.searchTextUpdate}
+              searchClose={this.searchClose}
               setTableAction={this.setTableAction}
               tableRef={this.getTableContentRef}
               title={title}
@@ -1458,7 +1474,6 @@ class MUIDataTable extends React.Component {
           options={this.options}
           page={page}
           rowCount={rowCount}
-          rowsPerPageOptions={this.options.rowsPerPageOptions}
           rowsPerPage={rowsPerPage}
           changeRowsPerPage={this.changeRowsPerPage}
           changePage={this.changePage} />
