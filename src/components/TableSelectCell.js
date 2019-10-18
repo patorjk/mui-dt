@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Checkbox from '@material-ui/core/Checkbox';
 import TableCell from '@material-ui/core/TableCell';
+import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Remove from '@material-ui/icons/Remove';
@@ -132,9 +133,9 @@ function TableSelectCell(props) {
       <div style={{ display: 'flex', alignItems: 'center' }}>
         {expandableOn && <>
           {(isHeaderCell && !areAllRowsExpanded() && props.expandedRows.data.length > 0 ) ?
-            <Remove id="expandable-button" className={iconIndeterminateClass} onClick={onExpand} />
+            <IconButton onClick={onExpand} style={{padding:0}}><Remove id="expandable-button" className={iconIndeterminateClass} /></IconButton>
             :
-            <KeyboardArrowRight id="expandable-button" className={iconClass} onClick={onExpand} />
+            <IconButton onClick={onExpand} style={{padding:0}}><KeyboardArrowRight id="expandable-button" className={iconClass} /></IconButton>
           }
           </>}
         {selectableOn !== 'none' && renderCheckBox()}
