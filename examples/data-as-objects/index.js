@@ -15,11 +15,11 @@ class Example extends React.Component {
           //display: 'excluded',
           setCellProps: () => ({style:{whiteSpace:'pre'}}),
           setCellHeaderProps: () => ({style:{whiteSpace:'pre'}}),
-          customBodyRenderLite: (value, tableMeta, updateValue) => {
+          customBodyRenderLite: (dataIndex, rowIndex) => {
             //console.dir(value);
             //console.dir(tableMeta);
             //console.dir(updateValue);
-            return <div style={{fontWeight:'bold'}}>Hi {value}!</div>;
+            return <div style={{fontWeight:'bold'}}>Hi {data[dataIndex].name}!</div>;
           },
           filterWithRenderData: false,
         }

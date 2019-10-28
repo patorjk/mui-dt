@@ -227,7 +227,8 @@ const columns = [
 #### Column Options:
 |Name|Type|Default|Description
 |:--:|:-----|:--|:-----|
-|**`customBodyRender`**|function||Function that returns a string or React component. Used as display data within all table cells of a given column. `function(value, tableMeta, updateValue) => string`&#124;` React Component` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/component/index.js)
+|**`customBodyRender`**|function||Function that returns a string or React component. Used to display data within a table cell of a given column. `function(value, tableMeta, updateValue) => string`&#124;` React Component` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/component/index.js)
+|**`customBodyRenderLite`**|function||Function that returns a string or React component. Used to display data within a table cell of a given column. This function has better performance than customBodyRender at the cost of some functionality (different arguments and filtering is done with pre-processed data). If you have a client-side table with 1000+ rows, this is what you should use. `function(dataIndex, rowIndex) => string`&#124;` React Component` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/data-as-objects/index.js)
 |**`customHeadLabelRender`**|function||Function that returns a string or React component. Used to replace the display for the column header's label. `function(columnMeta, sortOrder, handleToggleColumn) => string`&#124;` React Component`
 |**`customHeadRender`**|function||Function that returns a string or React component. Used as display for column header. In most cases you want customHeadLabelRender instead, as this method is for overriding the full header cell. `function(columnMeta, handleToggleColumn) => string`&#124;` React Component`
 |**`display`**|string|'true'|Display column in table. `enum('true', 'false', 'excluded')`
@@ -238,7 +239,6 @@ const columns = [
 |**`filterOptions`**|{names, logic, display}||With filter options, it's possible to use custom names for the filter fields. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/column-filters/index.js), custom filter logic [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-filter/index.js), and custom rendering. [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-filter/index.js)
 |**`customFilterListRender`**|function||Function that returns a string used as the chip label. `function(value) => string` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/column-filters/index.js)
 |**`filterType `**|string|'dropdown'|Choice of filtering view. Takes priority over global filterType option.`enum('checkbox', 'dropdown', 'multiselect', 'textField', 'custom')` Use 'custom' if you are supplying your own rendering via `filterOptions`.
-|**`filterWithRenderData`**|string|true|The table will call all of your customBodyRender functions to get values for the filter dropdowns. If your raw data is fine for these dropdowns, set this option to false as a way to improve performance for the table.
 |**`hint`**|string||Display hint icon with string as tooltip on hover.
 |**`print`**|boolean|true|Display column when printing.
 |**`searchable`**|boolean|true|Exclude/include column from search results.

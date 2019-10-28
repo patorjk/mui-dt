@@ -657,7 +657,7 @@ class MUIDataTable extends React.Component {
       let column = columns[index];
 
       if (column.customBodyRenderLite) {
-        displayRow.push(column.customBodyRender);
+        displayRow.push(column.customBodyRenderLite);
       } else if (column.customBodyRender) {
         const tableMeta = this.getTableMeta(rowIndex, index, row, column, dataForTableMeta, {
           ...this.state,
