@@ -259,7 +259,7 @@ class TableBody extends React.Component {
                           options={options}
                           visibleColumnCount={visibleColCnt}
                           key={columnIndex}>
-                          {column}
+                          {typeof column === 'function' ? column() : column}
                         </TableBodyCell>
                       ),
                   )}

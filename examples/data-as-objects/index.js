@@ -9,17 +9,17 @@ class Example extends React.Component {
     const columns = [
       {
         name: "name",
-        label: "Name",
+        label: "Name11",
         options: {
           filter: true,
           //display: 'excluded',
           setCellProps: () => ({style:{whiteSpace:'pre'}}),
           setCellHeaderProps: () => ({style:{whiteSpace:'pre'}}),
-          customBodyRender: (value, tableMeta, updateValue) => {
+          customBodyRenderLite: (value, tableMeta, updateValue) => {
             //console.dir(value);
             //console.dir(tableMeta);
             //console.dir(updateValue);
-            return value;
+            return <div style={{fontWeight:'bold'}}>Hi {value}!</div>;
           },
           filterWithRenderData: false,
         }
