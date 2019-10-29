@@ -9,19 +9,18 @@ class Example extends React.Component {
     const columns = [
       {
         name: "name",
-        label: "Name",
+        label: "Name11",
         options: {
           filter: true,
           //display: 'excluded',
           setCellProps: () => ({style:{whiteSpace:'pre'}}),
           setCellHeaderProps: () => ({style:{whiteSpace:'pre'}}),
-          customBodyRender: (value, tableMeta, updateValue) => {
+          customBodyRenderLite: (dataIndex, rowIndex) => {
             //console.dir(value);
             //console.dir(tableMeta);
             //console.dir(updateValue);
-            return value;
+            return <div style={{fontWeight:'bold'}}>Hi {data[dataIndex].name}!</div>;
           },
-          filterWithRenderData: false,
         }
       },      
       {

@@ -81,6 +81,7 @@ class MUIDataTable extends React.Component {
           name: PropTypes.string.isRequired,
           options: PropTypes.shape({
             customBodyRender: PropTypes.func,
+            customBodyRenderLite: PropTypes.func,
             customFilterListRender: PropTypes.func,
             customHeadRender: PropTypes.func,
             display: PropTypes.oneOf(['true', 'false', 'excluded']),
@@ -476,6 +477,7 @@ class MUIDataTable extends React.Component {
     }
 
     const data = status === TABLE_LOAD.INITIAL ? this.transformData(columns, props.data) : props.data;
+
     let searchText = status === TABLE_LOAD.INITIAL ? this.options.searchText : null;
 
     if (typeof this.options.searchText === 'undefined' && typeof this.state.searchText !== 'undefined') {
@@ -494,7 +496,7 @@ class MUIDataTable extends React.Component {
         }
 
         if (column.filter !== false) {
-          if (typeof column.customBodyRender === 'function' && column.filterWithRenderData !== false) {
+          if (typeof column.customBodyRender === 'function') {
             const rowData = tableData[rowIndex].data;
             tableMeta = this.getTableMeta(rowIndex, colIndex, rowData, column, data, this.state);
             const funcResult = column.customBodyRender(value, tableMeta);
@@ -655,7 +657,9 @@ class MUIDataTable extends React.Component {
       let columnValue = row[index];
       let column = columns[index];
 
-      if (column.customBodyRender) {
+      if (column.customBodyRenderLite) {
+        displayRow.push(column.customBodyRenderLite);
+      } else if (column.customBodyRender) {
         const tableMeta = this.getTableMeta(rowIndex, index, row, column, dataForTableMeta, {
           ...this.state,
           filterList: filterList,
@@ -670,17 +674,17 @@ class MUIDataTable extends React.Component {
         columnDisplay = funcResult;
 
         // drill down to get the value of a cell
-        if (column.filterWithRenderData !== false) {
-          columnValue =
-            typeof funcResult === 'string' || !funcResult
-              ? funcResult
-              : funcResult.props && funcResult.props.value
-              ? funcResult.props.value
-              : columnValue;
-          }
+        columnValue =
+          typeof funcResult === 'string' || !funcResult
+            ? funcResult
+            : funcResult.props && funcResult.props.value
+            ? funcResult.props.value
+            : columnValue;
+        
+        displayRow.push(columnDisplay);
+      } else {
+        displayRow.push(columnDisplay);
       }
-
-      displayRow.push(columnDisplay);
 
       const columnVal = columnValue === null || columnValue === undefined ? '' : columnValue.toString();
 
