@@ -477,6 +477,7 @@ class MUIDataTable extends React.Component {
     }
 
     const data = status === TABLE_LOAD.INITIAL ? this.transformData(columns, props.data) : props.data;
+
     let searchText = status === TABLE_LOAD.INITIAL ? this.options.searchText : null;
 
     if (typeof this.options.searchText === 'undefined' && typeof this.state.searchText !== 'undefined') {

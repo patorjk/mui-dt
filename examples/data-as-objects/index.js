@@ -21,7 +21,6 @@ class Example extends React.Component {
             //console.dir(updateValue);
             return <div style={{fontWeight:'bold'}}>Hi {data[dataIndex].name}!</div>;
           },
-          filterWithRenderData: false,
         }
       },      
       {
