@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import MUIDataTable from "../../src/";
+import { debounceSearchRender } from "../../src/plugins/DebounceSearchRender";
 
 class Example extends React.Component {
 
@@ -175,6 +176,7 @@ class Example extends React.Component {
       filterType: 'dropdown',
       displayMode: 'scroll',//stacked
       tableBodyHeight: '400px',
+      customSearchRender: debounceSearchRender(1500),
     };
 
     return (
