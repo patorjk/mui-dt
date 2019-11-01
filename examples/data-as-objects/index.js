@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import MUIDataTable from "../../src/";
-import { debounceSearchRender } from "../../src/plugins/DebounceSearchRender";
+import { debounceSearchRender } from "../../src/";
 
 class Example extends React.Component {
 
@@ -168,7 +168,7 @@ class Example extends React.Component {
         salary: salarys[ rand(salarys.length )],
       });
     }
-
+console.dir(debounceSearchRender);
     const options = {
       filter: true,
       rowsPerPage: 100,

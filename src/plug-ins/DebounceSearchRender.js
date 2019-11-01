@@ -5,7 +5,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
 import { makeStyles } from '@material-ui/core/styles';
-import { debounce } from 'lodash.debounce';
+import debounce from 'lodash.debounce';
 
 const useStyles = makeStyles(theme => ({
   main: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
 }), { name: 'MUIDataTableSearch' });
 
-export const DebounceTableSearch = (props) => {
+export function DebounceTableSearch(props) {
   const { options, onHide, searchText, debounceWait } = props;
   const classes = useStyles();
 
@@ -45,12 +45,12 @@ export const DebounceTableSearch = (props) => {
     };
   });
 
-  const debouncedSearch = debounce((event) => {
-    props.onSearch(event.target.value);
+  const debouncedSearch = debounce((value) => {
+    props.onSearch(value);
   }, debounceWait);
 
   const handleTextChange = event => {
-    debouncedSearch(event);
+    debouncedSearch(event.target.value);
   };
 
   return (
@@ -64,7 +64,6 @@ export const DebounceTableSearch = (props) => {
             'data-test-id': options.textLabels.toolbar.search,
             'aria-label': options.textLabels.toolbar.search,
           }}
-          value={searchText || ''}
           onChange={handleTextChange}
           fullWidth={true}
           {...(options.searchProps ? options.searchProps : {})}
@@ -77,7 +76,7 @@ export const DebounceTableSearch = (props) => {
   );
 };
 
-export const debounceSearchRender = (debounceWait = 500) => {
+export function debounceSearchRender(debounceWait = 200) {
   return (searchText, handleSearch, hideSearch, options) => {
     return (
       <DebounceTableSearch
