@@ -135,7 +135,7 @@ The component accepts the following props:
 |**`customFooter`**|function||Render a custom table footer. `function(count, page, rowsPerPage, changeRowsPerPage, changePage, `[`textLabels: object`](https://github.com/patorjk/mui-dt/blob/master/src/textLabels.js)`) => string`&#124;` React Component` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/customize-footer/index.js)
 |**`customRowRender `**|function||Override default row rendering with custom function. You probably don't need to use this, see the setRowProps method instead (this render method is more powerful, but it will be more work for you). `customRowRender(data, dataIndex, rowIndex) => React Component`
 |**`customSearch `**|function||Override default search with custom function. `customSearch(searchQuery: string, currentRow: array, columns: array) => boolean`
-|**`customSearchRender `**|function||Render a custom table search. `customSearchRender(searchText: string, handleSearch, hideSearch, options) => React Component`
+|**`customSearchRender `**|function||Render a custom table search. For a debounced search, there is a plug-in called "debounceSearchRender" you can use here. See the plug-in section for more details. `customSearchRender(searchText: string, handleSearch, hideSearch, options) => React Component`
 |**`customSort`**|function||Override default sorting with custom function. `function(data: array, colIndex: number, order: string) => array`
 |**`customToolbar`**|function||Render a custom toolbar.
 |**`customToolbarSelect`**|function||Render a custom selected rows toolbar. `function(selectedRows, displayData, setSelectedRows) => void`
@@ -289,6 +289,15 @@ function(value: any, tableMeta: {
   },
 }, updateValue: function)
 ```
+
+## Plug-ins
+
+The table lends itself to plug-ins in many areas, especially in the customRender functions. Many use cases for these render functions are common, so a set of plug-ins are available that you can use.
+
+#### Available Plug-ins:
+|Name|Type|Default|Description
+|:--:|:-----|:--|:-----|
+|**`debounceSearchRender`**|function||Function that returns a function for the customSearchRender method. This plug-in allows you to create a debounced search. `function(debounceWait) => function` [Example](https://github.com/patorjk/mui-dt/blob/master/examples/data-as-objects/index.js)
 
 ## Customize Styling
 
