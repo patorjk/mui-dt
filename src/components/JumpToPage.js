@@ -53,7 +53,9 @@ class JumpToPage extends React.Component {
   render() {
     const { count, classes, options, rowsPerPage, page, changePage } = this.props;
     const textLabels = options.textLabels.pagination;
+    return null;
 
+/*
     return (
       <>
         <Typography color="inherit" variant="body2" className={classes.caption}>
@@ -81,6 +83,7 @@ class JumpToPage extends React.Component {
         </Select>
       </>
     );
+  */
   }
 }
 
