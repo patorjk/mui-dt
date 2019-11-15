@@ -5,6 +5,7 @@ import MuiTableFooter from '@material-ui/core/TableFooter';
 import MuiTablePagination from '@material-ui/core/TablePagination';
 import { withStyles } from '@material-ui/core/styles';
 import { getPageValue } from '../utils';
+//import JumpToPage from './JumpToPage';
 
 const defaultPaginationStyles = {
   root: {
@@ -49,7 +50,7 @@ class TablePagination extends React.Component {
   };
 
   render() {
-    const { count, classes, options, rowsPerPage, page } = this.props;
+    const { count, classes, options, rowsPerPage, page, changePage } = this.props;
     const textLabels = options.textLabels.pagination;
 
     return (
@@ -90,10 +91,14 @@ class TablePagination extends React.Component {
             onChangePage={this.handlePageChange}
             onChangeRowsPerPage={this.handleRowChange}
           />
+
+          
         </MuiTableRow>
       </MuiTableFooter>
     );
   }
 }
+
+//{options.jumpToPage && <JumpToPage count={rowCount} rowsPerPage={rowsPerPage} page={page} changePage={changePage} options={options} />}
 
 export default withStyles(defaultPaginationStyles, { name: 'MUIDataTablePagination' })(TablePagination);
