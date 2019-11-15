@@ -9,14 +9,14 @@ const useStyles = makeStyles(
     root: {
       '&.Mui-selected': {
         '& td': {
-          backgroundColor: '#ededed',
+          backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[700] :theme.palette.grey[200],
         }        
       }
     },
     hover: {
       '&:hover': {
         '& td': {
-          backgroundColor: '#ededed',
+          backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[700] :theme.palette.grey[200],
         }
       }
     },

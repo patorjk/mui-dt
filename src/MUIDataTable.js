@@ -142,6 +142,7 @@ class MUIDataTable extends React.Component {
       fixedHeader: PropTypes.bool,
       isRowExpandable: PropTypes.func,
       isRowSelectable: PropTypes.func,
+      jumpToPage: PropTypes.bool,
       onDownload: PropTypes.func,
       onRowClick: PropTypes.func,
       onRowExpansionChange: PropTypes.func,
@@ -457,9 +458,7 @@ class MUIDataTable extends React.Component {
           });
         })
       : data.map(row => {
-          let ret = columns.map(col => leaf(row, col.name));
-          ret.originalObjectData = row;
-          return ret;
+          return columns.map(col => leaf(row, col.name));
         });
   };
 
